@@ -23,7 +23,11 @@ T = load_timeline(a.vid)
 sc = next(s for s in T["scenes"] if s["id"] == a.sid)
 od = out_dir(a.vid)
 clip = next((od / "media" / a.sid).rglob(f"{'480p30' if a.q == 'l' else '1080p30'}/{a.sid}.mp4"))
-ts = [min(s["end"] + 0.25, sc["duration"] - 0.1) for s in sc["sentences"]]
+# 取樣時間：句尾後 0.25 秒；但不能落在場景結尾的轉場（章節卡 1.15 秒、甩鏡 0.45 秒）或片尾畫面裡
+idx = [x["id"] for x in T["scenes"]].index(a.sid)
+nxt = T["scenes"][idx + 1] if idx + 1 < len(T["scenes"]) else None
+tail = (1.25 if nxt and nxt.get("chapter") else 0.5) if nxt else T.get("end_screen", 0) + 0.9
+ts = [min(s["end"] + 0.25, sc["duration"] - tail) for s in sc["sentences"]]
 cols = 4
 rows = (len(ts) + cols - 1) // cols
 W, H = 480, 270

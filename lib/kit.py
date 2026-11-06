@@ -41,11 +41,11 @@ S = json.loads((ROOT / "config/style.json").read_text())
 for f in S["font_files"]:
     manimpango.register_font(str(ROOT / f))
 
-VID = os.environ.get("YTV_VIDEO")
-if not VID:
-    raise SystemExit("請設定 YTV_VIDEO=<影片 ID>（lib/render.py 會自動設定）")
-VDIR, ODIR = ROOT / "videos" / VID, ROOT / "out" / VID
-TL_ = json.loads((VDIR / "timeline.json").read_text())
+# YTV_VIDEO＝影片 ID（lib/render.py 會自動設定）。沒設定時是「設計模式」：可以畫靜態圖（吉祥物、草圖、縮圖），但不能用 Timed。
+VID = os.environ.get("YTV_VIDEO", "")
+VDIR, ODIR = ROOT / "videos" / VID, ROOT / "out" / (VID or "_design")
+TL_ = json.loads((VDIR / "timeline.json").read_text()) if VID else {}
+_SCRIPT = json.loads((VDIR / "script.json").read_text()) if VID else {}
 
 # ---------------- 配色 ----------------
 BG = S["bg"]["deep"]
@@ -58,7 +58,7 @@ TEAL, TEAL_L, TEAL_M = S["brand"]["teal"], S["brand"]["teal_light"], S["brand"][
 GOOD, BAD, NEUTRAL = S["role"]["good"], S["role"]["bad"], S["role"]["neutral"]
 SCREEN, PANEL, SEA = S["bg"]["screen"], S["bg"]["panel"], S["bg"]["sea"]
 # 每支影片的概念色：script.json 的 "concepts": {"argmax": 0, "期望值": 1}（索引進 concept_pool），在場景裡用 C["argmax"]
-C = {k: S["concept_pool"][i] for k, i in json.loads((VDIR / "script.json").read_text()).get("concepts", {}).items()}
+C = {k: S["concept_pool"][i] for k, i in _SCRIPT.get("concepts", {}).items()}
 
 
 def zone(name):
@@ -152,86 +152,175 @@ def bgplate(name="glow_center"):
     return im
 
 
-# ---------------- 吉祥物：錘錘（logo 的測深錘） ----------------
+# ---------------- 吉祥物：錘錘（合體版，2026-11-07 使用者定案） ----------------
+# 設計（docs/mascot/）：
+#   燈籠臉：金色多面錘身挖一扇暗窗，眼睛是兩顆光點，表情只靠光點形狀；想通時整顆從裡面亮起來（「深處的光」）。
+#   繩語：垂直掛著＝「！」；繩子一捲＝「？」（錘身就是問號的點）。招牌動作是 curl() → straighten()：從問題到洞見。
+#   指標：尖端是天生的指標（point_at）；繩子可以圈住或畫底線（lasso / underline）。
+#   撈樣：真實的測深錘尖端塗油脂黏回海底樣本；錘錘收尾時尖端黏著發光的樣本（sample_on），接 takeaway_card 一句話重點。
+# 出場原則：開場、收尾、或真的需要「帶觀眾往下挖」的時刻。不是每場都出現；每支影片另有自己的機制角色（反模板）。
+
+_GOLD_L, _GOLD_D, _GLOW, _ROPE, _WIN = "#F5CD78", "#AA7628", "#FFE7A8", "#C8964A", "#1A1206"
+
+
+def _P(x, y):
+    return np.array([x, y, 0.0])
+
+
+def _eyes(mood, centers, k=1.0, angle=0.0):
+    g = VGroup()
+    for c in centers:
+        halo = Circle(.17 * k).set_fill(_GLOW, .28).set_stroke(width=0).move_to(c)
+        if mood == "happy":
+            e = ArcBetweenPoints(c + _P(-.1, -.03) * k, c + _P(.1, -.03) * k, angle=-PI * .75).set_stroke(_GLOW, 7 * k)
+        elif mood == "wow":
+            e = Circle(.1 * k).set_stroke(_GLOW, 6 * k).move_to(c)
+        elif mood == "flat":
+            e = Line(c + _P(-.1, 0) * k, c + _P(.1, 0) * k).set_stroke(_GLOW, 7 * k)
+        elif mood == "squint":   # 懷疑：一邊線一邊點
+            e = Line(c + _P(-.1, .02) * k, c + _P(.1, -.02) * k).set_stroke(_GLOW, 7 * k) if c is centers[0] else Dot(c, radius=.085 * k, color=_GLOW)
+        else:
+            e = Dot(c, radius=.085 * k, color=_GLOW)
+        if angle:
+            e.rotate(angle, about_point=c)
+        g.add(VGroup(halo, e))
+    return g
+
+
 class Plumb(VGroup):
-    """頻道吉祥物。造型來自 logo：繩子＋圓柱帽＋多面錐形金色錘身。
-    gear: None｜"goggles"（潛水鏡）｜"lamp"（頭燈）——造型定案前保留三種（docs/mascot/）。
-    動作：look(v) 看向、blink()、mood("happy"/"o"/"flat"/"wow")、glow_on()/glow_off()（找到洞見時發光）、
-    swing(角度)（以繩頂為軸擺動）、dive(距離)（沿繩下潛）；lipsync 由 Timed.lipsync(plumb, speaker="mascot") 驅動。
-    出場原則：開場與收尾、或真的需要「帶觀眾往下挖」的時刻；不是每個場景都出現（避免模板感）。"""
+    """頻道吉祥物「錘錘」。用 place(點) 擺位置（點＝錘身中心；繩子自動往上接到畫面外）。
+    動作（都回傳動畫 list，丟進 Timed.at(...) 用 * 展開）：
+      mood("neutral|happy|flat|wow|squint")、look(方向)、blink()、
+      curl()（繩子捲成「？」）、straighten()（拉直成「！」）、point_at(點)、upright()、
+      light_on()/light_off()（從內部發光）、sample_on()（尖端黏著發光樣本）、swing()、dive(距離)。
+    說話：script 的 speaker 寫 mascot，場景呼叫 self.lipsync(plumb)；說話時眼睛的光暈隨音量變亮。"""
 
-    def __init__(self, scale=1.0, gear=None, rope=3.0):
+    def __init__(self, scale=0.6):
         super().__init__()
-        gold, gold_l, gold_d = GOLD, "#F5CD78", "#AA7628"
-        k = 0.01
-        body = Polygon(*[np.array([x, y, 0]) * k for x, y in [(-95, 60), (-60, 100), (60, 100), (95, 60), (0, -170)]])
-        body.set_fill(gold, 1).set_stroke(width=0)
-        lit = Polygon(*[np.array([x, y, 0]) * k for x, y in [(-95, 60), (-60, 100), (-20, 100), (-35, 60), (0, -170)]])
-        lit.set_fill(gold_l, 1).set_stroke(width=0)
-        shade = Polygon(*[np.array([x, y, 0]) * k for x, y in [(95, 60), (60, 100), (25, 100), (40, 60), (0, -170)]])
-        shade.set_fill(gold_d, 1).set_stroke(width=0)
-        cap = RoundedRectangle(corner_radius=0.08, width=0.68, height=0.38).set_fill(gold_d, 1).set_stroke(width=0)
-        cap.move_to(np.array([0, 1.31, 0]))
-        neck = Rectangle(width=0.52, height=0.2).set_fill(gold_d, 1).set_stroke(width=0).move_to(np.array([0, 1.07, 0]))
-        top = cap.get_top()
-        self.rope = Line(top, top + UP * rope).set_stroke("#C8964A", 4)
-        eyes = VGroup(*[Ellipse(width=0.34, height=0.44).set_fill("#FFFAF0", 1).set_stroke(width=0).move_to([x, 0.6, 0]) for x in (-0.3, 0.3)])
-        pupils = VGroup(*[Circle(0.085).set_fill(SCREEN, 1).set_stroke(width=0).move_to(e.get_center() + DOWN * 0.02) for e in eyes])
-        shines = VGroup(*[Circle(0.028).set_fill(WHITE, 1).set_stroke(width=0).move_to(p.get_center() + UL * 0.035) for p in pupils])
-        mouth = ArcBetweenPoints(np.array([-0.17, 0.3, 0]), np.array([0.17, 0.3, 0]), angle=PI / 2.2).set_stroke(SCREEN, 5)
-        talk = Ellipse(width=0.26, height=0.16).set_fill(SCREEN, 1).set_stroke(width=0).move_to(mouth).set_opacity(0)
-        self.halo = VGroup(*[Circle(r).set_fill(GOLD, 0.07).set_stroke(width=0) for r in (0.9, 1.3, 1.8)]).move_to([0, 0.2, 0])
-        self.halo.set_opacity(0)
-        self.add(self.rope, self.halo, cap, neck, body, lit, shade, eyes, pupils, shines, mouth, talk)
-        self.body, self.eyes, self.pupils, self.shines, self.mouth, self.talk, self.cap = body, eyes, pupils, shines, mouth, talk, cap
-        self.gear = None
-        if gear == "goggles":
-            g = RoundedRectangle(corner_radius=0.26, width=1.24, height=0.64).set_stroke("#7EC8F2", 6).set_fill(opacity=0).move_to([0, 0.6, 0])
-            strap = Line([-0.62, 0.6, 0], [-0.95, 0.5, 0]).set_stroke("#7EC8F2", 5)
-            self.gear = VGroup(g, strap)
-        elif gear == "lamp":
-            self.gear = Circle(0.15).set_fill("#FFF0C8", 1).set_stroke(width=0).move_to(cap)
-        if self.gear is not None:
-            self.add(self.gear)
-        self.nocheck_parts = [self.rope]  # 繩子刻意伸出畫面上緣，不算越界
-        self.scale(scale)
+        self.k, self.angle = scale, 0.0
+        cap = RoundedRectangle(corner_radius=.08, width=.68, height=.38).set_fill(_GOLD_D, 1).set_stroke(width=0).move_to(_P(0, 1.31))
+        neck = Rectangle(width=.52, height=.2).set_fill(_GOLD_D, 1).set_stroke(width=0).move_to(_P(0, 1.07))
+        body = Polygon(_P(-.95, .6), _P(-.6, 1.0), _P(.6, 1.0), _P(.95, .6), _P(0, -1.7)).set_fill(GOLD, 1).set_stroke(width=0)
+        left = Polygon(_P(-.95, .6), _P(-.6, 1.0), _P(-.2, 1.0), _P(-.35, .6), _P(0, -1.7)).set_fill(_GOLD_L, 1).set_stroke(width=0)
+        right = Polygon(_P(.95, .6), _P(.6, 1.0), _P(.25, 1.0), _P(.4, .6), _P(0, -1.7)).set_fill(_GOLD_D, 1).set_stroke(width=0)
+        ridge = Line(_P(-.95, .6), _P(.95, .6)).set_stroke(_GOLD_D, 2, .6)
+        win = RoundedRectangle(corner_radius=.22, width=1.32, height=.46).set_fill(_WIN, 1).set_stroke(_GOLD_D, 3).move_to(_P(0, .38))
+        self.eyes = _eyes("neutral", [_P(-.3, .38), _P(.3, .38)])
+        self.hook = Dot(_P(0, 1.5), radius=.001).set_opacity(0)          # 繩子的接點
+        self.tip = Dot(_P(0, -1.7), radius=.001).set_opacity(0)          # 尖端（指標、樣本的位置）
+        self.sample = VGroup(Circle(.5).set_fill(GOLD, .25).set_stroke(width=0), Dot(radius=.2, color=_GLOW)).move_to(_P(0, -1.7)).set_opacity(0)
+        self.facets = VGroup(body, left, right)
+        self.bob = VGroup(cap, neck, body, left, right, ridge, win, self.eyes, self.hook, self.tip, self.sample)
+        self.halo = Circle(1.6).set_fill(GOLD, .14).set_stroke(width=0).move_to(_P(0, .1)).set_opacity(0)
+        self.rays = VGroup(*[Line(_P(np.cos(a), np.sin(a)) * 1.3 + _P(0, .1), _P(np.cos(a), np.sin(a)) * 1.85 + _P(0, .1)).set_stroke(GOLD, 5, .8)
+                             for a in np.linspace(0, TAU, 10, endpoint=False)]).set_opacity(0)
+        VGroup(self.bob, self.halo, self.rays).scale(scale, about_point=ORIGIN)
+        self.rope = self._straight_rope()
+        self.rope.nocheck = True     # 繩子刻意伸出畫面上緣
+        self.nocheck_parts = [self.rope]
+        self.add(self.rope, self.halo, self.rays, self.bob)
 
-    def look(self, v):
-        v = np.array(v, dtype=float)
-        k = 0.07 * self.eyes[0].height / 0.44
-        return [Transform(self.pupils, VGroup(*[p.copy().move_to(e.get_center() + DOWN * 0.02 * self.eyes[0].height / 0.44 + v * k)
-                                                 for p, e in zip(self.pupils, self.eyes)])),
-                Transform(self.shines, VGroup(*[s.copy().shift(v * k - (s.get_center() - p.get_center() - UL * 0.035 * self.eyes[0].height / 0.44))
-                                                 for s, p in zip(self.shines, self.pupils)]))]
+    # --- 位置與繩子 ---
+    def center(self):
+        return self.facets.get_center()
 
-    def blink(self):
-        return VGroup(self.eyes, self.pupils, self.shines).animate(rate_func=there_and_back, run_time=0.25).stretch(0.08, 1)
+    def place(self, point):
+        d = np.array(point) - self.center()
+        VGroup(self.bob, self.halo, self.rays).shift(d)
+        self.rope.become(self._straight_rope())
+        return self
+
+    def _rope(self, pts):
+        return VMobject().set_points_smoothly([np.array(p) for p in pts]).set_stroke(_ROPE, max(3, 9 * self.k))
+
+    def _straight_rope(self):
+        h = self.hook.get_center()
+        top = FH / 2 + .6
+        return self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)])
+
+    def _question_rope(self):
+        h, k = self.hook.get_center(), self.k / .6
+        offs = [(0, 0), (0, .3), (.15, .62), (.55, .9), (.62, 1.38), (.28, 1.72), (-.22, 1.72), (-.6, 1.4), (-.64, 1.0)]
+        return self._rope([h + _P(x * k, y * k) for x, y in offs])
+
+    def curl(self):
+        return [Transform(self.rope, self._question_rope(), rate_func=rate_functions.ease_in_out_back)]
+
+    def straighten(self):
+        return [Transform(self.rope, self._straight_rope(), rate_func=rate_functions.ease_in_out_back)]
+
+    # --- 表情 ---
+    def _eye_centers(self):
+        return [g[0].get_center() for g in self.eyes]
 
     def mood(self, m):
-        c, w = self.mouth.get_center(), 0.34 * self.eyes[0].height / 0.44
-        sw = 5 * self.eyes[0].height / 0.44
-        if m in ("o", "wow"):
-            new = Circle(w * 0.3).set_stroke(SCREEN, sw).move_to(c)
-        else:
-            ang = {"happy": PI / 2.2, "flat": 0.001, "sad": -PI / 2.2}[m]
-            new = ArcBetweenPoints(c + LEFT * w / 2, c + RIGHT * w / 2, angle=ang).set_stroke(SCREEN, sw)
-        return Transform(self.mouth, new)
+        return [Transform(self.eyes, _eyes(m, self._eye_centers(), self.k, self.angle))]
 
-    def glow_on(self):
-        return self.halo.animate.set_opacity(1)
+    def look(self, v):
+        v = np.array(v, dtype=float) * .06 * self.k
+        return [g[1].animate.move_to(g[0].get_center() + v) for g in self.eyes]
 
-    def glow_off(self):
-        return self.halo.animate.set_opacity(0)
+    def blink(self):
+        return [self.eyes.animate(rate_func=there_and_back, run_time=.25).stretch(.1, 1)]
 
-    def swing(self, angle=0.18, run=1.2):
-        piv = self.rope.get_end()
-        return Rotate(self, angle, about_point=piv, rate_func=there_and_back, run_time=run)
+    def speak(self, amp):
+        for g in self.eyes:
+            g[0].set_fill(_GLOW, .28 + .6 * amp)
+
+    # --- 發光、樣本 ---
+    def light_on(self):
+        return [self.halo.animate.set_opacity(1).set_fill(GOLD, .14), self.rays.animate.set_opacity(1).set_stroke(GOLD, 5, .8),
+                self.facets[0].animate.set_fill(_GLOW, 1), self.facets[1].animate.set_fill("#FFF3D0", 1), self.facets[2].animate.set_fill(GOLD, 1)]
+
+    def light_off(self):
+        return [self.halo.animate.set_opacity(0), self.rays.animate.set_opacity(0),
+                self.facets[0].animate.set_fill(GOLD, 1), self.facets[1].animate.set_fill(_GOLD_L, 1), self.facets[2].animate.set_fill(_GOLD_D, 1)]
+
+    def sample_on(self):
+        return [self.sample[0].animate.set_fill(GOLD, .25), self.sample[1].animate.set_opacity(1)]
+
+    # --- 指、擺、潛 ---
+    def point_at(self, target):
+        c = self.center()
+        v = np.array(target) - c
+        want = np.arctan2(v[1], v[0]) + PI / 2       # 尖端原本朝下（-90°）
+        delta = (want - self.angle + PI) % TAU - PI
+        self.angle += delta
+        h = self.hook.get_center() - c
+        h2 = c + np.array([h[0] * np.cos(delta) - h[1] * np.sin(delta), h[0] * np.sin(delta) + h[1] * np.cos(delta), 0])
+        top = _P(self.rope.get_end()[0], FH / 2 + .6)
+        mid = (top + h2) / 2 + _P(-.6 * np.sign(delta), 0)
+        new_rope = self._rope([top, (top + mid) / 2, mid, (mid + h2) / 2, h2])
+        return [Rotate(self.bob, delta, about_point=c), Rotate(self.halo, delta, about_point=c), Transform(self.rope, new_rope)]
+
+    def upright(self):
+        c = self.center()
+        d = -self.angle
+        self.angle = 0.0
+        tmp = self.bob.copy().rotate(d, about_point=c)
+        h = tmp[8].get_center()
+        top = FH / 2 + .6
+        return [Rotate(self.bob, d, about_point=c), Rotate(self.halo, d, about_point=c),
+                Transform(self.rope, self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)]))]
+
+    def swing(self, angle=.15, run=1.2):
+        return [Rotate(self, angle, about_point=self.rope.get_end() if self.rope.get_end()[1] > self.rope.get_start()[1] else self.rope.get_start(),
+                       rate_func=there_and_back, run_time=run)]
 
     def dive(self, dist=1.5):
-        """沿繩下潛：錘身往下、繩子跟著變長（繩頂不動）。"""
-        top = self.rope.get_end().copy()
-        others = VGroup(*[m for m in self if m is not self.rope])
-        return [others.animate.shift(DOWN * dist), self.rope.animate.put_start_and_end_on(self.rope.get_start() + DOWN * dist, top)]
+        g = VGroup(self.bob, self.halo, self.rays)
+        top = FH / 2 + .6
+        h = self.hook.get_center() + DOWN * dist
+        return [g.animate.shift(DOWN * dist), Transform(self.rope, self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)]))]
+
+
+def takeaway_card(lines, frac=.05, w=None):
+    """收尾：「這集重點：」＋一句話重點（內容要過查核）。"""
+    body = VGroup(*[B(s, frac, GOLD) for s in ([lines] if isinstance(lines, str) else lines)]).arrange(DOWN, buff=.12)
+    head = T("這集重點：", .032, MUTED)
+    inner = VGroup(head, body).arrange(DOWN, buff=.2)
+    box = RoundedRectangle(corner_radius=.18, width=(w or inner.width + .8), height=inner.height + .6).set_fill(SEA, 1).set_stroke(GOLD, 3)
+    return VGroup(box, inner.move_to(box))
 
 
 # ---------------- 通用動作與元件（PoC 證明好用的） ----------------
@@ -558,6 +647,7 @@ class Timed(MovingCameraScene):
 
     # --- 嘴型同步（依該說話者的音檔音量） ---
     def lipsync(self, who, speaker="mascot"):
+        """依該說話者的音檔音量驅動角色：有 speak(amp) 的角色（錘錘）用它；否則開合 who.talk（PoC 機器人式的嘴）。"""
         sents = [s for s in self.sc["sentences"] if s.get("speaker") == speaker]
         envs = []
         for s in sents:
@@ -572,13 +662,20 @@ class Timed(MovingCameraScene):
             e = np.clip(e / (np.percentile(e, 95) + 1e-9), 0, 1)
             envs.append((s["start"], e))
 
-        def upd(m):
+        def amp_now():
             t = self.renderer.time
-            amp = 0.0
             for st, e in envs:
                 k = int((t - st) * 30)
                 if 0 <= k < len(e):
-                    amp = float(e[k])
+                    return float(e[k])
+            return 0.0
+
+        if hasattr(who, "speak"):
+            who.eyes.add_updater(lambda m: who.speak(amp_now()))
+            return
+
+        def upd(m):
+            amp = amp_now()
             on = amp > 0.08
             w = who.mouth.get_width() * 0.9
             m.stretch_to_fit_width(max(0.05, w)).stretch_to_fit_height(max(0.03, 0.04 + 0.22 * amp * who.eyes[0].height / 0.44))
@@ -598,6 +695,7 @@ class Timed(MovingCameraScene):
             if getattr(top, "nocheck", False) or isinstance(top, ImageMobject):
                 continue
             skip = {id(x) for p in getattr(top, "nocheck_parts", []) for x in p.get_family()}
+            skip |= {id(x) for x in top.get_family() if getattr(x, "nocheck", False)}
             leaves = [x for x in top.family_members_with_points() if isinstance(x, VMobject) and id(x) not in skip
                       and (x.get_fill_opacity() > 0.05 or (x.get_stroke_width() > 0 and x.get_stroke_opacity() > 0.05))]
             if not leaves:

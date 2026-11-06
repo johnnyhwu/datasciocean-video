@@ -5,7 +5,8 @@
 讀 videos/<id>/fingerprint.json：
 {"opening_mode": "反直覺問題", "skeleton": ["hook","why","warmup","notice","name","real","limits","takeaway"],
  "visual_devices": ["蹺蹺板","百格圖","印章"], "music": ["curious_pluck","warm_outro"], "title_pattern": "疑問式",
- "mechanism_character": "機器人評審", "background": "glow_center"}
+ "mechanism_character": "機器人評審", "background": "glow_center",
+ "fixed_lines": ["intro-2", "takeaway-1", "blog-1"]}
 
 相似度＝各欄位的加權平均（集合欄位用 Jaccard，序列用最長共同子序列比例，單值欄位相等算 1）。
 > 0.6（暫定）就交給主流程判斷要不要調整，寫進關卡 3 審查包。
@@ -17,7 +18,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from paths import ROOT, video_dir  # noqa: E402
 
-W = {"opening_mode": 2, "skeleton": 1.5, "visual_devices": 2, "music": 1, "title_pattern": 1, "mechanism_character": 1, "background": 0.5}
+W = {"opening_mode": 2, "skeleton": 1.5, "visual_devices": 2, "music": 1, "title_pattern": 1, "mechanism_character": 1, "background": 0.5, "fixed_lines": 0.5}
 THRESH = 0.6
 
 

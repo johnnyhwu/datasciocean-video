@@ -17,9 +17,10 @@ dependencies = [
 ]
 
 [dependency-groups]
-# 渲染需要系統的 cairo（pycairo 在 macOS 沒有 wheel），見 docs/setup.md
+# 渲染需要 cairo（pycairo 在 macOS 沒有 wheel）：scripts/setup.sh 會先把 cairo 裝進專案內的 .sysdeps/
 render = ["manim==0.22.1"]
 
 [tool.uv]
 cache-dir = ".uv-cache"
+default-groups = ["render"]
 package = false

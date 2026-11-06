@@ -9,7 +9,9 @@ description: 影片第 6 步「動畫」：用 ManimCE 與 lib/kit.py 逐場寫�
 
 ## 工具
 
-- **ManimCE 0.22.1**（Cairo），透過 `lib/kit.py`。執行要加 `--group render`：`uv run --group render …`。環境見 `docs/setup.md`。
+- **ManimCE 0.22.1**（Cairo），透過 `lib/kit.py`。環境見 `docs/setup.md`（從零建立用 `scripts/setup.sh`）。
+- 畫靜態圖（草圖、縮圖、吉祥物）不需要影片：不設 `YTV_VIDEO` 就是設計模式，
+  `PYTHONPATH=lib uv run python -m manim -qh -s <檔案> <場景>`。
 - 不混用 ManimGL 的 API。不複製或改作 3b1b/videos 的程式碼。
 - 要試其他工具（Remotion、HyperFrames、three.js）可以，但要限定時間與範圍、寫進 `experiments/`、用同一個題材比較，最後由使用者決定。
 
@@ -56,7 +58,10 @@ class Sc03(Timed):
 
 ### 角色
 
-- 吉祥物 `Plumb(gear=…)`：動作有 `look`、`blink`、`mood`、`glow_on`（找到洞見）、`swing`、`dive`。
+- 吉祥物錘錘 `Plumb(scale).place(點)`（設計與示範：`docs/mascot/`，`plumb-demo.gif`）。
+  - 招牌：好奇時 `curl()` 讓繩子捲成「？」；想通時 `straighten()` 拉直成「！」，再加 `light_on()`。
+  - 指標：`point_at(點)` 用尖端指重點，`upright()` 回正。收尾：`dive()`、`sample_on()`，接 `takeaway_card([...])`。
+  - 表情：`mood("neutral|happy|flat|wow|squint")`、`look(方向)`、`blink()`。所有動作都回傳 list，用 `self.at(t, *p.curl(), ...)`。
   - 有台詞時，script 的 `speaker` 寫 `mascot`，場景裡呼叫 `self.lipsync(plumb)`。
 - 機制角色寫在這支影片自己的 scenes 檔裡。通用而且證明好用的，回顧時再收進 `kit.py`。
 
@@ -74,7 +79,7 @@ class Sc03(Timed):
 ## 迴圈（每 2～3 場一輪）
 
 ```bash
-uv run --group render python lib/render.py <id> -q l --scenes sc01,sc02   # 480p，同時寫版面檢查
+uv run python lib/render.py <id> -q l --scenes sc01,sc02   # 480p，同時寫版面檢查
 uv run python lib/checks/sheet.py <id> sc01                               # 每句結束的畫面拼成一張
 ```
 
@@ -86,7 +91,7 @@ uv run python lib/checks/sheet.py <id> sc01                               # 每�
 全部場景通過後：
 
 ```bash
-uv run --group render python lib/render.py <id> -q h       # 1080p30，並串接成 out/<id>/video.mp4
+uv run python lib/render.py <id> -q h       # 1080p30，並串接成 out/<id>/video.mp4
 uv run python lib/checks/still.py <id>                      # 超過 4 秒不動的段落
 ```
 

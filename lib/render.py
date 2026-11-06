@@ -1,6 +1,6 @@
 """渲染：每個場景各自渲染（平行、各用自己的 media 資料夾，避免文字快取互搶），再無損串接成 out/<id>/video.mp4。
 
-用法：uv run --group render python lib/render.py <影片 ID> [-q l|h] [--scenes sc03,sc05] [-j 4]
+用法：uv run python lib/render.py <影片 ID> [-q l|h] [--scenes sc03,sc05] [-j 4]
 
 - 場景類別寫在 videos/<id>/scenes*.py，類別名＝場景 ID 首字大寫（sc01 → Sc01）。
 - -q l：480p30，檢查用；-q h：1080p30，成片用。只重渲改過的場景：--scenes。
