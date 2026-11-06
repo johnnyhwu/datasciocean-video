@@ -1,0 +1,20 @@
+<!-- 來源：datasciocean-social-media @ 69d1116，路徑 config/terms.yaml，複製日期 2026-11-06。之後不跟進原 repo。 -->
+
+# 貼文用語對照（人確認）。卡上的寫法 -> 貼文的寫法。
+# check_a.py 讀這份：貼文（含 hook、串文、caption、系列檔的 planned_title）出現左邊的詞就退回。
+# 例外：caption 的導流行 nav 會引用 blog 文章的原標題，不檢查。
+# 忠實者提示詞也讀這份：用語替換本身不算「措辭與卡不同」，只判斷意思是否忠實。
+replace:
+  判官: Judge        # 台灣讀者習慣說 Judge（2026-10-06 人確認）。強判官 -> 強的 Judge、推理型判官 -> 推理型 Judge
+  單一軼事: 單個隨機樣本   # skillopt（2026-10-12 人的用語）
+  選擇題: 驗證資料集        # 資料集用 訓練／驗證／測試資料集，不用「題」（2026-10-12 人確認）
+  訓練題: 訓練資料集
+  目標模型: 目標 Agent       # skillopt 系列用「目標 Agent」（2026-10-12 人確認）
+  多步: Multi-Hop            # SAG 系列（2026-10-24 人的用語）：多步推理 -> Multi-Hop 推理、多步依賴 -> Multi-Hop 依賴；台灣讀者習慣說 Multi-Hop
+  多跳: Multi-Hop            # 同上：多跳傳播 -> Multi-Hop 傳播
+  找回率: Recall        # SAG 第 3 則（2026-10-27 人的回饋）：指標名一律寫英文 Recall、Recall@5，台灣讀者較看得懂；不寫找回率
+  召回率: Recall        # 同上
+  精確率: Precision      # 同上：指標名寫英文（2026-10-27）
+  精準率: Precision
+  嵌入向量: embedding    # 同上：embedding 不翻譯
+  向量嵌入: embedding

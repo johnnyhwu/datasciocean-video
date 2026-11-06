@@ -1,0 +1,37 @@
+# 秘密與憑證（不論 repo 是否公開）
+.env
+.env.*
+!.env.example
+*client_secret*.json
+*token*.json
+credentials*.json
+
+# 音訊、影片與使用者錄音（放本機輸出目錄）
+out/
+media/
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.flac
+*.ogg
+*.mp4
+*.mov
+*.webm
+assets/music/
+assets/voice/
+
+# 環境
+.venv/
+.uv-cache/
+__pycache__/
+*.pyc
+.DS_Store
+
+# pre-plan 內的大型實驗 zip
+pre-plan/experiment/*.zip
+
+# 專案內的系統依賴（micromamba 與 cairo/pango）
+tools/
+.sysdeps/
+.mamba/

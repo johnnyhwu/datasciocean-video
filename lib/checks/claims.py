@@ -1,0 +1,107 @@
+"""查核紀錄的程式檢查（規格 §4.2「標記」、§5.5–5.7）。LLM 查核員做判斷，這支只做能用規則判斷的事。
+
+用法：uv run python lib/checks/claims.py <影片 ID>
+
+讀 videos/<id>/factcheck.json（查核員產出）：
+{"sentences": {"a1": {"tag": "card_claim", "refs": ["<卡 ID>#c3"], "verdict": "pass", "note": ""}, ...},
+ "screen": {"<畫面文字>": {"tag": "...", "refs": [...]}}}
+tag ∈ card_claim | prerequisite | illustration | framing | fixed_line
+
+檢查：
+1. 每句（含 script 每句的 screen 畫面文字）都有標記，而且一句一個標記。
+2. card_claim 一定有 refs；refs 指到的主張存在、而且 status 可用（normal／author_confirmed）。
+3. card_claim 句子裡的每個數字都要在引用主張（含限定條件、比較對象）的文字裡找得到；找不到列給 LLM 判斷（可能寫法不同，例如「三成」對「31%」）。
+4. framing 句子掃描數字、比較詞、因果詞；掃到就列進關卡 3 的審查包。
+5. prerequisite 句子的單位數比例 ≤ 1/3（暫定）。
+6. illustration 句子有數字時，畫面上要有「示意」標籤（列出來讓視覺檢查員確認）。
+7. fixed_line 必須和 rules/fixed-lines.md 的模板相符（只能填變數）。
+"""
+import json
+import re
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import cards  # noqa: E402
+from paths import ROOT, load_script, video_dir  # noqa: E402
+from textutil import units  # noqa: E402
+
+TAGS = {"card_claim", "prerequisite", "illustration", "framing", "fixed_line"}
+NUM = re.compile(r"\d+(?:\.\d+)?%?|[一二三四五六七八九十百千萬億兩]+(?:成|倍|個百分點|分之)")
+COMPARE = re.compile(r"更|最|比|超過|不到|勝過|贏|輸|提升|下降|高於|低於|倍|全部|都|從不|總是|一定|幾乎|大幅|完全")
+CAUSAL = re.compile(r"因為|所以|導致|造成|使得|讓.*變|因此|由於|結果")
+
+
+def fixed_templates():
+    f = ROOT / "rules/fixed-lines.md"
+    pats = []
+    for m in re.findall(r"^\s*-\s*`([^`]+)`", f.read_text(), re.M) if f.exists() else []:
+        pats.append(re.compile("^" + re.sub(r"\\\{[^}]+\\\}", ".+", re.escape(m)) + "$"))
+    return pats
+
+
+def nums(s):
+    return set(NUM.findall(s))
+
+
+def main():
+    vid = sys.argv[1]
+    spec = load_script(vid)
+    fc = json.loads((video_dir(vid) / "factcheck.json").read_text())
+    S, SCR = fc.get("sentences", {}), fc.get("screen", {})
+    problems, flagged = [], []
+    sents = [s for sc in spec["scenes"] for s in sc["sentences"]]
+    total = sum(units(s["display"]) for s in sents)
+    prereq = 0
+    pats = fixed_templates()
+    items = [(s["id"], s["display"], S.get(s["id"])) for s in sents]
+    items += [(f"畫面：{t}", t, SCR.get(t)) for s in sents for t in s.get("screen", [])]
+    for key, text, rec in items:
+        if not rec:
+            problems.append(f"{key} 沒有標記")
+            continue
+        tag = rec.get("tag")
+        if tag not in TAGS:
+            problems.append(f"{key} 標記不合法：{tag}（不屬於任何標記就停下來問使用者）")
+            continue
+        if tag == "card_claim":
+            refs = rec.get("refs") or []
+            if not refs:
+                problems.append(f"{key} 是 card_claim 但沒有來源")
+            src_text = ""
+            for r in refs:
+                try:
+                    cid, clid = r.split("#")
+                    c = cards.claim(cid, clid)
+                except Exception:  # noqa: BLE001
+                    problems.append(f"{key} 的來源不存在：{r}")
+                    continue
+                if c.get("status") not in cards.USABLE:
+                    problems.append(f"{key} 引用了不可用的主張 {r}（{c.get('status')}）")
+                src_text += c["text"] + str(c.get("comparison_target", "")) + "".join(q["text"] for q in c.get("qualifiers") or [])
+            miss = [n for n in nums(text) if n not in src_text]
+            if miss:
+                flagged.append(f"{key} 的數字 {miss} 不在引用主張的文字裡（交給查核員判斷是否只是寫法不同）")
+        elif tag == "framing":
+            hit = sorted(nums(text)) + COMPARE.findall(text) + CAUSAL.findall(text)
+            if hit:
+                flagged.append(f"{key}（framing）含 {hit}：{text}")
+        elif tag == "prerequisite":
+            prereq += units(text) if not key.startswith("畫面") else 0
+        elif tag == "illustration" and nums(text):
+            flagged.append(f"{key}（illustration）有數字，畫面要標「示意」：{text}")
+        elif tag == "fixed_line" and pats and not any(p.match(text) for p in pats):
+            problems.append(f"{key} 是 fixed_line 但和模板不符（只能填變數）：{text}")
+        if rec.get("verdict") == "fail":
+            problems.append(f"{key} 查核不通過：{rec.get('note', '')}")
+    ratio = prereq / max(1, total)
+    if ratio > 1 / 3:
+        problems.append(f"前置知識佔 {ratio:.0%}，超過 1/3")
+    out = {"problems": problems, "flagged_for_gate3": flagged, "prerequisite_ratio": round(ratio, 3)}
+    (video_dir(vid) / "factcheck-program.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+    sys.exit(1 if problems else 0)
+
+
+if __name__ == "__main__":
+    main()

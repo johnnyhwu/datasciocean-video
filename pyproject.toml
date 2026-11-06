@@ -1,0 +1,25 @@
+[project]
+name = "datasciocean-video"
+version = "0.1.0"
+description = "DataSci Ocean：把觀念卡做成 3B1B 風格的 YouTube 講解影片"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "soundfile>=0.12",
+    "pillow>=10",
+    "fonttools>=4.50",
+    "jieba>=0.42.1",
+    "opencc-python-reimplemented>=0.1.7",
+    "imageio-ffmpeg>=0.5",
+    "pyyaml>=6",
+    "google-genai>=1.0",
+]
+
+[dependency-groups]
+# 渲染需要系統的 cairo（pycairo 在 macOS 沒有 wheel），見 docs/setup.md
+render = ["manim==0.22.1"]
+
+[tool.uv]
+cache-dir = ".uv-cache"
+package = false

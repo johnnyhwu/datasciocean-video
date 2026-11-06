@@ -1,0 +1,89 @@
+---
+name: write-script
+description: 影片第 3、4 步「寫腳本」與「查核」：依規劃寫逐句的唸法稿與顯示稿（script.json），再派查核員逐句標記與查來源，程式檢查通過才往旁白走。
+---
+
+# 第 3 步：寫腳本　＋　第 4 步：查核
+
+## 寫腳本時只守一條：事實來自卡
+
+其他表達完全自由。標記與查核是寫完之後的事，寫的當下不用想標記，否則腳本會變死板。
+
+### script.json 格式
+
+```jsonc
+{
+ "title": "影片標題（暫定）",
+ "gap": 0.25,                         // 句間固定間隔（秒）
+ "scene_pad": [0.4, 0.5],             // 場景前後留白的預設值
+ "end_screen": 20,                    // 最後一場結尾留給片尾畫面的乾淨秒數
+ "chapter0": "開場",                  // 0:00 那一章的名稱
+ "concepts": {"名次": 0, "分數": 1},  // 概念 → config/style.json 的 concept_pool 索引，全片同色
+ "speakers": {"mascot": {"label": "錘錘"}},   // 非旁白說話者的字幕前綴
+ "music_duck_db": -7,
+ "scenes": [
+  {"id": "sc01", "name": "老是平手", "bg": "glow_center", "music": "<曲庫代號>",
+   "chapter": [1, "章名"],             // 有 chapter 的場景開頭會蓋章節卡（pad 前段要 ≥1.7 秒）
+   "pad": [1.7, 1.3],
+   "sentences": [
+     {"id": "a1",
+      "display": "叫它給 1 到 5 分。",         // 顯示稿：畫面與字幕用
+      "say": "叫它給一到五分。",              // 唸法稿：給 TTS（省略就唸 display）
+      "style": "語氣好奇，像在丟一個謎題",     // 可省略
+      "speaker": "narrator",                // narrator｜mascot｜…（見 config/voice.json）
+      "hold": 0.4,                          // 念完多停幾秒，給動畫時間
+      "screen": ["1～5 分"]}                 // 這句時畫面上會出現的文字或數字（也要查核）
+   ]}
+ ]
+}
+```
+
+### 口語稿規則
+
+- 句子短，一句一個重點，用台灣口語的繁體中文。中英之間加半形空格（和 podcast、卡一致）。
+- 英文縮寫第一次出現時，附全名和一句話說明。
+- **唸法稿**：數字寫成國字（31% → 百分之三十一）。多音字或英文容易唸錯的，改寫唸法稿繞過，並記進發音對照表 `rules/pronunciation.md`。可參考 `rules/from-podcast/NORMALIZATION.md`、`NARRATION.md`。
+- **數字三件事要齊**：量的是什麼、比較對象、限定條件。比例要寫出分母。
+  - 取整不能改變意思：31% 可以說「約三成」，不能說「超過三成」。方向詞要一致。
+  - 每個關鍵數字的限定條件，**旁白至少完整說一次**，畫面再補細節。
+- **寫法依錨點類型**（`rules/from-social-media/anchor-writing-rules.md`）：
+  - 設計參數：主詞是方法名。
+  - 官方宣稱：主詞是宣稱方。
+  - 原作者解讀：寫「論文指出」。
+  - 部落格推論、部落格判斷：以作者口吻寫，語氣不能比卡強。
+  - 部落格舉例：標明是例子。
+- **`author_confirmed` 的主張取保守寫法。** `pending` 的一律不用。
+- 固定句只能照 `rules/fixed-lines.md` 的模板填變數。
+- 字幕：每句 `display` 要能放進 2 行、每行約 18 字。太長就拆句。
+- PoC 的經驗：第一稿常常太長。刪的順序是重複的鋪陳 → 合併句子 → 把細節交給畫面。**不要砍使用者重視的細節與限定條件。**
+
+### 寫完先跑
+
+```bash
+uv run python lib/timeline.py <id> --estimate      # 估算片長、場景長度、字幕斷行與每秒字數
+uv run python lib/checks/fonts.py <id>             # 缺字與簡體字
+```
+
+片長要在 3～15 分鐘內（不含片尾 20 秒）。字幕問題在這裡就修掉。
+
+## 第 4 步：查核
+
+1. 執行 `uv run python lib/state.py set <id> 查核`。
+2. **派查核員**（`.claude/agents/fact-checker.md`）。只給它：
+   - `videos/<id>/script.json`；
+   - 來源卡 ID 清單（它自己用 `lib/cards.py` 讀）；
+   - `plan.md` 裡的暖身例子對照表；
+   - 有重畫論文圖時，列出圖檔路徑和重畫的規格。
+   
+   第 2 輪以後，**只給改過的句子 ID**。
+3. 查核員寫 `videos/<id>/factcheck.json`，再跑：
+   ```bash
+   uv run python lib/checks/claims.py <id>
+   ```
+4. **不通過**就回到寫腳本，只改被點名的句子。規則卡住好內容時：
+   - 先換一種表達；
+   - 還是不行，就列進關卡 3 的審查包，交給使用者決定；
+   - 遇到不屬於任何標記的內容，停下來問使用者。
+
+   查核改寫最多 3 輪，還不過就停下來回報。
+5. **通過**：`factcheck-program.json` 的 `flagged_for_gate3` 留著放進關卡 3 審查包。接著 `state.py set <id> 旁白`，載入 `narrate`。
