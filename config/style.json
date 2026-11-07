@@ -8,7 +8,8 @@
   "brand": {"beige": "#F2E0C0", "teal": "#076876", "sea": "#01353F", "gold": "#DDA642",
             "teal_light": "#69B4AA", "teal_mid": "#1F8A8D", "abyss": "#032027"},
   "role": {"accent": "#DDA642", "good": "#8BD17C", "bad": "#FF7A6B", "neutral": "#8FB3B0"},
-  "concept_pool": ["#FF9F5A", "#7EC8F2", "#C9A7FF", "#FF8FB1", "#B5E36A", "#5FE0C8", "#FFD27A"],
+  "concept_pool": ["#FF9F5A", "#7EC8F2", "#C9A7FF", "#FF8FB1", "#B5E36A", "#5FE0C8"],
+  "_concept_note": "2026-11-07 手機校準：移除淺黃（太像金色強調）。橘（0）與粉（3）不要和「錯誤」紅（role.bad）用在同一個畫面。",
   "concept_max": 5,
   "zones": {
     "safe_margin_x": 0.05, "safe_margin_y": 0.05,
@@ -19,7 +20,8 @@
   "grid": [6, 6],
   "font": "Noto Sans CJK TC",
   "font_files": ["assets/fonts/NotoSansCJKtc-Regular.otf", "assets/fonts/NotoSansCJKtc-Bold.otf"],
-  "min_text_frac": 0.03,
+  "min_text_frac": 0.038,
+  "_text_note": "2026-11-07 手機橫向實看：0.024～0.034（A～D）太小，下限定為 0.038（E）。一般標籤 0.04～0.045，條件標註 0.038，重點數字 0.06 以上。",
   "contrast_min": 4.5,
-  "subtitle": {"max_units_per_line": 18, "max_lines": 2, "max_units_per_sec": 9}
+  "subtitle": {"max_units_per_line": 18, "max_lines": 2, "max_units_per_sec": 9, "ass_font_px": 54, "ass_margin_v": 54}
 }

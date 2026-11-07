@@ -89,6 +89,7 @@ def build(vid: str, estimate: bool):
                 x = x.replace(a, b)
             return x
     sub = STYLE["subtitle"]
+    ass_events = []
     for lang, f in [("zh-TW", lambda x: x), ("zh-CN", conv.convert)]:
         blocks = []
         for i, (a, b, txt, spk) in enumerate(cues, 1):
@@ -103,8 +104,49 @@ def build(vid: str, estimate: bool):
                 if ups > sub["max_units_per_sec"]:
                     problems.append(f"第 {i} 條每秒 {ups:.1f} 字（上限 {sub['max_units_per_sec']}）：{txt[:20]}")
             blocks.append(f"{i}\n{srt_time(a)} --> {srt_time(b + 0.15)}\n" + "\n".join(lines) + "\n")
+            if lang == "zh-TW":
+                ass_events.append((a, b + 0.15, lines, spk))
         (out_dir(vid) / f"subs.{lang}.srt").write_text("\n".join(blocks))
+    write_ass(vid, ass_events, labels)
     return out, problems
+
+
+def ass_time(t):
+    cs = int(round(t * 100))
+    h, cs = divmod(cs, 360000)
+    m, cs = divmod(cs, 6000)
+    s, cs = divmod(cs, 100)
+    return f"{h}:{m:02}:{s:02}.{cs:02}"
+
+
+def ass_color(hexrgb, alpha=0):
+    h = hexrgb.lstrip("#")
+    return f"&H{alpha:02X}{h[4:6]}{h[2:4]}{h[0:2]}".upper()
+
+
+def write_ass(vid, events, labels):
+    """燒入用的字幕（只用在預覽版與審查用的手機版；正式上傳用軟字幕 SRT）。字級與位置對齊 config/style.json 的字幕區。"""
+    sub = STYLE["subtitle"]
+    px, mv = sub.get("ass_font_px", 54), sub.get("ass_margin_v", 54)
+    txt, out_c = ass_color(STYLE["text_strong"]), ass_color(STYLE["bg"]["screen"])
+    alt = ass_color(STYLE["brand"]["gold"])
+    hdr = f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: 1920
+PlayResY: 1080
+WrapStyle: 2
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: N,{STYLE['font']},{px},{txt},{txt},{out_c},&H80000000,0,0,0,0,100,100,1,0,1,3,1,2,96,96,{mv},1
+Style: M,{STYLE['font']},{px},{alt},{alt},{out_c},&H80000000,1,0,0,0,100,100,1,0,1,3,1,2,96,96,{mv},1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+    ev = [f"Dialogue: 0,{ass_time(a)},{ass_time(b)},{'N' if spk == 'narrator' else 'M'},,0,0,0,,{(chr(92) + 'N').join(lines)}"
+          for a, b, lines, spk in events]
+    (out_dir(vid) / "subs.ass").write_text(hdr + "\n".join(ev) + "\n")
 
 
 def main():

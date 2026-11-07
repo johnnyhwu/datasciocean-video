@@ -15,6 +15,9 @@ tag ∈ card_claim | prerequisite | illustration | framing | fixed_line
 5. prerequisite 句子的單位數比例 ≤ 1/3（暫定）。
 6. illustration 句子有數字時，畫面上要有「示意」標籤（列出來讓視覺檢查員確認）。
 7. fixed_line 必須和 rules/fixed-lines.md 的模板相符（只能填變數）。
+8. 代入計算（使用者 2026-11-07 同意）：card_claim 可以有 "calc": {"expr": "1/(60+3)+1/(60+3)", "result": "0.0317"}。
+   程式驗算 expr（只允許數字與 + - * / ( )），結果要和 result 相符（依 result 的小數位數四捨五入）；
+   expr 裡的每個數字都要出現在引用主張的文字裡；句子裡的 result 數字不再列為「不在卡上」。
 """
 import json
 import re
@@ -42,6 +45,73 @@ def fixed_templates():
 
 def nums(s):
     return set(NUM.findall(s))
+
+
+CN = "零一二三四五六七八九"
+
+
+def cn_num(n: int) -> str:
+    """0～9999 的整數轉國字（三、十二、六十、一百零八）。"""
+    if n < 10:
+        return CN[n]
+    out, units_ = "", ["千", "百", "十", ""]
+    digits = f"{n:04d}"
+    zero = False
+    for d, u in zip(digits, units_):
+        d = int(d)
+        if d == 0:
+            zero = bool(out)
+            continue
+        if zero:
+            out += "零"
+            zero = False
+        out += ("" if (d == 1 and u == "十" and not out) else CN[d]) + u
+    return out
+
+
+def in_text(n: str, text: str) -> bool:
+    if n in text:
+        return True
+    if n.isdigit() and int(n) < 10000:
+        return cn_num(int(n)) in text or ("兩" + cn_num(int(n))[1:]) in text
+    return False
+
+
+def check_calc(calc, src_text, extra=None):
+    """驗算代入計算。回傳問題清單；extra 收集算式的中間值（例如 60+3 的 63），讓句子可以提到它們。"""
+    import ast
+    import operator as op
+    probs = []
+    expr, result = calc.get("expr", ""), str(calc.get("result", ""))
+    ops = {ast.Add: op.add, ast.Sub: op.sub, ast.Mult: op.mul, ast.Div: op.truediv, ast.USub: op.neg}
+
+    def ev(n):
+        if isinstance(n, ast.Expression):
+            return ev(n.body)
+        if isinstance(n, ast.Constant) and isinstance(n.value, (int, float)):
+            return n.value
+        if isinstance(n, ast.BinOp) and type(n.op) in ops:
+            v = ops[type(n.op)](ev(n.left), ev(n.right))
+            if extra is not None:
+                extra.append(str(int(v)) if float(v).is_integer() else f"{v:.6g}")
+            return v
+        if isinstance(n, ast.UnaryOp) and type(n.op) in ops:
+            return ops[type(n.op)](ev(n.operand))
+        raise ValueError("算式只能有數字與 + - * / ( )")
+    try:
+        val = ev(ast.parse(expr, mode="eval"))
+    except Exception as e:  # noqa: BLE001
+        return [f"算式無法驗算：{expr}（{e}）"]
+    dec = len(result.split(".")[1]) if "." in result else 0
+    try:
+        if round(val, dec) != round(float(result.rstrip("%")), dec):
+            probs.append(f"算式 {expr} ＝ {val:.6g}，和寫的結果 {result} 不符")
+    except ValueError:
+        probs.append(f"結果不是數字：{result}")
+    for n in set(re.findall(r"\d+(?:\.\d+)?", expr)):
+        if not in_text(n, src_text):
+            probs.append(f"算式裡的 {n} 不在引用主張的文字裡")
+    return probs
 
 
 def main():
@@ -79,7 +149,12 @@ def main():
                 if c.get("status") not in cards.USABLE:
                     problems.append(f"{key} 引用了不可用的主張 {r}（{c.get('status')}）")
                 src_text += c["text"] + str(c.get("comparison_target", "")) + "".join(q["text"] for q in c.get("qualifiers") or [])
-            miss = [n for n in nums(text) if n not in src_text]
+            calc = rec.get("calc")
+            if calc:
+                mids = []
+                problems += [f"{key} {p}" for p in check_calc(calc, src_text, mids)]
+                src_text += " " + str(calc.get("result", "")) + " " + " ".join(mids)
+            miss = [n for n in nums(text) if not in_text(n, src_text)]
             if miss:
                 flagged.append(f"{key} 的數字 {miss} 不在引用主張的文字裡（交給查核員判斷是否只是寫法不同）")
         elif tag == "framing":

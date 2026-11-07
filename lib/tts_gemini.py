@@ -1,4 +1,7 @@
-"""逐句旁白合成（Gemini 3.8 Flash TTS，直連 Gemini API）。
+"""逐句旁白合成（Gemini 3.8 Flash TTS）。兩種路徑，由 config/voice.json 每個聲音的 provider 決定：
+- "openrouter"（預設）：走 OpenRouter /api/v1/audio/speech，金鑰 OPENROUTER_API_KEY。只能用 Gemini 預設聲音
+  （2026-11-07 查證：OpenRouter 上 gemini-3.8-flash-tts 的兩個端點 supports_voice_cloning 都是 false）。
+- "gemini"：直連 Gemini API，金鑰 GEMINI_API_KEY（付費層）。複製聲音（voice_… ID）只能走這條。
 
 用法：uv run python lib/tts_gemini.py <影片 ID> [--only s1,s2] [--force]
 
@@ -30,15 +33,16 @@ from paths import ROOT, load_script, out_dir  # noqa: E402
 SR = 24000
 
 
-def load_env():
+def load_env(need=("GEMINI_API_KEY",)):
     f = ROOT / ".env"
     if f.exists():
         for line in f.read_text().splitlines():
             if "=" in line and not line.lstrip().startswith("#"):
                 k, v = line.split("=", 1)
                 os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
-    if not os.environ.get("GEMINI_API_KEY"):
-        sys.exit("缺少 GEMINI_API_KEY（放在 .env 或環境變數）。")
+    for k in need:
+        if not os.environ.get(k):
+            sys.exit(f"缺少 {k}（放在 .env 或環境變數；不要貼進對話）。")
 
 
 def key_of(text, voice, model, style):
@@ -73,7 +77,28 @@ def write_wav(path: Path, x: np.ndarray):
         w.writeframes((np.clip(x, -1, 1) * 32767).astype(np.int16).tobytes())
 
 
-def synth_once(client, text, voice, model, style):
+def synth_openrouter(text, voice, model, style):
+    """OpenRouter 的 TTS：回傳裸 PCM（24 kHz、16-bit、單聲道）。style 走 instructions（不寫進正文，避免被唸出來）。"""
+    import urllib.error
+    import urllib.request
+    body = {"model": model if "/" in model else f"google/{model}", "input": text, "voice": voice, "response_format": "pcm"}
+    if style:
+        body["instructions"] = style
+    req = urllib.request.Request("https://openrouter.ai/api/v1/audio/speech", data=json.dumps(body).encode(),
+                                 headers={"Authorization": f"Bearer {os.environ['OPENROUTER_API_KEY']}", "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            ctype, raw = r.headers.get("Content-Type", ""), r.read()
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"HTTP {e.code}: {e.read()[:300]!r}")
+    if "json" in ctype or len(raw) < 2000:
+        raise RuntimeError(f"回傳不是音訊或太短（{ctype}, {len(raw)} bytes）")
+    return to_pcm(raw)
+
+
+def synth_once(client, text, voice, model, style, provider="gemini"):
+    if provider == "openrouter":
+        return synth_openrouter(text, voice, model, style)
     content = {"type": "text", "text": text}
     if style:
         content["annotations"] = [{"type": "speech_metadata", "style": style}]
@@ -93,11 +118,11 @@ class DailyLimit(Exception):
     pass
 
 
-def synth_retry(client, text, voice, model, style, tries=3):
+def synth_retry(client, text, voice, model, style, tries=3, provider="gemini"):
     delay = 5
     for k in range(tries):
         try:
-            return synth_once(client, text, voice, model, style)
+            return synth_once(client, text, voice, model, style, provider)
         except Exception as e:  # noqa: BLE001
             msg = str(e)
             if "429" in msg and ("day" in msg.lower() or "daily" in msg.lower()):
@@ -115,12 +140,14 @@ def main():
     ap.add_argument("--only", default="")
     ap.add_argument("--force", action="store_true", help="忽略快取重新生成（重骰）")
     a = ap.parse_args()
-    load_env()
-    from google import genai
-    client = genai.Client()
-
     spec = load_script(a.vid)
     voices = json.loads((ROOT / "config/voice.json").read_text())
+    used = {voices[s.get("speaker", "narrator")].get("provider", "openrouter") for sc in spec["scenes"] for s in sc["sentences"]}
+    load_env(tuple({"openrouter": "OPENROUTER_API_KEY", "gemini": "GEMINI_API_KEY"}[p] for p in used))
+    client = None
+    if "gemini" in used:
+        from google import genai
+        client = genai.Client()
     od = out_dir(a.vid) / "audio"
     (od / "cache").mkdir(parents=True, exist_ok=True)
     rep_path = od / "report.json"
@@ -134,14 +161,14 @@ def main():
         v = voices[s.get("speaker", "narrator")]
         text = s.get("say") or s["display"]
         style = s.get("style") or v.get("style", "")
-        k = key_of(text, v["voice"], v["model"], style)
+        k = key_of(text, v["voice"], v["model"], style + "|" + v.get("provider", "openrouter"))
         cache = od / "cache" / f"{k}.wav"
         if a.force and (not only or s["id"] in only):
             cache.unlink(missing_ok=True)
         if not cache.exists():
             print(f"  {s['id']}：{text[:30]}…", flush=True)
             try:
-                x = trim(synth_retry(client, text, v["voice"], v["model"], style))
+                x = trim(synth_retry(client, text, v["voice"], v["model"], style, provider=v.get("provider", "openrouter")))
             except DailyLimit as e:
                 rep_path.write_text(json.dumps(rep, ensure_ascii=False, indent=1))
                 sys.exit(f"碰到每日上限，已存檔；重置後再跑同一個指令會從 {s['id']} 接續。({e})")

@@ -7,6 +7,8 @@
 - 字幕：繁中、簡中兩軌 mov_text（軟字幕，不燒入），另外交付 SRT 檔。
 - 檢查：響度、真峰值、取樣率、影音長度差 ≤ 0.3 秒、格數＝timeline、C2PA 殘留。
 - 產出：out/<id>/deliver/<id>.mp4、subs.*.srt、chapters.txt、checks.json。
+- --preview：審查用的預覽版（out/<id>/deliver/<id>-preview.mp4）：字幕燒入（subs.ass），聲音用 mix_preview.wav，
+  不做響度正規化與成片檢查。給使用者在手機上看畫面與節奏，不能上傳。
 """
 import json
 import re
@@ -16,7 +18,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from paths import ffmpeg, load_timeline, out_dir, video_dir  # noqa: E402
+from paths import ROOT, ffmpeg, load_timeline, out_dir, video_dir  # noqa: E402
 
 I, TP, LRA = -14.0, -1.0, 11.0
 
@@ -68,8 +70,25 @@ def c2pa_check(path):
     return {"found": bool(hits), "markers": [h.decode() for h in hits]}
 
 
+def preview(vid):
+    od = out_dir(vid)
+    dl = od / "deliver"
+    dl.mkdir(exist_ok=True)
+    final = dl / f"{vid}-preview.mp4"
+    fonts = ROOT / "assets/fonts"
+    ass = str(od / "subs.ass").replace(":", r"\:")
+    r = run(["-y", "-i", str(od / "video.mp4"), "-i", str(od / "mix_preview.wav"), "-map", "0:v", "-map", "1:a",
+             "-vf", f"ass={ass}:fontsdir={fonts}", "-c:v", "libx264", "-crf", "20", "-preset", "veryfast", "-pix_fmt", "yuv420p",
+             "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-shortest", str(final)])
+    if r.returncode:
+        sys.exit(r.stderr[-1500:])
+    print("預覽版：", final)
+
+
 def main():
     vid = sys.argv[1]
+    if "--preview" in sys.argv:
+        return preview(vid)
     nomusic = "--nomusic" in sys.argv
     od, T = out_dir(vid), load_timeline(vid)
     video = od / "video.mp4"

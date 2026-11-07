@@ -26,6 +26,17 @@
 - **多人對話**：複製聲音不能放進多說話者請求，要每句各自合成再串接。
 - 價格與 OpenRouter 支援：這次沒有查到。研究 I 寫「音訊輸出 US$9/1M tokens，2027-01-01 起加倍」。**預設直連 Gemini API。**
 
+## OpenRouter（查證 2026-11-07）
+
+- `google/gemini-3.8-flash-tts` 在 OpenRouter 上有兩個端點：Google AI Studio、Google。**兩個的 `supports_voice_cloning` 都是 false**（查 `/api/v1/models/google/gemini-3.8-flash-tts/endpoints`）。
+- 結論：**走 OpenRouter 只能用 Gemini 的預設聲音，不能用使用者的複製聲音。** 在 Google 的專案裡建立的 `voice_…` ID 也不能拿到 OpenRouter 用，因為聲音是綁在建立它的 Google Cloud 專案上的。
+- 用法：`POST /api/v1/audio/speech`，參數 `model`、`input`、`voice`、`instructions`、`response_format`。
+  - `instructions` 會被轉成 Gemini 的 `speech_metadata.style`，語氣不用寫進正文。
+  - 文件提醒：Gemini 3.8 會逐字念 `input`。
+  - Gemini 只回傳 `pcm`（24 kHz、16-bit、單聲道）。
+- 價格和直連一樣：音訊輸出 US$9／百萬 tokens，輸入 US$0.5／百萬 tokens。
+- OpenRouter 上**有**聲音複製的模型：`fish-audio/s2.1-pro`、`heygen/heygen-voice-1`、`bytedance-seed/seed-audio-1-0`。複製是無狀態的，每次請求都附上參考音檔（`input_references`）。台灣口音沒有官方保證；podcast repo 的經驗是「複製傳得了音色、傳不了口音」，這三個要實測才知道。
+
 ## 動畫工具
 
 - **ManimCE**：PyPI 最新版是 **0.22.1**（2026-10-27），MIT 授權。實驗 v4 用的就是 0.22.1。

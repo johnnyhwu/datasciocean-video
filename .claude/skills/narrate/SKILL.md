@@ -11,7 +11,7 @@ description: 影片第 5 步「旁白」：用 Gemini TTS 逐句合成唸法稿�
 2. 確認 `config/voice.json` 的 `narrator` 是定案的聲音。
    - 複製聲音的 voice ID 由 `lib/voice_create.py` 建立。
    - 盲聽定案前，用 podcast 的預設聲音 Zubenelgenubi 當備案。
-3. 金鑰放在 `.env` 的 `GEMINI_API_KEY`。**不要讀出或印出 `.env`**，也不要向使用者要金鑰。
+3. 金鑰放在 `.env`：`OPENROUTER_API_KEY`（預設路徑，只能用預設聲音）或 `GEMINI_API_KEY`（直連，複製聲音要用這個）。每個聲音走哪條路徑看 `config/voice.json` 的 `provider`。**不要讀出或印出 `.env`**，也不要向使用者要金鑰。
 
 ## 合成
 

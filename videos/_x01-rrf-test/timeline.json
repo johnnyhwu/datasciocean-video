@@ -1,0 +1,163 @@
+{
+ "video": "_x01-rrf-test",
+ "title": "名次，不是分數",
+ "estimated": true,
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "duration": 39.053,
+ "frames": 1172,
+ "end_screen": 2,
+ "scenes": [
+  {
+   "id": "sc01",
+   "name": "分數不能比",
+   "bg": "glow_center",
+   "pad": [
+    0.5,
+    0.4
+   ],
+   "start": 0.0,
+   "duration": 9.899,
+   "sentences": [
+    {
+     "id": "a1",
+     "display": "BM25 的分數範圍不固定，cosine 卻落在 -1 到 1 之間。",
+     "say": "BM25 的分數範圍不固定，cosine 卻落在負一到一之間。",
+     "hold": 0.4,
+     "screen": [
+      "BM25",
+      "cosine",
+      "範圍不固定",
+      "-1",
+      "0",
+      "1",
+      "12.4",
+      "9.7",
+      "3.1",
+      "0.83",
+      "0.71",
+      "0.42",
+      "示意"
+     ],
+     "start": 0.5,
+     "end": 5.351,
+     "abs": 0.5
+    },
+    {
+     "id": "a2",
+     "display": "直接加起來，沒有意義。",
+     "hold": 1.2,
+     "screen": [
+      "12.4 ＋ 0.83 ＝ ？",
+      "沒有意義"
+     ],
+     "start": 6.001,
+     "end": 8.299,
+     "abs": 6.001
+    }
+   ],
+   "start_frame": 0,
+   "frames": 297
+  },
+  {
+   "id": "sc02",
+   "name": "只看名次",
+   "chapter": [
+    1,
+    "名次，不是分數"
+   ],
+   "bg": "glow_left",
+   "pad": [
+    1.7,
+    0.5
+   ],
+   "start": 9.899,
+   "duration": 10.944,
+   "sentences": [
+    {
+     "id": "b1",
+     "display": "RRF 的巧思：不看分數，只看名次。",
+     "hold": 0.8,
+     "screen": [
+      "第 1 名",
+      "第 2 名",
+      "第 3 名"
+     ],
+     "start": 1.7,
+     "end": 4.764,
+     "abs": 11.599
+    },
+    {
+     "id": "b2",
+     "display": "名次每一路都有，也能直接互相比較。",
+     "hold": 0.8,
+     "start": 5.814,
+     "end": 9.644,
+     "abs": 15.713
+    }
+   ],
+   "start_frame": 297,
+   "frames": 328
+  },
+  {
+   "id": "sc03",
+   "name": "怎麼算",
+   "bg": "calm",
+   "pad": [
+    0.4,
+    0.4
+   ],
+   "start": 20.843,
+   "duration": 18.21,
+   "sentences": [
+    {
+     "id": "c1",
+     "display": "每一路給 1 ÷ (k + 名次)，再全部加總。",
+     "say": "每一路給一除以 k 加名次，再全部加總。",
+     "hold": 0.3,
+     "screen": [
+      "RRF 分數 ＝ Σ 1 ÷ (k + 名次)",
+      "每一路的 weight 預設 1.0"
+     ],
+     "start": 0.4,
+     "end": 4.485,
+     "abs": 21.243
+    },
+    {
+     "id": "c2",
+     "display": "Cerebras 把 k 設成 60。",
+     "say": "Cerebras 把 k 設成六十。",
+     "hold": 0.5,
+     "screen": [
+      "k ＝ 60",
+      "60 來自 Cormack 等人 2009 年論文的建議值"
+     ],
+     "start": 5.035,
+     "end": 6.822,
+     "abs": 25.878
+    },
+    {
+     "id": "c3",
+     "display": "舉個例子：兩路都第 3 名的 A，常常贏過一路第 1、一路第 8 的 B。",
+     "say": "舉個例子：兩路都第三名的 A，常常贏過一路第一、一路第八的 B。",
+     "hold": 1.6,
+     "screen": [
+      "舉例",
+      "A",
+      "B",
+      "3",
+      "1",
+      "8",
+      "示意"
+     ],
+     "start": 7.572,
+     "end": 14.21,
+     "abs": 28.415
+    }
+   ],
+   "start_frame": 625,
+   "frames": 547
+  }
+ ]
+}

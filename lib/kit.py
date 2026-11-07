@@ -105,7 +105,9 @@ def fs(frac):
 def T(s, frac=0.042, color=TXT, weight=NORMAL):
     if frac < S["min_text_frac"] - 1e-9:
         raise ValueError(f"字太小：{frac} < {S['min_text_frac']}（{s}）")
-    return Text(s, font=FONT, font_size=fs(frac), color=color, weight=weight)
+    t = Text(s, font=FONT, font_size=fs(frac), color=color, weight=weight)
+    t._frac, t._h0 = frac, t.height   # 版面檢查用：之後被 scale 縮小，實際字級仍要 ≥ 下限
+    return t
 
 
 def B(s, frac=0.042, color=TXT):
@@ -131,7 +133,7 @@ def wrap(s, frac, max_w, color=TXT, bold=False, buff=0.12):
     return VGroup(*[mk(x, frac, color) for x in lines]).arrange(DOWN, buff=buff, aligned_edge=LEFT)
 
 
-def pill(s, color, frac=0.034, fill=0.18, pad=0.24, txt=None, bold=False):
+def pill(s, color, frac=0.04, fill=0.18, pad=0.24, txt=None, bold=False):
     t = (B if bold else T)(s, frac, txt or color)
     r = RoundedRectangle(corner_radius=min(0.3, (t.height + pad) / 2), width=t.width + 2 * pad, height=t.height + pad)
     r.set_stroke(color, 2.5).set_fill(color, fill)
@@ -140,7 +142,7 @@ def pill(s, color, frac=0.034, fill=0.18, pad=0.24, txt=None, bold=False):
     return g
 
 
-def tag(s="示意", color=GOLD, frac=0.03):
+def tag(s="示意", color=GOLD, frac=0.038):
     """示意標籤：自己補的數字、例子、重畫的估讀圖都要掛（規格 §5.5、§6.8）。"""
     return pill(s, color, frac, fill=0.12, pad=0.16)
 
@@ -246,6 +248,18 @@ class Plumb(VGroup):
     def curl(self):
         return [Transform(self.rope, self._question_rope(), rate_func=rate_functions.ease_in_out_back)]
 
+    def set_curled(self, mood=None):
+        """不播動畫，直接設成「？」狀態（場景接續上一場時用）；mood 一起設定表情。"""
+        self.rope.become(self._question_rope())
+        if mood:
+            self.eyes.become(_eyes(mood, self._eye_centers(), self.k, self.angle))
+        return self
+
+    def set_mood(self, mood):
+        """不播動畫，直接設定表情。"""
+        self.eyes.become(_eyes(mood, self._eye_centers(), self.k, self.angle))
+        return self
+
     def straighten(self):
         return [Transform(self.rope, self._straight_rope(), rate_func=rate_functions.ease_in_out_back)]
 
@@ -317,7 +331,7 @@ class Plumb(VGroup):
 def takeaway_card(lines, frac=.05, w=None):
     """收尾：「這集重點：」＋一句話重點（內容要過查核）。"""
     body = VGroup(*[B(s, frac, GOLD) for s in ([lines] if isinstance(lines, str) else lines)]).arrange(DOWN, buff=.12)
-    head = T("這集重點：", .032, MUTED)
+    head = T("這集重點：", .04, MUTED)
     inner = VGroup(head, body).arrange(DOWN, buff=.2)
     box = RoundedRectangle(corner_radius=.18, width=(w or inner.width + .8), height=inner.height + .6).set_fill(SEA, 1).set_stroke(GOLD, 3)
     return VGroup(box, inner.move_to(box))
@@ -398,7 +412,7 @@ def num(val, nd=0, frac=0.05, color=TXT, suffix="", at=ORIGIN, prefix=""):
 class Bars(VGroup):
     """橫條圖（軸從 0 起，條長與數值成正比；規格 §6.7）。items: [(標籤, 值, 顏色)]。"""
 
-    def __init__(self, items, vmax, w=6.0, rowh=0.7, frac=0.036, fmt="{:.1f}%", label_w=2.4):
+    def __init__(self, items, vmax, w=6.0, rowh=0.7, frac=0.04, fmt="{:.1f}%", label_w=2.4):
         super().__init__()
         self.bars, self.vals, self.labels = VGroup(), VGroup(), VGroup()
         for i, (lab, v, col) in enumerate(items):
@@ -426,7 +440,7 @@ def cross_mark(color=BAD, s=0.3):
     return VGroup(Line([-0.5, -0.5, 0], [0.5, 0.5, 0]), Line([-0.5, 0.5, 0], [0.5, -0.5, 0])).scale(s).set_stroke(color, 8)
 
 
-def coin(color=GOLD, r=0.16, label=None, frac=0.03):
+def coin(color=GOLD, r=0.2, label=None, frac=0.038):
     c = VGroup(Circle(r).set_fill(color, 1).set_stroke("#AA7628", 2), Circle(r * 0.7).set_stroke("#AA7628", 1.5, 0.7))
     if label:
         c.add(B(label, frac, SCREEN).move_to(c))
@@ -479,7 +493,7 @@ def chapter_card(n, title, subtitle=None):
     circ = Circle(0.85).set_fill(GOLD, 1).set_stroke(width=0)
     nn = B(str(n), 0.12, SCREEN).move_to(circ)
     ttl = B(title, 0.085, TXT_STRONG)
-    sub = T(subtitle or TL_.get("title", ""), 0.036, MUTED)
+    sub = T(subtitle or TL_.get("title", ""), 0.04, MUTED)
     head = VGroup(VGroup(circ, nn), ttl).arrange(RIGHT, buff=0.5)
     content = VGroup(head, sub).arrange(DOWN, buff=0.35).move_to(UP * 0.35)
     g = VGroup(shadow, panel, edge, content)
@@ -639,9 +653,9 @@ class Timed(MovingCameraScene):
                 self.f = end
 
     def chapter_tag(self, num_, text):
-        circ = Circle(0.21).set_fill(GOLD, 1).set_stroke(width=0)
-        n = B(str(num_), 0.03, SCREEN).move_to(circ)
-        g = VGroup(VGroup(circ, n), T(text, 0.03, MUTED)).arrange(RIGHT, buff=0.15)
+        circ = Circle(0.25).set_fill(GOLD, 1).set_stroke(width=0)
+        n = B(str(num_), 0.038, SCREEN).move_to(circ)
+        g = VGroup(VGroup(circ, n), T(text, 0.038, MUTED)).arrange(RIGHT, buff=0.15)
         g.move_to([XL, TOP - 0.05, 0], aligned_edge=UL)
         return g
 
@@ -685,26 +699,58 @@ class Timed(MovingCameraScene):
         who.talk.add_updater(upd)
 
     # --- 版面檢查（每個 at() 之後） ---
+    # 三項：(1) 越界：超出安全邊界或壓到字幕區；(2) 元素重疊：兩個頂層元素部分重疊；(3) 實際字級：被 scale 縮到低於下限。
+    # 刻意的重疊（印章蓋在東西上、箭頭碰到公式）在其中一個物件設 overlap_ok = True。
+    OVERLAP_MIN, OVERLAP_MAX = 0.04, 0.85   # 重疊面積／較小者面積：太小是擦邊，太大是刻意的包含（例如框住文字）
+
+    def _visible_bbox(self, top, frame):
+        skip = {id(x) for p in getattr(top, "nocheck_parts", []) for x in p.get_family()}
+        skip |= {id(x) for x in top.get_family() if getattr(x, "nocheck", False)}
+        leaves = [x for x in top.family_members_with_points() if isinstance(x, VMobject) and id(x) not in skip
+                  and (x.get_fill_opacity() > 0.05 or (x.get_stroke_width() > 0 and x.get_stroke_opacity() > 0.05))]
+        return bbox_in(VGroup(*leaves), frame) if leaves else None
+
+    @staticmethod
+    def _label(m):
+        t = next((x for x in m.get_family() if isinstance(x, Text)), None)
+        return f"{m.__class__.__name__}「{t.text[:12]}」" if t is not None else m.__class__.__name__
+
     def check(self):
         if not self.zone_check:
             return
         frame = self.camera.frame
         mx, my = S["zones"]["safe_margin_x"], S["zones"]["safe_margin_y"]
         sub_y0 = zone("subtitle")[1]
+        boxes = []
         for top in self.mobjects:
-            if getattr(top, "nocheck", False) or isinstance(top, ImageMobject):
+            if getattr(top, "nocheck", False) or isinstance(top, ImageMobject) or top is self.hud:
                 continue
-            skip = {id(x) for p in getattr(top, "nocheck_parts", []) for x in p.get_family()}
-            skip |= {id(x) for x in top.get_family() if getattr(x, "nocheck", False)}
-            leaves = [x for x in top.family_members_with_points() if isinstance(x, VMobject) and id(x) not in skip
-                      and (x.get_fill_opacity() > 0.05 or (x.get_stroke_width() > 0 and x.get_stroke_opacity() > 0.05))]
-            if not leaves:
+            b = self._visible_bbox(top, frame)
+            if b is None:
                 continue
-            b = bbox_in(VGroup(*leaves), frame)
-            if b[2] < 0 or b[0] > 1:
+            if b[2] < 0 or b[0] > 1 or b[3] < 0 or b[1] > 1:   # 完全在畫面外（甩鏡、等著掉進來的物件）
                 continue
             if b[3] > sub_y0 + 3e-3 or b[0] < mx - 3e-3 or b[2] > 1 - mx + 3e-3 or b[1] < my - 3e-3:
-                self.problems.append(f"{self.SID} t={self.t:.2f}s {top.__class__.__name__} outside zones {[round(x, 3) for x in b]}")
+                self.problems.append(f"{self.SID} t={self.t:.2f}s {self._label(top)} outside zones {[round(float(x), 3) for x in b]}")
+            boxes.append((top, b))
+            for x in top.get_family():           # 實際字級
+                if getattr(x, "_frac", None) and x._h0 > 0 and x.get_fill_opacity() > 0.05:
+                    eff = x._frac * x.height / x._h0
+                    if eff < S["min_text_frac"] - 1e-3:
+                        self.problems.append(f"{self.SID} t={self.t:.2f}s 字被縮小到 {eff:.3f}（下限 {S['min_text_frac']}）：{x.text[:12]}")
+        for i in range(len(boxes)):              # 元素重疊
+            for j in range(i + 1, len(boxes)):
+                (ma, a), (mb, b) = boxes[i], boxes[j]
+                if getattr(ma, "overlap_ok", False) or getattr(mb, "overlap_ok", False):
+                    continue
+                w = min(a[2], b[2]) - max(a[0], b[0])
+                h = min(a[3], b[3]) - max(a[1], b[1])
+                if w <= 0 or h <= 0:
+                    continue
+                small = min((a[2] - a[0]) * (a[3] - a[1]), (b[2] - b[0]) * (b[3] - b[1]))
+                r = w * h / max(small, 1e-9)
+                if self.OVERLAP_MIN < r < self.OVERLAP_MAX:
+                    self.problems.append(f"{self.SID} t={self.t:.2f}s 重疊 {r:.0%}：{self._label(ma)} × {self._label(mb)}")
 
     def tear_down(self):
         super().tear_down()

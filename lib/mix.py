@@ -9,6 +9,7 @@
   - 曲庫只有授權紀錄進 git，音樂檔在 assets/music/（不進 git）。找不到檔案就不放音樂並警告。
   - 不得使用曲庫以外的音樂（規格 §7.5）。
 - 產出：out/<id>/mix.wav、mix_nomusic.wav（48 kHz 立體聲 float32），以及 mix.json（各軌量測）。
+- --preview：還沒有旁白時的預覽（timeline 可以是估算版）。缺的旁白音檔就是靜音，只輸出 mix_preview.wav。
 """
 import json
 import sys
@@ -104,15 +105,19 @@ def music_track(vid, T, n, spec):
 
 def main():
     vid = sys.argv[1]
+    preview = "--preview" in sys.argv
     T, spec, od = load_timeline(vid), load_script(vid), out_dir(vid)
-    if T.get("estimated"):
-        sys.exit("timeline 是估算版（--estimate），不能混音；先合成旁白再重跑 timeline.py。")
+    if T.get("estimated") and not preview:
+        sys.exit("timeline 是估算版（--estimate），不能混音；先合成旁白再重跑 timeline.py（或用 --preview 做無旁白預覽）。")
     n = int(T["frames"] / T["fps"] * SR)
     TARGET = db(-20)
     voice = np.zeros(n)
     for sc in T["scenes"]:
         for s in sc["sentences"]:
-            x = load_mono(od / f"audio/{s['id']}.wav")
+            f = od / f"audio/{s['id']}.wav"
+            if preview and not f.exists():
+                continue
+            x = load_mono(f)
             x = x * TARGET / rms_active(x)
             pk = np.abs(x).max()
             if pk > 0.95:
@@ -145,7 +150,8 @@ def main():
     mus = mus * db(spec.get("music_level_db", -17)) * TARGET
     mus *= 1 - (1 - db(duck_db)) * vact
 
-    for name, parts in (("mix", (voice, fx, mus)), ("mix_nomusic", (voice, fx))):
+    outs = (("mix_preview", (voice, fx, mus)),) if preview else (("mix", (voice, fx, mus)), ("mix_nomusic", (voice, fx)))
+    for name, parts in outs:
         mix = sum(parts)
         mix = mix / max(1.0, np.abs(mix).max() / 0.97)
         sf.write(od / f"{name}.wav", np.stack([mix, mix], 1).astype(np.float32), SR)

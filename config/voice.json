@@ -1,5 +1,15 @@
 {
- "_note": "speaker → 聲音。narrator 是目前使用的旁白；盲聽定案前先用 podcast 的預設聲音（備案）。voice_create.py 會加上 narrator_cloned。mascot 是吉祥物的台詞聲音（暫定，盲聽時一起選）。",
- "narrator": {"voice": "Zubenelgenubi", "model": "gemini-3.8-flash-tts", "style": "用台灣人的口音，像在跟朋友講一個有趣的發現，清楚、有精神"},
- "mascot": {"voice": "Puck", "model": "gemini-3.8-flash-tts", "style": "用台灣人的口音，語氣活潑、好奇，短句"}
+ "_note": "speaker → 聲音。provider：openrouter（預設，只能用 Gemini 預設聲音）或 gemini（直連，複製聲音只能走這條）。narrator 目前是 podcast 用的 Zubenelgenubi，盲聽定案前的暫定值。mascot 是吉祥物台詞的聲音（暫定）。",
+ "narrator": {
+  "voice": "Zubenelgenubi",
+  "model": "gemini-3.8-flash-tts",
+  "style": "用台灣人的口音，像在跟朋友講一個有趣的發現，清楚、有精神",
+  "provider": "openrouter"
+ },
+ "mascot": {
+  "voice": "Puck",
+  "model": "gemini-3.8-flash-tts",
+  "style": "用台灣人的口音，語氣活潑、好奇，短句",
+  "provider": "openrouter"
+ }
 }
