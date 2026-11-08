@@ -1,0 +1,1332 @@
+{
+ "sentences": {
+  "h1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "第四版：開頭用「假設」，h2、h3 的 0.83、12.4 因此是舉例（claims.py 規則 6）；沒有夾帶事實"
+  },
+  "h2": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "0.83 是舉例數字，h1 已說「假設」；與 c3（cosine 落在 -1 到 1）不矛盾"
+  },
+  "h3": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "12.4 是舉例數字，h1 已說「假設」；與 c3（BM25 範圍不固定）不矛盾"
+  },
+  "h4": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "h5": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "比喻只是翻譯（公尺＋公斤），對應 c3「單位不同，加起來沒有意義」"
+  },
+  "h6": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：加起來沒有意義"
+  },
+  "h7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1：只用名次不用分數"
+  },
+  "i1": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "intro-1，變數＝排名融合 RRF"
+  },
+  "i2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：改成「可能」，與 c13「可能輸給」一致"
+  },
+  "w1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "第 2 輪：「有些系統」不概括，後接 w3 的 Cerebras 例子（c3）"
+  },
+  "w3": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：Cerebras 系統同時用好幾種檢索器打同一個查詢"
+  },
+  "w4": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "向量搜尋比語意、全文搜尋比字面：教科書等級；未碰論文的數字或比較"
+  },
+  "w5": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c2"
+   ],
+   "verdict": "pass",
+   "note": "c2（官方宣稱）：每天處理超過 15,000 次查詢。旁白「Cerebras 說」保留了官方宣稱的限定（畫面已沒有「官方說法」標籤，改由旁白負責）；「一萬五千」＝15,000，「超過」＝超過"
+  },
+  "w6": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3",
+    "rrf-rank-fusion#c5"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：已刪「每一次」；c3 好幾種檢索器，c5 對所有檢索器加總"
+  },
+  "r1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「我們來舉個例子」：之後 sc03 的 0.83、0.61、0.32、12.4、9.7、3.1 都是舉例數字，由這句交代；沒有夾帶事實"
+  },
+  "r2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：cosine 相似度落在 -1 到 1。「向量搜尋↔cosine」是教科書等級的對應，旁白用「例如」，沒有說成所有向量搜尋的分數都是 cosine；限定條件沒有掉"
+  },
+  "r3": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：BM25 的分數範圍不固定。「全文搜尋↔BM25」同上，用「例如」。注意：這句的畫面有「0」，見 screen「0」的判定（BM25 下限 0 卡上沒有）"
+  },
+  "r4": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：單位、尺度、分布形狀都不一樣。「兩邊」＝上句的向量與全文，未改變意思"
+  },
+  "r5": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "比喻，對應 c3 的「加起來沒有意義」"
+  },
+  "r6": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：常見解法是把每種分數正規化到 0 到 1 再加權相加；「兩邊」＝向量與全文，未改變意思"
+  },
+  "r7": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r8": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：正規化依賴這批結果的最大值、最小值"
+  },
+  "r9": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "橡皮尺對應 c4（依賴這批結果的最大、最小值）；12.4、3.1 是舉例數字，r1 已說「舉個例子」"
+  },
+  "r10": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "30 是舉例數字，r1 已說「舉個例子」；示範 c4 的最大值改變"
+  },
+  "r11": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "對應 c4：同一份文件換一批結果，值會變。B 1.00 → 0.35 是 min-max 正規化的舉例算式，見 screen 的註記"
+  },
+  "r12": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：同一份文件在不同查詢批次裡的相對權重飄移不定"
+  },
+  "n1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "n2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1"
+  },
+  "n3": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "0.83、12.4 回頭提 h2、h3（sc01 h1 已說「假設」）的舉例數字，不是新數字；「第一名就是第一名」對應 c1"
+  },
+  "n4": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1：名次是所有檢索器天然具備、天然可比較的整數"
+  },
+  "n5": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：已補回「正規化帶來的」，與 c1 一致"
+  },
+  "n6": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "ask_user",
+   "note": "「Reciprocal Rank Fusion／倒數排名融合」全名不在卡上，也不是教科書前置知識（屬於這個方法本身的名稱）。要使用者決定"
+  },
+  "n7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c5 公式 weight/(k+rank)，c6 weight 預設 1.0；旁白簡化為 1÷(k+名次)，權重在 n10 交代"
+  },
+  "n8": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5：對所有檢索器加總"
+  },
+  "n9": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5"
+   ],
+   "verdict": "pass",
+   "note": "由 c5 公式直接得到（名次小→分母小→值大），沒有新數字"
+  },
+  "n10": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：k=60、weight 預設 1.0"
+  },
+  "n11": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：來自 Cormack 等人 2009 年論文的建議值"
+  },
+  "m1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「我們來舉個例子，實際算一次」：這個例子（A 兩路第 3、B 第 1 與第 8）本身就是 c9 的舉例，名次來自 c9；沒有夾帶事實"
+  },
+  "m2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：A 兩路都排第三"
+  },
+  "m3": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：B 一路第一、另一路第八"
+  },
+  "m4": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "吉祥物誤解式提問，未帶入事實"
+  },
+  "m5": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5；k=60、weight 1.0 來自 c6；名次 3 來自 c9。旁白已說「在 k 等於六十時」",
+   "calc": {
+    "expr": "1/(60+3)+1/(60+3)",
+    "result": "0.0317"
+   }
+  },
+  "m6": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：screen 已有「依卡上公式計算」；名次 1、8 來自 c9",
+   "calc": {
+    "expr": "1/(60+1)+1/(60+8)",
+    "result": "0.0311"
+   }
+  },
+  "m7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "0.0317>0.0311，在 k=60 的條件下成立；「只贏一點點」是對兩個算出來的值的描述，無新數字"
+  },
+  "m8": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：算出來的 RRF 分數「常常」是 A 贏。刪掉「作者說」後仍保留「常常」，沒有說成一定；主詞「像這樣的比較」＝c9 的 A、B 這種情況"
+  },
+  "m9": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：可能贏過；保留「可能」"
+  },
+  "k1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "旋鈕比喻"
+  },
+  "k2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c7"
+   ],
+   "verdict": "pass",
+   "note": "c7；v4：加「例如轉到 200／1」交代旋鈕值是舉例"
+  },
+  "k3": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c7"
+   ],
+   "verdict": "pass",
+   "note": "c7"
+  },
+  "k4": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c7"
+   ],
+   "verdict": "pass",
+   "note": "c7；v4：加「例如轉到 200／1」交代旋鈕值是舉例"
+  },
+  "k5": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c7"
+   ],
+   "verdict": "pass",
+   "note": "c7"
+  },
+  "k6": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8（部落格判斷）：選 k=60，等於 Cerebras 選擇了「寧可相信……」。旁白改「可以看成」，語氣不比卡強（卡用「等於」），且保留「Cerebras 選擇了」的主詞；「所以」承接 c7 的 k 越大偏好共識，卡上 c8 即是這個推論"
+  },
+  "k7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8"
+  },
+  "t1": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13：隱含一個假設"
+  },
+  "t2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13"
+  },
+  "t3": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "假設情境的提問"
+  },
+  "t4": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c5、c13：沒撈到的那一路貢獻是 0。畫面的代入計算見 screen「1/(60 + 1) + 0」"
+  },
+  "t6": {
+   "tag": "illustration",
+   "refs": [
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13：可能輸給兩路都排名普通、但兩路都有出現的雜訊文件；旁白用「可能」，並以「比方說」交代「第 4 名」是假設的舉例（卡上沒有名次 4）。例子和 c13 不矛盾：一路第 1 加另一路 0 ≈ 0.0164，低於兩路都第 4 的 0.03125"
+  },
+  "t7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13：共識機制反而變成懲罰"
+  },
+  "t8": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "吉祥物提問"
+  },
+  "t9": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14：作者自述做投影片檢索時遇過這個弱點；「我們自己做」是頻道主自述（2026-11-08 決定），內容沒有比卡強"
+  },
+  "t10": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14"
+  },
+  "t12": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14：常出現正確答案在向量檢索第一、全文完全沒撈到（反過來也會）"
+  },
+  "t13": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14"
+  },
+  "t14": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "t15": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "t16": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：對字面詞彙敏感的全文搜尋容易完全掛零"
+  },
+  "t17": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "t18": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14：暫時的權宜解法是「永遠保留向量跟全文各自的第一名」；「暫時」的限定保留"
+  },
+  "f1": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：解法可以由淺到深疊著用；刪掉「作者說」後沒有更強"
+  },
+  "f2": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：例如拉到 top 50 到 100"
+  },
+  "f3": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16"
+  },
+  "f4": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16"
+  },
+  "f5": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16"
+  },
+  "f7": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c17"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：只剩「最根本的一層是 reranker」，c17"
+  },
+  "f9": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c10",
+    "rrf-rank-fusion#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17 取聯集交給 cross-encoder；c10 逐一配對輸出相關性分數"
+  },
+  "f10": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17"
+  },
+  "f11": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "takeaway-2；變數「名次能比、分數不能；小心單路缺席」是事實，對應 c1/c3/c13，均有依據；「分數不能」＝c3 的「不能直接比」，畫面寫「分數不能直接加」"
+  },
+  "f12": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "blog-2，原句"
+  },
+  "f8": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c10"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪新增：c10，RRF 純粹是統計融合不理解語意；reranker 能做語意層面判斷"
+  }
+ },
+ "screen": {
+  "查詢": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c10"
+   ],
+   "verdict": "pass",
+   "note": "c10"
+  },
+  "向量搜尋": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "檢索器名稱"
+  },
+  "全文搜尋": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "檢索器名稱"
+  },
+  "0.83": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字：h2、r1 在 h1／r1 的「假設」「舉個例子」之後出現（claims.py 規則 6）"
+  },
+  "12.4": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字：h3、r1、r9 同上"
+  },
+  "0.83 + 12.4 = ?": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字；h1 已說「假設」"
+  },
+  "0.83 m + 12.4 kg = ?": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "h5 的比喻（公尺＋公斤）；0.83、12.4 承接 h1「假設」的舉例數字，對應 c3「加起來沒有意義」"
+  },
+  "RRF": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "名稱"
+  },
+  "DataSci Ocean": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "頻道名稱"
+  },
+  "總榜": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "合併後清單的名稱；i2、w6 的畫面，不夾帶事實"
+  },
+  "1": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3",
+    "rrf-rank-fusion#c4",
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c9",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "此鍵多處使用：r2 cosine 上限 1（c3）、r6 縮到 0 到 1（c4）、n4／n9 名次 1、m3 B 第 1（c9）、t12／t18 向量第 1（c14）；k1／i2／f10 為順位標號"
+  },
+  "2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "示例整數名次，非資料"
+  },
+  "3": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "示例整數名次，非資料"
+  },
+  "4": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "i2、n9、k1 為順位標號；t6 的 4 是假設名次，由 t6「比方說」交代"
+  },
+  "?": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "符號"
+  },
+  "Cerebras 內部知識庫": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c2",
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c2"
+  },
+  "IDF 加權": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "意思像不像": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "w4：教科書等級"
+  },
+  "字面有沒有對上": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "w4：教科書等級"
+  },
+  "15,000+ 次／天": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c2"
+   ],
+   "verdict": "pass",
+   "note": "c2：每天處理超過 15,000 次查詢；官方宣稱的限定由 w5 旁白「Cerebras 說」負責，畫面需與 w5 同時出現"
+  },
+  "A": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9 的 A 文件（sc05）；sc03 r1 的 A 是舉例文件標籤（r1 已說「舉個例子」），不是 c9 的名次"
+  },
+  "B": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9 的 B 文件（sc05）；sc03 r1 的 B 是舉例文件標籤，不是 c9 的名次"
+  },
+  "C": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例的文件標籤，r1 已說「舉個例子」"
+  },
+  "0.61": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字，r1 已說「舉個例子」"
+  },
+  "0.32": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字，r1 已說「舉個例子」"
+  },
+  "9.7": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字，r1 已說「舉個例子」"
+  },
+  "3.1": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字，r1 已說「舉個例子」"
+  },
+  "cosine": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "−1": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：cosine 落在 -1 到 1（Unicode 減號）"
+  },
+  "0": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3",
+    "rrf-rank-fusion#c4",
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c13",
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "r6「0 到 1」（c4）、t4 貢獻 0（c5、c13）、t16 全文掛零（c15）、r2 cosine 數線中點都可以。【v4 已依建議修正：r3 拿掉「0」，BM25 數線只畫開口】"
+  },
+  "BM25": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "0.83 + 3.1 = ?": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "同一份文件 A 在兩邊的舉例分數相加，比喻 c3「分數不能直接加」；r1 已說「舉個例子」"
+  },
+  "正規化": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4"
+  },
+  "最低": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4"
+  },
+  "最高": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4"
+  },
+  "B 1.00": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例：B 的 12.4 是這批最高，min-max 後 (12.4−3.1)/(12.4−3.1)=1.00；r1 已說「舉個例子」。這是教科書的 min-max 定義，不是卡上的公式，所以不標「依卡上公式計算」"
+  },
+  "E": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例的文件標籤，r10 同上"
+  },
+  "30": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字，r1 已說「舉個例子」"
+  },
+  "B 1.00 → 0.35": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例：(12.4−3.1)/(30−3.1)=0.3457≈0.35，前提是這批的最低仍是 3.1（A 的 3.1 仍在榜上）；r1 已說「舉個例子」。畫面要讓最低值 3.1 維持可見，否則 0.35 無從驗證"
+  },
+  "名次": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1"
+  },
+  "=": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "符號"
+  },
+  "Reciprocal Rank Fusion": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "ask_user",
+   "note": "全名不在卡上，與 n6 一起請使用者決定"
+  },
+  "倒數排名融合": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "ask_user",
+   "note": "同上"
+  },
+  "1 / (k + 名次)": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c5 公式 weight/(k+rank)，c6 weight 預設 1.0（權重 1 在 n10 交代）"
+  },
+  "RRF(d) = Σ 1 / (k + 名次)": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c5 公式，省略 weight（c6 預設 1.0，n10 說明）"
+  },
+  "每一路": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5"
+  },
+  "5": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "順位標號，非資料"
+  },
+  "k = 60": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6"
+  },
+  "權重 = 1": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：weight 預設是 1.0"
+  },
+  "Cormack 等人, 2009": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：k=60 來自 Cormack 等人 2009 年論文的建議值"
+  },
+  "8": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：B 另一路第八"
+  },
+  "1/(60 + 3) + 1/(60 + 3)": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入計算：公式 c5、k=60 c6、名次 3 c9；依卡上公式計算的標註在 m5 畫面",
+   "calc": {
+    "expr": "1/(60+3)+1/(60+3)",
+    "result": "0.0317"
+   }
+  },
+  "≈ 0.0317": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入計算；2/63=0.031746",
+   "calc": {
+    "expr": "1/(60+3)+1/(60+3)",
+    "result": "0.0317"
+   }
+  },
+  "依卡上公式計算": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "標記性文字；m5 有"
+  },
+  "1/(60 + 1) + 1/(60 + 8)": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入計算：名次 1、8 來自 c9。m5 的「依卡上公式計算」標註需在 m6 時仍在畫面上（視覺檢查員確認）",
+   "calc": {
+    "expr": "1/(60+1)+1/(60+8)",
+    "result": "0.0311"
+   }
+  },
+  "≈ 0.0311": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入計算；0.016393+0.014706=0.031099",
+   "calc": {
+    "expr": "1/(60+1)+1/(60+8)",
+    "result": "0.0311"
+   }
+  },
+  "k": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "k = 200": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "假設的 k 值：卡上只有 k=60（c6）與「越大／越小」的方向（c7），沒有 200。k 旋鈕轉到 200 時，長條（1/(k+名次)、A(3,3)、B(1,8) 的合併）每格依 c5 公式重算，是 c7 的圖解，不是卡上數字代入，所以標 illustration，不是 card_claim。【v4 已依建議修正：k2 旁白加「例如轉到 200」】"
+  },
+  "k = 1": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "假設的 k 值，理由同 k = 200。k=1 時 A=2/4=0.5、B=1/2+1/9≈0.611（B 長）與 c7「k 越小越相信單路強訊號」同方向，不與 c9「常常 A 贏」矛盾（c9 沒限定 k）。【v4 已依建議修正：k4 旁白加「例如轉到 1」】"
+  },
+  "正確答案": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "沒撈到": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "1/(60 + 1) + 0": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c13",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "代入計算：公式與「沒撈到＝0」來自 c5、c13；k=60 來自 c6；名次 1 來自 c14（正確答案在向量排第一、全文完全沒撈到）",
+   "calc": {
+    "expr": "1/(60+1)+0",
+    "result": "0.0164"
+   }
+  },
+  "≈ 0.0164": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c13",
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "代入計算：1/61=0.016393。【v4 已依建議修正：t4 畫面加「依卡上公式計算」，留到 t6】",
+   "calc": {
+    "expr": "1/(60+1)+0",
+    "result": "0.0164"
+   }
+  },
+  "1/(60 + 4) + 1/(60 + 4)": {
+   "tag": "illustration",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5、k=60 c6，但名次 4 是 t6 旁白「比方說」的假設名次，卡上沒有 4（所以 claims.py 的代入計算驗算不適用，改標 illustration，由程式檢查旁白有舉例用詞）。手算：1/64+1/64=0.03125。使用者 2026-11-08 確認：「卡上公式＋旁白交代的假設名次」可接受"
+  },
+  "≈ 0.0313": {
+   "tag": "illustration",
+   "refs": [
+    "rrf-rank-fusion#c5",
+    "rrf-rank-fusion#c6",
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "0.03125 精確值；寫 ≈ 0.0313 是四捨五入（與 sc05 四位小數一致）。注意：Python 對 0.03125 取四位會得 0.0312（銀行家進位），所以不能用 calc 驗算這個結果，手算已核對。需要「依卡上公式計算」標籤（見 ≈ 0.0164）"
+  },
+  "投影片": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14"
+  },
+  "VLM": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14"
+  },
+  "摘要": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14：VLM 產生文字摘要"
+  },
+  "同一份摘要": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "revenue growth": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "sales increase": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15"
+  },
+  "⊥": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：訊號要正交（符號）"
+  },
+  "①": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "由淺到深的順位標號（c16）"
+  },
+  "②": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "由淺到深的順位標號（c16）"
+  },
+  "③": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "由淺到深的順位標號（c17）"
+  },
+  "拉深召回": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16"
+  },
+  "50 ~ 100": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：比如拉到 top 50 到 100；f2 旁白有「例如」"
+  },
+  "截斷線": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16"
+  },
+  "修表示層": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：修正表示層讓兩路訊號源頭不同"
+  },
+  "OCR 原文": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：加入 OCR 抽出的原始文字"
+  },
+  "reranker": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17"
+  },
+  "聯集": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17"
+  },
+  "名次能比，分數不能直接加": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c1",
+    "rrf-rank-fusion#c3"
+   ],
+   "verdict": "pass",
+   "note": "c1、c3"
+  },
+  "小心單路缺席": {
+   "tag": "card_claim",
+   "refs": [
+    "rrf-rank-fusion#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13"
+  },
+  "完整文章在說明欄": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "blog-2 固定句的畫面對應"
+  },
+  "0.83 + 9.7 = ?": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "A 文件兩路的舉例分數（r1 已說「我們來舉個例子」）；直接相加沒有意義，對應 c3"
+  }
+ },
+ "warmup_map": [
+  {
+   "step": "向量搜尋（例 cosine，-1～1）與全文搜尋（例 BM25，範圍不固定）的分數單位不同；公尺加公斤的比喻",
+   "card": "rrf-rank-fusion#c3",
+   "ok": true
+  },
+  {
+   "step": "縮到 0～1、橡皮尺、換一批最高值就變（數字為 r1 交代的舉例）",
+   "card": "rrf-rank-fusion#c4",
+   "ok": true
+  },
+  {
+   "step": "只看名次：第一名就是第一名",
+   "card": "rrf-rank-fusion#c1",
+   "ok": true
+  },
+  {
+   "step": "1÷(60+名次) 加總",
+   "card": "rrf-rank-fusion#c5、c6",
+   "ok": true
+  },
+  {
+   "step": "A 兩路第 3、B 第 1 與第 8，算出 A 贏（代入計算）",
+   "card": "rrf-rank-fusion#c9（calc）",
+   "ok": true
+  },
+  {
+   "step": "k 旋鈕：k 大時 A 長、k 小時 B 長（k=200、k=1 是假設值；旁白尚未交代）",
+   "card": "rrf-rank-fusion#c7",
+   "ok": false
+  },
+  {
+   "step": "某一路沒撈到貢獻 0；雜訊兩路都第 4（假設名次）超車",
+   "card": "rrf-rank-fusion#c5、c13",
+   "ok": true
+  }
+ ],
+ "figures": []
+}

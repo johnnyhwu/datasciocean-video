@@ -26,7 +26,8 @@
 | 知識範圍 | 影片傳達的知識不超出觀念卡。唯一例外：教科書等級的前置知識，佔比 ≤ 1/3 |
 | 忠實 | 不加卡上沒有的事實、數字、比較、因果；不說得比卡更強；**限定條件不得刪除**，旁白至少完整說一次。新數字只有一種來源可以出現：**把卡上的數字代進卡上的公式**算出來（使用者 2026-11-07 同意），畫面要標「依卡上公式計算」，查核紀錄要寫出算式（`calc`），由程式驗算；其他自行推算一律不行 |
 | 翻譯 | 英文、簡體的標題、說明、字幕只翻譯，不多加說法 |
-| 論文圖 | 一律依主張文字重新製作，不放原圖，不逐筆描摹；只能估讀的只畫示意並標「示意」 |
+| 論文圖 | 一律依主張文字重新製作，不放原圖，不逐筆描摹；只能估讀的只畫示意，並由旁白交代是示意 |
+| 舉例 | 自己補的數字、例子，旁白要說出這是舉例（「假設」「我們來舉個例子」「比方說」），畫面不放「示意」標籤（使用者 2026-11-08）；`claims.py` 檢查 |
 | 授權 | 只用允許營利的工具、字型（OFL）、音樂（使用者的曲庫）；不複製 3b1b/videos 的程式碼與素材（CC BY-NC-SA） |
 | 不進 git | API 金鑰、OAuth 憑證、音檔、渲染的影片、音樂檔、使用者的聲音錄音（`.gitignore` 已排除；不論 repo 是否公開都一樣） |
 | 人審關卡 | 四個關卡都要使用者核准，紀錄用 `state.py approve` 寫入，才能往下走 |
@@ -61,6 +62,7 @@
 | 研究結論（敘事、手法、政策、授權） | `rules/research-distilled.md`。原文在 `pre-plan/research/`，平常不要載入 |
 | 外部規則現況（YouTube、Gemini） | `rules/external-rules.md`（每季重查） |
 | PoC 的經驗（使用者滿意的兩支試做） | `rules/from-poc/`：`03_CREATIVE_PLAYBOOK.md`（哪些創意有效）、`04_LESSONS_LEARNED.md`（踩過的坑） |
+| 外部動畫 skill 的研究（版面、線條、停留的規則從哪來） | `rules/from-skills/README.md`。原文在 `vendor/`（MIT），平常不要載入 |
 | 原始規劃書 | `pre-plan/spec/for_claude_code.md`（背景用；和本 repo 的規則衝突時，以本 repo 為準） |
 
 ## 跨步驟原則
@@ -87,7 +89,7 @@ CLAUDE.md                 跨步驟原則（本檔，保持精簡）
 .claude/hooks/            protect_wiki.py：擋寫入 concept-wiki
 concept-wiki/             submodule，唯讀
 config/                   style.json（版面、配色、字幕）、voice.json（TTS 聲音）、zh-cn-terms.yaml
-rules/                    資料性質的規則：卡格式、語速、固定句、研究提煉、外部規則、from-social-media/、from-podcast/、from-poc/
+rules/                    資料性質的規則：卡格式、語速、固定句、研究提煉、外部規則、from-social-media/、from-podcast/、from-poc/、from-skills/
 lib/                      程式：kit.py（Manim 工具箱＋吉祥物）、tts_gemini.py、timeline.py、render.py、mix.py、package.py、
                           cards.py、state.py、checks/（claims、fonts、sheet、still、fingerprint）
 assets/                   fonts/（OFL）、brand/logo.png、music-library.yaml（曲庫授權紀錄）；music/、voice/ 不進 git

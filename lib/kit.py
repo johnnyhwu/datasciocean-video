@@ -19,7 +19,7 @@
 規則（規格 §6.2、§6.4）：
 - 每個 at() 都要對應某一句旁白（用 A()/E() 錨定），標不出來就刪掉；同一時間只有一個焦點。
 - 位置用 cell()/zone 換算，不要自己填座標；字級用畫面高度比例（T/B 的 frac），不低於 style 的 min_text_frac。
-- 示意的數字或例子一定掛 tag("示意")。
+- 示意的數字或例子：v4 起不掛 tag("示意")，由旁白交代是舉例（使用者 2026-11-08）。
 """
 import json
 import os
@@ -36,10 +36,20 @@ import numpy as np  # noqa: E402
 from manim import *  # noqa: E402,F403
 
 import bgplates  # noqa: E402
+from manim.renderer.cairo_renderer import CairoRenderer  # noqa: E402
+
+
+def _freeze_round(self, duration):
+    """Manim 的靜止等待用 int() 無條件捨去，浮點誤差會少一格（v001 sc06 少 1 格）；改成四捨五入。"""
+    self.add_frame(self.get_frame(), num_frames=int(round(duration * self.camera.frame_rate)))
+
+
+CairoRenderer.freeze_current_frame = _freeze_round
 
 S = json.loads((ROOT / "config/style.json").read_text())
-for f in S["font_files"]:
+for f in S["font_files"] + S.get("serif_files", []):
     manimpango.register_font(str(ROOT / f))
+SERIF = S.get("serif_font", "STIX Two Text")
 
 # YTV_VIDEO＝影片 ID（lib/render.py 會自動設定）。沒設定時是「設計模式」：可以畫靜態圖（吉祥物、草圖、縮圖），但不能用 Timed。
 VID = os.environ.get("YTV_VIDEO", "")
@@ -56,6 +66,7 @@ TXT, TXT_STRONG, MUTED, DIM = S["text"], S["text_strong"], S["muted"], S["dim"]
 GOLD = S["brand"]["gold"]
 TEAL, TEAL_L, TEAL_M = S["brand"]["teal"], S["brand"]["teal_light"], S["brand"]["teal_mid"]
 GOOD, BAD, NEUTRAL = S["role"]["good"], S["role"]["bad"], S["role"]["neutral"]
+LINE = S.get("line", "#5E8C8E")   # 細線、刻度、次要連線
 SCREEN, PANEL, SEA = S["bg"]["screen"], S["bg"]["panel"], S["bg"]["sea"]
 # 每支影片的概念色：script.json 的 "concepts": {"argmax": 0, "期望值": 1}（索引進 concept_pool），在場景裡用 C["argmax"]
 C = {k: S["concept_pool"][i] for k, i in _SCRIPT.get("concepts", {}).items()}
@@ -142,9 +153,38 @@ def pill(s, color, frac=0.04, fill=0.18, pad=0.24, txt=None, bold=False):
     return g
 
 
-def tag(s="示意", color=GOLD, frac=0.038):
-    """示意標籤：自己補的數字、例子、重畫的估讀圖都要掛（規格 §5.5、§6.8）。"""
-    return pill(s, color, frac, fill=0.12, pad=0.16)
+def tag(s="示意", color=None, frac=0.038):
+    """示意標籤：自己補的數字、例子、重畫的估讀圖都要掛（規格 §5.5、§6.8）。
+    v2 風格：小字＋細底線，不用膠囊框（2026-11-07 使用者嫌膠囊像小學生做的）。"""
+    return note(s, color or MUTED, frac)
+
+
+def note(s, color=None, frac=0.038):
+    """小註記：純文字＋細底線。"""
+    t = T(s, frac, color or MUTED)
+    u = Line(t.get_corner(DL), t.get_corner(DR)).shift(DOWN * 0.07).set_stroke(color or MUTED, 1.2, 0.6)
+    g = VGroup(t, u)
+    g.txt = t
+    return g
+
+
+def M(s, frac=0.06, color=TXT, italic=False):
+    """數字與公式：襯線字（STIX Two，OFL）。變數用 italic=True。"""
+    if frac < S["min_text_frac"] - 1e-9:
+        raise ValueError(f"字太小：{frac} < {S['min_text_frac']}（{s}）")
+    t = Text(s, font=SERIF, font_size=fs(frac), color=color, slant=ITALIC if italic else NORMAL)
+    t._frac, t._h0 = frac, t.height
+    return t
+
+
+def fraction(num, den, frac=0.06, color=TXT, gap=0.1):
+    """分數：分子、分數線、分母（各自可以是字串或 Mobject）。g.num / g.bar / g.den。"""
+    n = num if isinstance(num, Mobject) else M(num, frac, color)
+    d = den if isinstance(den, Mobject) else M(den, frac, color)
+    bar = Line(LEFT, RIGHT).set_stroke(color, 2.2).set_width(max(n.width, d.width) + 0.2)
+    g = VGroup(n, bar, d).arrange(DOWN, buff=gap)
+    g.num, g.bar, g.den = n, bar, d
+    return g
 
 
 def bgplate(name="glow_center"):
@@ -179,6 +219,12 @@ def _eyes(mood, centers, k=1.0, angle=0.0):
             e = Circle(.1 * k).set_stroke(_GLOW, 6 * k).move_to(c)
         elif mood == "flat":
             e = Line(c + _P(-.1, 0) * k, c + _P(.1, 0) * k).set_stroke(_GLOW, 7 * k)
+        elif mood == "sad":
+            e = ArcBetweenPoints(c + _P(-.1, -.06) * k, c + _P(.1, -.06) * k, angle=PI * .6).set_stroke(_GLOW, 7 * k)
+        elif mood == "think":    # 眼珠往右上看
+            e = Dot(c + _P(.05, .05) * k, radius=.075 * k, color=_GLOW)
+        elif mood == "closed":
+            e = ArcBetweenPoints(c + _P(-.1, .0) * k, c + _P(.1, .0) * k, angle=PI * .5).set_stroke(_GLOW, 6 * k)
         elif mood == "squint":   # 懷疑：一邊線一邊點
             e = Line(c + _P(-.1, .02) * k, c + _P(.1, -.02) * k).set_stroke(_GLOW, 7 * k) if c is centers[0] else Dot(c, radius=.085 * k, color=_GLOW)
         else:
@@ -197,9 +243,10 @@ class Plumb(VGroup):
       light_on()/light_off()（從內部發光）、sample_on()（尖端黏著發光樣本）、swing()、dive(距離)。
     說話：script 的 speaker 寫 mascot，場景呼叫 self.lipsync(plumb)；說話時眼睛的光暈隨音量變亮。"""
 
-    def __init__(self, scale=0.6):
+    def __init__(self, scale=0.6, top_y=None):
         super().__init__()
         self.k, self.angle = scale, 0.0
+        self.top_y = FH / 2 + .6 if top_y is None else top_y   # 繩子往上接到哪（鏡頭移動的場景要設成畫面上緣之外）
         cap = RoundedRectangle(corner_radius=.08, width=.68, height=.38).set_fill(_GOLD_D, 1).set_stroke(width=0).move_to(_P(0, 1.31))
         neck = Rectangle(width=.52, height=.2).set_fill(_GOLD_D, 1).set_stroke(width=0).move_to(_P(0, 1.07))
         body = Polygon(_P(-.95, .6), _P(-.6, 1.0), _P(.6, 1.0), _P(.95, .6), _P(0, -1.7)).set_fill(GOLD, 1).set_stroke(width=0)
@@ -218,9 +265,11 @@ class Plumb(VGroup):
                              for a in np.linspace(0, TAU, 10, endpoint=False)]).set_opacity(0)
         VGroup(self.bob, self.halo, self.rays).scale(scale, about_point=ORIGIN)
         self.rope = self._straight_rope()
-        self.rope.nocheck = True     # 繩子刻意伸出畫面上緣
+        self.rope.nocheck = True     # 繩子刻意伸出畫面上緣（越界不算）
+        self.rope.rope_check = True  # 但繩子穿過文字仍要抓
         self.nocheck_parts = [self.rope]
-        self.add(self.rope, self.halo, self.rays, self.bob)
+        self.bodyg = VGroup(self.halo, self.rays, self.bob)   # 常駐的子群組：旋轉、彈跳都對它做（臨時 VGroup 會被 Manim 拆出 Plumb）
+        self.add(self.rope, self.bodyg)
 
     # --- 位置與繩子 ---
     def center(self):
@@ -228,7 +277,7 @@ class Plumb(VGroup):
 
     def place(self, point):
         d = np.array(point) - self.center()
-        VGroup(self.bob, self.halo, self.rays).shift(d)
+        self.bodyg.shift(d) if hasattr(self, "bodyg") else VGroup(self.bob, self.halo, self.rays).shift(d)
         self.rope.become(self._straight_rope())
         return self
 
@@ -237,7 +286,7 @@ class Plumb(VGroup):
 
     def _straight_rope(self):
         h = self.hook.get_center()
-        top = FH / 2 + .6
+        top = self.top_y
         return self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)])
 
     def _question_rope(self):
@@ -302,7 +351,7 @@ class Plumb(VGroup):
         self.angle += delta
         h = self.hook.get_center() - c
         h2 = c + np.array([h[0] * np.cos(delta) - h[1] * np.sin(delta), h[0] * np.sin(delta) + h[1] * np.cos(delta), 0])
-        top = _P(self.rope.get_end()[0], FH / 2 + .6)
+        top = _P(self.rope.get_end()[0], self.top_y)
         mid = (top + h2) / 2 + _P(-.6 * np.sign(delta), 0)
         new_rope = self._rope([top, (top + mid) / 2, mid, (mid + h2) / 2, h2])
         return [Rotate(self.bob, delta, about_point=c), Rotate(self.halo, delta, about_point=c), Transform(self.rope, new_rope)]
@@ -313,28 +362,70 @@ class Plumb(VGroup):
         self.angle = 0.0
         tmp = self.bob.copy().rotate(d, about_point=c)
         h = tmp[8].get_center()
-        top = FH / 2 + .6
+        top = self.top_y
         return [Rotate(self.bob, d, about_point=c), Rotate(self.halo, d, about_point=c),
                 Transform(self.rope, self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)]))]
+
+    # --- 生動一點的動作（2026-11-07 使用者：表情和動作可以再生動） ---
+    def _body(self):
+        return self.bodyg
+
+    def hop(self, h=.3):
+        """彈跳＋擠壓伸展：先壓扁、彈起拉長、落地再壓扁回正。"""
+        body = self._body()
+        base = body.copy()
+        rope0 = self.rope.copy()
+
+        def upd(m, a):
+            y = h * np.sin(PI * a)
+            sq = 1 - .18 * np.sin(2 * PI * a) if a < .5 else 1 + .12 * np.sin(2 * PI * (a - .5))
+            body.become(base.copy().stretch(sq, 1, about_edge=DOWN).shift(UP * y))
+            self.rope.become(rope0.copy().shift(UP * y))
+        return [UpdateFromAlphaFunc(self, upd, rate_func=linear)]
+
+    def nod(self, n=2, angle=.18):
+        """點頭（同意、恍然大悟）。"""
+        c = self.hook.get_center()
+        return [Rotate(self._body(), angle, about_point=c, rate_func=lambda t: np.sin(n * PI * t) * (1 - t))]
+
+    def shake_head(self, n=3, angle=.12):
+        """搖頭（不對、不是這樣）。"""
+        c = self.hook.get_center()
+        return [Rotate(self._body(), angle, about_point=c, rate_func=lambda t: np.sin(2 * n * PI * t) * (1 - t))]
+
+    def tilt(self, angle=.25):
+        """歪頭（疑惑）；再呼叫 tilt(-angle) 回正。"""
+        return [Rotate(self._body(), angle, about_point=self.hook.get_center())]
+
+    def emote(self, sym="？", color=None, side=RIGHT):
+        """頭上冒出一個符號（？！…），回傳 (物件, 出現動畫)；之後自己 FadeOut。"""
+        t = Text(sym, font=FONT, font_size=fs(.07 * self.k / .3), color=color or GOLD, weight=BOLD)
+        t._frac, t._h0 = .07 * self.k / .3, t.height
+        t.move_to(self.facets.get_corner(UP + side) + (side * .25 + UP * .35) * self.k / .3)
+        t.overlap_ok = True
+        return t, [GrowFromPoint(t, self.facets.get_top(), rate_func=rate_functions.ease_out_back)]
 
     def swing(self, angle=.15, run=1.2):
         return [Rotate(self, angle, about_point=self.rope.get_end() if self.rope.get_end()[1] > self.rope.get_start()[1] else self.rope.get_start(),
                        rate_func=there_and_back, run_time=run)]
 
     def dive(self, dist=1.5):
-        g = VGroup(self.bob, self.halo, self.rays)
+        g = self.bodyg
         top = FH / 2 + .6
         h = self.hook.get_center() + DOWN * dist
+        top = self.top_y
         return [g.animate.shift(DOWN * dist), Transform(self.rope, self._rope([h + _P(0, (top - h[1]) * i / 8) for i in range(9)]))]
 
 
-def takeaway_card(lines, frac=.05, w=None):
-    """收尾：「這集重點：」＋一句話重點（內容要過查核）。"""
-    body = VGroup(*[B(s, frac, GOLD) for s in ([lines] if isinstance(lines, str) else lines)]).arrange(DOWN, buff=.12)
-    head = T("這集重點：", .04, MUTED)
-    inner = VGroup(head, body).arrange(DOWN, buff=.2)
-    box = RoundedRectangle(corner_radius=.18, width=(w or inner.width + .8), height=inner.height + .6).set_fill(SEA, 1).set_stroke(GOLD, 3)
-    return VGroup(box, inner.move_to(box))
+def takeaway_card(lines, frac=.055, w=None):
+    """收尾（v3 細線風格）：小字「這集重點」＋左側一條金色細線＋重點句（米白）。不用框、不用粗體。內容要過查核。"""
+    body = VGroup(*[T(s, frac, TXT_STRONG) for s in ([lines] if isinstance(lines, str) else lines)]).arrange(DOWN, buff=.28, aligned_edge=LEFT)
+    head = T("這集重點", .04, GOLD)
+    inner = VGroup(head, body).arrange(DOWN, buff=.35, aligned_edge=LEFT)
+    rule = Line(UP, DOWN).set_stroke(GOLD, 2, .9).set_height(inner.height + .2).next_to(inner, LEFT, buff=.35)
+    g = VGroup(rule, inner)
+    g.rule, g.head, g.body = rule, head, body
+    return g
 
 
 # ---------------- 通用動作與元件（PoC 證明好用的） ----------------
@@ -482,24 +573,27 @@ def confetti(center, n=40, seed=3, colors=None):
     return bits, anims
 
 
-# ---------------- 章節卡、進度條 ----------------
+# ---------------- 章節標題、進度條 ----------------
 def chapter_card(n, title, subtitle=None):
-    """斜切的章節卡：深海色塊＋金色圓章大號數字＋章名。"""
-    w = FW + 3.0
-    panel = Polygon([-w / 2 - 1.2, -FH / 2 - 0.3, 0], [w / 2 - 1.2, -FH / 2 - 0.3, 0], [w / 2 + 1.2, FH / 2 + 0.3, 0], [-w / 2 + 1.2, FH / 2 + 0.3, 0])
-    panel.set_fill(SEA, 1).set_stroke(GOLD, 0)
-    edge = Line([w / 2 - 1.2, -FH / 2 - 0.3, 0], [w / 2 + 1.2, FH / 2 + 0.3, 0]).set_stroke(GOLD, 10)
-    shadow = panel.copy().set_fill(SCREEN, 1).shift(RIGHT * 0.5)
-    circ = Circle(0.85).set_fill(GOLD, 1).set_stroke(width=0)
-    nn = B(str(n), 0.12, SCREEN).move_to(circ)
-    ttl = B(title, 0.085, TXT_STRONG)
-    sub = T(subtitle or TL_.get("title", ""), 0.04, MUTED)
-    head = VGroup(VGroup(circ, nn), ttl).arrange(RIGHT, buff=0.5)
-    content = VGroup(head, sub).arrange(DOWN, buff=0.35).move_to(UP * 0.35)
-    g = VGroup(shadow, panel, edge, content)
-    g.nocheck = True
-    g.content = content
-    g.set_z_index(500)
+    """章節標題（v3，2026-11-08）：主畫面正中，細金線上方是襯線數字、下方是章名。不用整面色塊掃過。
+    上一場收尾時寫出來；下一場開頭由 open_chapter() 把它變形成左上角的章節標籤（同一個物件縮過去，不是換一個）。"""
+    nn = M(str(n), .085, GOLD)
+    rule = Line(LEFT * .9, RIGHT * .9).set_stroke(GOLD, 1.5, .8)
+    ttl = T(title, .062, TXT_STRONG)
+    g = VGroup(nn, rule, ttl).arrange(DOWN, buff=.28).move_to([0, MIDY, 0])
+    g.num, g.rule, g.ttl = nn, rule, ttl
+    g.chrome = True
+    return g
+
+
+def chapter_tag_mob(n, text):
+    nn = M(str(n), .045, GOLD)
+    rule = Line(UP * .14, DOWN * .14).set_stroke(GOLD, 1.5, .8)
+    t = T(text, .038, MUTED)
+    g = VGroup(nn, rule, t).arrange(RIGHT, buff=.18)
+    g.move_to([XL, TOP + .02, 0], aligned_edge=UL)
+    g.num, g.rule, g.ttl = nn, rule, t
+    g.chrome = True
     return g
 
 
@@ -513,6 +607,9 @@ class Timed(MovingCameraScene):
     """旁白錨定的場景基底。時間全部來自 timeline.json（旁白先行），不寫絕對秒數。"""
     SID = None
     BG = "glow_center"
+    LAY = S.get("layout", {})
+    HUD = False      # v4：不放頂端進度條（框架元素讓畫面像投影片）
+    CARDS = False    # v4：不放章節卡與角落章節標籤；章節只寫進 YouTube 說明欄（chapters.txt）
 
     def setup(self):
         super().setup()
@@ -521,27 +618,34 @@ class Timed(MovingCameraScene):
         self.idx = [s["id"] for s in TL_["scenes"]].index(self.SID)
         self.t, self.f = 0.0, 0
         self.zone_check = True
-        self.add(bgplate(self.sc.get("bg", self.BG)))
-        self.hud = self.make_hud()
-        self.add(self.hud)
-        self.chap_now = self.sc.get("chapter")
+        self.last_anim_end = 0.0
+        self.seen = {}          # id(頂層物件) → [出現時間, 物件]（停留時間檢查）
+        self.balance_log = []   # (時間, 內容中心偏移, 內容高度比例)
+        self.faded = set()      # 被 FadeOut／Uncreate 這類動畫拿掉的物件（停留檢查只看這些；鏡頭移開、變形成別的不算）
+        bg = self.sc.get("bg", self.BG)
+        if bg != "flat":                 # flat＝平面底色（v4 預設；鏡頭移動時背景也不會露邊）
+            self.add(bgplate(bg))
+        self.hud = self.make_hud() if self.HUD else VGroup()
+        if self.HUD:
+            self.add(self.hud)
+        self.chap_now = self.sc.get("chapter") if self.CARDS else None
         nxt = TL_["scenes"][self.idx + 1] if self.idx + 1 < len(TL_["scenes"]) else None
-        self.next_chapter = nxt.get("chapter") if nxt else None
+        self.next_chapter = nxt.get("chapter") if (nxt and self.CARDS) else None
         self.card = None
         if self.chap_now:
             self.card = chapter_card(*self.chap_now)
             self.add(self.card)
 
     def make_hud(self):
-        """頂端的細進度條（全片時間），章節處有刻度。片尾畫面時段淡出。"""
+        """頂端的細進度條（全片時間），章節處有刻度。"""
         total = TL_["duration"] - TL_.get("end_screen", 0)
         starts = [s["start"] for s in TL_["scenes"] if s.get("chapter")]
         y = FH / 2 - 0.16
         x0, x1 = -FW / 2 + 0.3, FW / 2 - 0.3
-        track = Line([x0, y, 0], [x1, y, 0]).set_stroke(TXT, 3, 0.12)
-        ticks = VGroup(*[Line([x0 + (x1 - x0) * st / total, y - 0.05, 0], [x0 + (x1 - x0) * st / total, y + 0.05, 0]).set_stroke(TXT, 2, 0.35) for st in starts])
+        track = Line([x0, y, 0], [x1, y, 0]).set_stroke(TXT, 2, 0.1)
+        ticks = VGroup(*[Line([x0 + (x1 - x0) * st / total, y - 0.05, 0], [x0 + (x1 - x0) * st / total, y + 0.05, 0]).set_stroke(TXT, 1.5, 0.3) for st in starts])
         t0 = self.sc["start"]
-        fill = Line([x0, y, 0], [x0 + 0.001, y, 0]).set_stroke(GOLD, 3, 0.9)
+        fill = Line([x0, y, 0], [x0 + 0.001, y, 0]).set_stroke(GOLD, 2, 0.8)
 
         def upd(m):
             g = (t0 + self.renderer.time) / total
@@ -576,76 +680,112 @@ class Timed(MovingCameraScene):
         if sfx:
             for k in (sfx if isinstance(sfx, (list, tuple)) else [sfx]):
                 self.sfx(k, gain=gain)
+        self.anim_start = self.f / fps
+
+        def _flat(xs):
+            for x in xs:
+                yield x
+                yield from _flat(getattr(x, "animations", []) or [])
+        self.faded |= {id(a.mobject) for a in _flat(anims) if getattr(a, "remover", False)}
         if anims:
             n = max(1, round(run_time * fps))
             self.play(*anims, run_time=n / fps, **kw)
             self.f += n
+            self.last_anim_end = self.f / fps
         self.t = self.f / fps
         self.check()
 
-    # --- 轉場 ---
-    def card_out(self, t=0.75):
-        if self.card is None:
-            return
-        self.at(t, self.card.animate(rate_func=rate_functions.ease_in_cubic).shift(LEFT * (FW + 4)), run_time=0.55, sfx="whoosh", gain=0.8)
-        self.remove(self.card)
+    # --- 鏡頭（v4：一張大圖，鏡頭跟著走） ---
+    @staticmethod
+    def view(p, width=None):
+        """讓世界座標 p 落在主畫面中心時，鏡頭中心該在哪（主畫面中心比畫面中心高 MIDY）。"""
+        w = width or FW
+        return np.array(p, dtype=float) - UP * MIDY * w / FW
 
-    def whip_in(self, *mobs, t=0.0, run=0.5):
-        g = Group(*mobs)
-        g.shift(RIGHT * FW)
-        self.add(*mobs)
-        self.at(t, g.animate(rate_func=rate_functions.ease_out_cubic).shift(LEFT * FW), run_time=run)
+    def cam_set(self, p, width=None):
+        """不播動畫，直接設定鏡頭（場景開頭接上一場最後一格用）。"""
+        self.camera.frame.set(width=width or FW).move_to(self.view(p, width))
+
+    def cam(self, p, width=None):
+        """鏡頭移到 p（世界座標，會落在主畫面中心），寬度 width。回傳動畫，放進 at()。"""
+        return self.camera.frame.animate.set(width=width or FW).move_to(self.view(p, width))
+
+    def screen_pt(self, fx, fy):
+        """畫面比例座標（0–1，左上原點）→ 目前鏡頭下的世界座標。"""
+        f = self.camera.frame
+        return f.get_center() + np.array([(fx - .5) * f.width, (.5 - fy) * f.height, 0])
+
+    # --- 轉場（v3：不甩、不掃；內容淡出、章名在正中寫出，下一場把章名縮成左上角標籤） ---
+    def open_chapter(self, t=0.35, run=0.7):
+        """場景開頭：上一場留下的章節標題變形成左上角標籤。回傳標籤。"""
+        if self.card is None:
+            return None
+        tag_ = chapter_tag_mob(*self.chap_now)
+        self.at(t, ReplacementTransform(self.card, tag_), run_time=run)
+        self.tag_mob = tag_
+        return tag_
+
+    def card_out(self, t=0.35):   # 舊名，相容
+        return self.open_chapter(t)
 
     def content(self):
-        return [m for m in self.mobjects if m is not self.hud and not isinstance(m, ImageMobject) and m is not self.card]
+        return [m for m in self.mobjects if m is not self.hud and m is not self.camera.frame and not isinstance(m, ImageMobject)]
+
+    def _hold_check(self, exit_start):
+        fps = config.frame_rate
+        hold = exit_start / fps - self.last_anim_end
+        need = self.LAY.get("min_end_hold", 2.0)
+        if hold < need - 1e-3:
+            self.problems.append(f"{self.SID}: 收尾停留只有 {hold:.2f}s（至少 {need}s）：最後一個動作結束後要讓觀眾看清楚再轉場")
 
     def finish(self, mode=None):
-        """場景收尾：card＝下一場有章節時蓋上章節卡；whip＝往左甩出；fade＝淡出；none；
-        endscreen＝最後一場：內容淡出，留下 end_screen 秒乾淨畫面給 YouTube 片尾元素。預設依 timeline 判斷。"""
+        """場景收尾：card＝內容淡出、正中寫出下一章的章名；fade＝內容淡出；none；
+        endscreen＝最後一場：內容淡出，留下 end_screen 秒乾淨畫面。預設依 timeline 判斷。
+        轉場開始前，最後一個動作至少要停 min_end_hold 秒（程式檢查）。"""
         fps = config.frame_rate
         end = self.sc["frames"]
         last = self.idx + 1 == len(TL_["scenes"])
         if mode is None:
-            mode = "endscreen" if last else ("card" if self.next_chapter else "whip")
+            mode = "endscreen" if last else ("card" if self.next_chapter else ("none" if not self.CARDS else "fade"))
         if self.f > end:
             self.problems.append(f"{self.SID}: animations overrun the scene by {(self.f - end) / fps:.2f}s")
+        nf = round(0.6 * fps)
         if mode == "card":
-            n_in = round(0.5 * fps)
-            start = end - round(1.15 * fps)
+            nw = round(0.8 * fps)
+            start = end - nf - nw - round(0.35 * fps)
+            self._hold_check(start)
+            if self.f < start:
+                self.wait((start - self.f) / fps)
+                self.f = start
+            mobs = [m for m in self.content()]
+            self.sfx("swoosh", gain=0.5)
+            self.play(*[FadeOut(m) for m in mobs], run_time=nf / fps)
+            self.f += nf
             card = chapter_card(*self.next_chapter)
-            card.shift(RIGHT * (FW + 4))
-            self.at(start / fps, card.animate(rate_func=rate_functions.ease_out_cubic).shift(LEFT * (FW + 4)), run_time=n_in / fps, sfx="swoosh", gain=0.9)
-            self.wait((end - self.f) / fps)
+            self.play(LaggedStart(FadeIn(card.num, shift=UP * .1), Create(card.rule), Write(card.ttl), lag_ratio=.25), run_time=nw / fps)
+            self.f += nw
+            self.wait(max(0, end - self.f) / fps)
             self.f = end
-        elif mode == "whip":
-            n = round(0.45 * fps)
-            if self.f < end - n:
-                self.wait((end - n - self.f) / fps)
-                self.f = end - n
-            mobs = self.content()
-            if mobs:
-                self.sfx("whoosh", gain=0.7)
-                self.play(Group(*mobs).animate(rate_func=rate_functions.ease_in_cubic).shift(LEFT * FW), run_time=(end - self.f) / fps)
-                self.f = end
         elif mode == "endscreen":
             es = round(TL_.get("end_screen", 20) * fps)
             clean = end - es
             n = round(0.8 * fps)
+            self._hold_check(clean - n)
             if self.f > clean - n:
                 self.problems.append(f"{self.SID}: 內容侵入片尾畫面時段（{(self.f - clean + n) / fps:.2f}s）")
             else:
                 self.wait((clean - n - self.f) / fps)
                 self.f = clean - n
-            self.play(*[FadeOut(m) for m in self.mobjects if not isinstance(m, ImageMobject)], run_time=n / fps)
+            self.play(*[FadeOut(m) for m in self.content()], run_time=n / fps)
             self.f += n
             self.wait(max(0, end - self.f) / fps)
             self.f = end
         elif mode == "fade":
-            n = round(0.8 * fps)
-            if self.f < end - n:
-                self.wait((end - n - self.f) / fps)
-                self.f = end - n
-            self.play(*[FadeOut(m) for m in self.mobjects if m is not self.hud], FadeOut(self.hud), run_time=(end - self.f) / fps)
+            self._hold_check(end - nf)
+            if self.f < end - nf:
+                self.wait((end - nf - self.f) / fps)
+                self.f = end - nf
+            self.play(*[FadeOut(m) for m in self.content()], run_time=(end - self.f) / fps)
             self.f = end
         else:
             if self.f < end:
@@ -653,11 +793,7 @@ class Timed(MovingCameraScene):
                 self.f = end
 
     def chapter_tag(self, num_, text):
-        circ = Circle(0.25).set_fill(GOLD, 1).set_stroke(width=0)
-        n = B(str(num_), 0.038, SCREEN).move_to(circ)
-        g = VGroup(VGroup(circ, n), T(text, 0.038, MUTED)).arrange(RIGHT, buff=0.15)
-        g.move_to([XL, TOP - 0.05, 0], aligned_edge=UL)
-        return g
+        return chapter_tag_mob(num_, text)
 
     # --- 嘴型同步（依該說話者的音檔音量） ---
     def lipsync(self, who, speaker="mascot"):
@@ -699,9 +835,12 @@ class Timed(MovingCameraScene):
         who.talk.add_updater(upd)
 
     # --- 版面檢查（每個 at() 之後） ---
-    # 三項：(1) 越界：超出安全邊界或壓到字幕區；(2) 元素重疊：兩個頂層元素部分重疊；(3) 實際字級：被 scale 縮到低於下限。
-    # 刻意的重疊（印章蓋在東西上、箭頭碰到公式）在其中一個物件設 overlap_ok = True。
-    OVERLAP_MIN, OVERLAP_MAX = 0.04, 0.85   # 重疊面積／較小者面積：太小是擦邊，太大是刻意的包含（例如框住文字）
+    # (1) 越界：超出安全邊界或壓到字幕區；(2) 元素重疊：兩個頂層元素部分重疊；(3) 實際字級：被 scale 縮到低於下限；
+    # (4) 字壓字：任兩段文字的框重疊（不看 overlap_ok，只看 cross_ok）；(5) 線穿字、線穿點：細線經過別人的文字或圓點；
+    # (6) 版面平衡：內容的中心偏離主畫面中心、或內容太扁（擠在上半部）；(7) 停留：元素出現不到 min_dwell 秒就被拿掉。
+    # 刻意的重疊（印章蓋在東西上）在物件設 overlap_ok = True；刻意讓線穿過文字（刪除線）設 cross_ok = True；
+    # 刻意一閃而過的設 transient = True。章節標籤等「框架」元素設 chrome = True（不算進版面平衡）。
+    OVERLAP_MIN, OVERLAP_MAX = 0.04, 0.85
 
     def _visible_bbox(self, top, frame):
         skip = {id(x) for p in getattr(top, "nocheck_parts", []) for x in p.get_family()}
@@ -712,48 +851,205 @@ class Timed(MovingCameraScene):
 
     @staticmethod
     def _label(m):
+        if isinstance(m, Text):
+            return f"「{m.text[:12]}」"
         t = next((x for x in m.get_family() if isinstance(x, Text)), None)
         return f"{m.__class__.__name__}「{t.text[:12]}」" if t is not None else m.__class__.__name__
+
+    @staticmethod
+    def _flag(m, top, name):
+        return getattr(m, name, False) or getattr(top, name, False)
+
+    def _solids(self, top):
+        """頂層物件裡看得見的實心部件（文字、填色形狀），回傳 (物件, 左下, 右上)。"""
+        out, stack = [], [top]
+        while stack:
+            m = stack.pop()
+            if getattr(m, "nocheck", False) or getattr(m, "overlap_ok", False) and m is not top:
+                continue
+            if isinstance(m, Text):
+                if m.get_fill_opacity() > 0.3 and m.text.strip():
+                    out.append((m, m.get_corner(DL)[:2], m.get_corner(UR)[:2]))
+                continue
+            if isinstance(m, VMobject) and m.has_points() and m.get_fill_opacity() > 0.3 and m.width > 0.02:
+                out.append((m, m.get_corner(DL)[:2], m.get_corner(UR)[:2]))
+            stack.extend(m.submobjects)
+        return out
+
+    def _parts(self, top):
+        """頂層物件裡看得見的文字、細線、圓點。"""
+        texts, lines, dots = [], [], []
+        stack = [(top, False, False)]
+        while stack:
+            m, cross, nchk = stack.pop()
+            cross = cross or getattr(m, "cross_ok", False)
+            if getattr(m, "rope_check", False):
+                lines.append((m, cross))
+                continue
+            nchk = nchk or getattr(m, "nocheck", False)
+            if nchk:
+                continue
+            if isinstance(m, Text):
+                if m.get_fill_opacity() > 0.3 and len(m.text.strip()) > 0:
+                    texts.append((m, cross))
+                continue
+            if isinstance(m, Dot) or (isinstance(m, Circle) and m.get_fill_opacity() > 0.5):
+                if m.get_fill_opacity() > 0.3:
+                    dots.append((m, cross))
+                continue
+            if isinstance(m, VMobject) and m.has_points() and m.get_fill_opacity() < 0.05 and m.get_stroke_width() > 0 \
+                    and m.get_stroke_opacity() > 0.3 and max(m.width, m.height) > 0.5:
+                if getattr(top, "dots_ok", False):
+                    m.dots_ok = True
+                lines.append((m, cross))
+            stack.extend((c, cross, nchk) for c in m.submobjects)
+        return texts, lines, dots
 
     def check(self):
         if not self.zone_check:
             return
+        L = self.LAY
         frame = self.camera.frame
         mx, my = S["zones"]["safe_margin_x"], S["zones"]["safe_margin_y"]
         sub_y0 = zone("subtitle")[1]
-        boxes = []
+        boxes, visible = [], set()
         for top in self.mobjects:
-            if getattr(top, "nocheck", False) or isinstance(top, ImageMobject) or top is self.hud:
+            if getattr(top, "nocheck", False) or isinstance(top, ImageMobject) or top is self.hud or top is self.camera.frame:
                 continue
             b = self._visible_bbox(top, frame)
             if b is None:
                 continue
-            if b[2] < 0 or b[0] > 1 or b[3] < 0 or b[1] > 1:   # 完全在畫面外（甩鏡、等著掉進來的物件）
+            if b[2] < 0 or b[0] > 1 or b[3] < 0 or b[1] > 1:
+                continue
+            visible.add(id(top))
+            # 鏡頭移動時，長線條本來就會延伸到畫面外（只有線、沒有字和填色），不算越界
+            off_cam = b[0] < 0 or b[2] > 1 or b[1] < 0 or b[3] > 1
+            line_only = not any(isinstance(x, Text) or (x.has_points() and x.get_fill_opacity() > .05)
+                                for x in top.family_members_with_points() if isinstance(x, VMobject))
+            if off_cam and line_only:
+                boxes.append((top, b))
                 continue
             if b[3] > sub_y0 + 3e-3 or b[0] < mx - 3e-3 or b[2] > 1 - mx + 3e-3 or b[1] < my - 3e-3:
                 self.problems.append(f"{self.SID} t={self.t:.2f}s {self._label(top)} outside zones {[round(float(x), 3) for x in b]}")
             boxes.append((top, b))
-            for x in top.get_family():           # 實際字級
+            for x in top.get_family():
                 if getattr(x, "_frac", None) and x._h0 > 0 and x.get_fill_opacity() > 0.05:
-                    eff = x._frac * x.height / x._h0
+                    eff = x._frac * x.height / x._h0 * FW / frame.width   # 鏡頭拉遠，字也跟著變小
                     if eff < S["min_text_frac"] - 1e-3:
                         self.problems.append(f"{self.SID} t={self.t:.2f}s 字被縮小到 {eff:.3f}（下限 {S['min_text_frac']}）：{x.text[:12]}")
-        for i in range(len(boxes)):              # 元素重疊
-            for j in range(i + 1, len(boxes)):
-                (ma, a), (mb, b) = boxes[i], boxes[j]
+        sol = [(top, self._solids(top)) for top, _ in boxes]
+        for i in range(len(sol)):
+            for j in range(i + 1, len(sol)):
+                (ma, A_), (mb, B_) = sol[i], sol[j]
                 if getattr(ma, "overlap_ok", False) or getattr(mb, "overlap_ok", False):
                     continue
-                w = min(a[2], b[2]) - max(a[0], b[0])
-                h = min(a[3], b[3]) - max(a[1], b[1])
-                if w <= 0 or h <= 0:
+                hit = None
+                for xa, a0, a1 in A_:
+                    for xb, b0, b1 in B_:
+                        w = min(a1[0], b1[0]) - max(a0[0], b0[0])
+                        h = min(a1[1], b1[1]) - max(a0[1], b0[1])
+                        if w <= 0 or h <= 0:
+                            continue
+                        small = min((a1 - a0).prod(), (b1 - b0).prod())
+                        r = w * h / max(small, 1e-9)
+                        if self.OVERLAP_MIN < r < self.OVERLAP_MAX:
+                            hit = (r, xa, xb)
+                            break
+                    if hit:
+                        break
+                if hit:
+                    self.problems.append(f"{self.SID} t={self.t:.2f}s 重疊 {hit[0]:.0%}：{self._label(ma)}／{self._label(hit[1])} × {self._label(mb)}／{self._label(hit[2])}")
+        self._fine_check([t for t, _ in boxes])
+        self._balance([(t, b) for t, b in boxes if not getattr(t, "chrome", False)])
+        # 停留時間
+        now = self.t
+        for top, _ in boxes:
+            if id(top) not in self.seen:
+                self.seen[id(top)] = [now, top]
+        for k in list(self.seen):
+            if k not in visible:
+                t0, m = self.seen.pop(k)
+                dwell = getattr(self, "anim_start", now) - t0
+                if k in self.faded and dwell < L.get("min_dwell", 1.5) - 1e-3 and not getattr(m, "transient", False) \
+                        and not getattr(m, "chrome", False):
+                    self.problems.append(f"{self.SID} t={t0:.2f}s {self._label(m)} 只停留 {dwell:.2f}s 就被拿掉（至少 {L.get('min_dwell', 1.5)}s）")
+
+    def _fine_check(self, tops):
+        pad = self.LAY.get("line_text_pad", 0.06)
+        T_, Ln, Dt = [], [], []
+        for k, top in enumerate(tops):
+            a, b, c = self._parts(top)
+            T_ += [(m, cr, k) for m, cr in a]
+            Ln += [(m, cr, k) for m, cr in b]
+            Dt += [(m, cr, k) for m, cr in c]
+        boxes = [(m, cr, k, m.get_corner(DL)[:2], m.get_corner(UR)[:2]) for m, cr, k in T_]
+        # 字壓字
+        for i in range(len(boxes)):
+            for j in range(i + 1, len(boxes)):
+                ma, ca, _, a0, a1 = boxes[i]
+                mb, cb, _, b0, b1 = boxes[j]
+                if ca or cb:
                     continue
-                small = min((a[2] - a[0]) * (a[3] - a[1]), (b[2] - b[0]) * (b[3] - b[1]))
-                r = w * h / max(small, 1e-9)
-                if self.OVERLAP_MIN < r < self.OVERLAP_MAX:
-                    self.problems.append(f"{self.SID} t={self.t:.2f}s 重疊 {r:.0%}：{self._label(ma)} × {self._label(mb)}")
+                w = min(a1[0], b1[0]) - max(a0[0], b0[0])
+                h = min(a1[1], b1[1]) - max(a0[1], b0[1])
+                if w > 0.02 and h > 0.02:
+                    small = min((a1 - a0).prod(), (b1 - b0).prod())
+                    if w * h > 0.08 * small:
+                        self.problems.append(f"{self.SID} t={self.t:.2f}s 字壓字：{self._label(ma)} × {self._label(mb)}")
+        # 線穿字、線穿點
+        for ln, cr, k in Ln:
+            if cr:
+                continue
+            pts = np.array([ln.point_from_proportion(u) for u in np.linspace(0.02, 0.98, 80)])[:, :2]
+            ends = np.array([ln.get_start()[:2], ln.get_end()[:2]])
+            for m, tcr, tk, lo, hi in boxes:
+                if tcr:
+                    continue
+                inside = np.all((pts > lo - pad) & (pts < hi + pad), axis=1)
+                if inside.sum() >= 2:
+                    self.problems.append(f"{self.SID} t={self.t:.2f}s 線穿過文字：{self._label(ln)} × {self._label(m)}")
+            for d, dcr, dk in Dt:
+                if dcr or getattr(ln, "dots_ok", False):
+                    continue
+                c, r = d.get_center()[:2], d.width / 2
+                if np.min(np.linalg.norm(ends - c, axis=1)) < r + 0.08:   # 線的端點接在這個點上：正常
+                    continue
+                if np.min(np.linalg.norm(pts - c, axis=1)) < r * 0.9:
+                    self.problems.append(f"{self.SID} t={self.t:.2f}s 線穿過圓點：{self._label(ln)} 經過 {self._label(d)}")
+
+    def _balance(self, boxes):
+        if not boxes or self.t < 0.5:
+            return
+        x0 = min(b[0] for _, b in boxes); y0 = min(b[1] for _, b in boxes)
+        x1 = max(b[2] for _, b in boxes); y1 = max(b[3] for _, b in boxes)
+        mz = zone("main")
+        mh = mz[3] - mz[1]
+        off = ((y0 + y1) / 2 - (mz[1] + mz[3]) / 2) / mh   # 正＝偏下，負＝偏上
+        fill = (y1 - y0) / mh
+        self.balance_log.append((self.t, off, fill))
+
+    def _balance_report(self):
+        L = self.LAY
+        tol, mf = L.get("balance_tol", 0.14), L.get("min_fill_h", 0.45)
+        log = self.balance_log
+        bad = []
+        for (t, off, fill), nxt in zip(log, log[1:] + [(self.f / config.frame_rate, 0, 0)]):
+            dur = nxt[0] - t
+            if dur <= 0:
+                continue
+            # 偏上／偏下；或內容夠多（> mf 的一半高）卻把主畫面下方 30% 空著
+            if abs(off) > tol:
+                bad.append((t, dur, off, fill))
+        total = sum(x[1] for x in bad)
+        for t, dur, off, fill in bad:
+            if dur >= 1.0:
+                why = f"內容中心偏{'上（下方空著）' if off < 0 else '下'} {abs(off):.0%}"
+                self.problems.append(f"{self.SID} t={t:.2f}s 版面不平衡（{dur:.1f}s）：{why.strip()}")
+        return total
 
     def tear_down(self):
         super().tear_down()
+        self._balance_report()
         ODIR.mkdir(parents=True, exist_ok=True)
         (ODIR / f"layout-{self.SID}.txt").write_text("\n".join(dict.fromkeys(self.problems)) or "OK")
         (ODIR / f"sfx-{self.SID}.json").write_text(json.dumps(self.cues))

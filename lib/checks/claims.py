@@ -13,7 +13,8 @@ tag ∈ card_claim | prerequisite | illustration | framing | fixed_line
 3. card_claim 句子裡的每個數字都要在引用主張（含限定條件、比較對象）的文字裡找得到；找不到列給 LLM 判斷（可能寫法不同，例如「三成」對「31%」）。
 4. framing 句子掃描數字、比較詞、因果詞；掃到就列進關卡 3 的審查包。
 5. prerequisite 句子的單位數比例 ≤ 1/3（暫定）。
-6. illustration 句子有數字時，畫面上要有「示意」標籤（列出來讓視覺檢查員確認）。
+6. illustration 句子（含畫面文字）有數字時，旁白要交代這是舉例：同一句或同一場較前面的句子要有
+   「假設／舉個例子／比方說／例如／舉例」（使用者 2026-11-08：畫面不放「示意」標籤，改在旁白說）。
 7. fixed_line 必須和 rules/fixed-lines.md 的模板相符（只能填變數）。
 8. 代入計算（使用者 2026-11-07 同意）：card_claim 可以有 "calc": {"expr": "1/(60+3)+1/(60+3)", "result": "0.0317"}。
    程式驗算 expr（只允許數字與 + - * / ( )），結果要和 result 相符（依 result 的小數位數四捨五入）；
@@ -32,6 +33,7 @@ from textutil import units  # noqa: E402
 TAGS = {"card_claim", "prerequisite", "illustration", "framing", "fixed_line"}
 NUM = re.compile(r"\d+(?:\.\d+)?%?|[一二三四五六七八九十百千萬億兩]+(?:成|倍|個百分點|分之)")
 COMPARE = re.compile(r"更|最|比|超過|不到|勝過|贏|輸|提升|下降|高於|低於|倍|全部|都|從不|總是|一定|幾乎|大幅|完全")
+EXAMPLE = re.compile(r"假設|舉個例子|舉例|比方說|比如|例如")
 CAUSAL = re.compile(r"因為|所以|導致|造成|使得|讓.*變|因此|由於|結果")
 
 
@@ -124,9 +126,25 @@ def main():
     total = sum(units(s["display"]) for s in sents)
     prereq = 0
     pats = fixed_templates()
-    items = [(s["id"], s["display"], S.get(s["id"])) for s in sents]
-    items += [(f"畫面：{t}", t, SCR.get(t)) for s in sents for t in s.get("screen", [])]
-    for key, text, rec in items:
+    # 每句之前（含本句），同一場有沒有用口語交代「這是舉例」
+    told = {}
+    for sc in spec["scenes"]:
+        seen = False
+        for s in sc["sentences"]:
+            seen = seen or bool(EXAMPLE.search(s.get("say") or s["display"]))
+            told[s["id"]] = seen
+    # 已經用「舉例」交代過的數字：之後再提到（例如 n3 回頭提 sc01 的 0.83）不必再說一次
+    shown, ok_before = set(), {}
+    for s in sents:
+        ok_before[s["id"]] = set(shown)
+        if told[s["id"]]:
+            texts = [s["display"]] + [t for t in s.get("screen", []) if (SCR.get(t) or {}).get("tag") == "illustration"]
+            if (S.get(s["id"]) or {}).get("tag") == "illustration" or len(texts) > 1:
+                for t in texts:
+                    shown |= nums(t)
+    items = [(s["id"], s["display"], S.get(s["id"]), s["id"]) for s in sents]
+    items += [(f"畫面：{t}", t, SCR.get(t), s["id"]) for s in sents for t in s.get("screen", [])]
+    for key, text, rec, owner in items:
         if not rec:
             problems.append(f"{key} 沒有標記")
             continue
@@ -163,8 +181,8 @@ def main():
                 flagged.append(f"{key}（framing）含 {hit}：{text}")
         elif tag == "prerequisite":
             prereq += units(text) if not key.startswith("畫面") else 0
-        elif tag == "illustration" and nums(text):
-            flagged.append(f"{key}（illustration）有數字，畫面要標「示意」：{text}")
+        elif tag == "illustration" and nums(text) and not told.get(owner) and not nums(text) <= ok_before.get(owner, set()):
+            problems.append(f"{key}（illustration）有數字，但旁白到這句為止沒有說這是舉例（假設／舉個例子／比方說／例如）：{text}")
         elif tag == "fixed_line" and pats and not any(p.match(text) for p in pats):
             problems.append(f"{key} 是 fixed_line 但和模板不符（只能填變數）：{text}")
         if rec.get("verdict") == "fail":

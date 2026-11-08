@@ -1,27 +1,95 @@
 {
   "_note": "全頻道共用的版面與配色。座標以畫面比例表示（0–1，左上為原點）。品牌哲學「深處的光」：深海底、金色只給最重要的一個元素。來源：rules/from-social-media/brand-and-layouts.md §2",
-  "bg": {"deep": "#032027", "sea": "#01353F", "panel": "#0B4450", "screen": "#021A20"},
+  "bg": {
+    "deep": "#032027",
+    "sea": "#01353F",
+    "panel": "#0B4450",
+    "screen": "#021A20"
+  },
   "text": "#F2E0C0",
   "text_strong": "#FFF6E6",
   "muted": "#8FB3B0",
   "dim": "#4E7A7C",
-  "brand": {"beige": "#F2E0C0", "teal": "#076876", "sea": "#01353F", "gold": "#DDA642",
-            "teal_light": "#69B4AA", "teal_mid": "#1F8A8D", "abyss": "#032027"},
-  "role": {"accent": "#DDA642", "good": "#8BD17C", "bad": "#FF7A6B", "neutral": "#8FB3B0"},
-  "concept_pool": ["#FF9F5A", "#7EC8F2", "#C9A7FF", "#FF8FB1", "#B5E36A", "#5FE0C8"],
+  "brand": {
+    "beige": "#F2E0C0",
+    "teal": "#076876",
+    "sea": "#01353F",
+    "gold": "#DDA642",
+    "teal_light": "#69B4AA",
+    "teal_mid": "#1F8A8D",
+    "abyss": "#032027"
+  },
+  "role": {
+    "accent": "#DDA642",
+    "good": "#8BD17C",
+    "bad": "#FF7A6B",
+    "neutral": "#8FB3B0"
+  },
+  "concept_pool": [
+    "#FF9F5A",
+    "#7EC8F2",
+    "#C9A7FF",
+    "#FF8FB1",
+    "#B5E36A",
+    "#5FE0C8"
+  ],
   "_concept_note": "2026-11-07 手機校準：移除淺黃（太像金色強調）。橘（0）與粉（3）不要和「錯誤」紅（role.bad）用在同一個畫面。",
   "concept_max": 5,
   "zones": {
-    "safe_margin_x": 0.05, "safe_margin_y": 0.05,
-    "main":       [0.05, 0.05, 0.95, 0.74],
-    "annotation": [0.05, 0.74, 0.95, 0.80],
-    "subtitle":   [0.05, 0.80, 0.95, 0.95]
+    "safe_margin_x": 0.05,
+    "safe_margin_y": 0.05,
+    "main": [
+      0.05,
+      0.06,
+      0.95,
+      0.78
+    ],
+    "annotation": [
+      0.05,
+      0.78,
+      0.95,
+      0.82
+    ],
+    "subtitle": [
+      0.05,
+      0.82,
+      0.95,
+      0.95
+    ]
   },
-  "grid": [6, 6],
+  "grid": [
+    6,
+    6
+  ],
   "font": "Noto Sans CJK TC",
-  "font_files": ["assets/fonts/NotoSansCJKtc-Regular.otf", "assets/fonts/NotoSansCJKtc-Bold.otf"],
+  "font_files": [
+    "assets/fonts/NotoSansCJKtc-Regular.otf",
+    "assets/fonts/NotoSansCJKtc-Bold.otf"
+  ],
   "min_text_frac": 0.038,
   "_text_note": "2026-11-07 手機橫向實看：0.024～0.034（A～D）太小，下限定為 0.038（E）。一般標籤 0.04～0.045，條件標註 0.038，重點數字 0.06 以上。",
   "contrast_min": 4.5,
-  "subtitle": {"max_units_per_line": 18, "max_lines": 2, "max_units_per_sec": 9, "ass_font_px": 54, "ass_margin_v": 54}
+  "subtitle": {
+    "max_units_per_line": 18,
+    "max_lines": 2,
+    "max_units_per_sec": 9,
+    "ass_font_px": 54,
+    "ass_margin_v": 54
+  },
+  "serif_font": "STIX Two Text",
+  "serif_files": [
+    "assets/fonts/STIX2Text-Regular.otf",
+    "assets/fonts/STIX2Text-Italic.otf"
+  ],
+  "line": "#5E8C8E",
+  "_style_v2": "2026-11-07 使用者看完 v001 預覽：字太大、畫面空、像小學生做的；要 3Blue1Brown 式專業。改成：圖為主字為輔（一個大的中心視覺佔滿主畫面）、細線（2～3px）、一般文字用 Regular 不用粗體、不用膠囊框與徽章、標籤貼著物件、數字與公式用襯線字（serif_font，變數斜體）、金色每個畫面只給一個重點、音效只留在真正的轉折。字級：註記 0.038、標籤 0.04～0.045、公式與重點數字 0.055～0.075；超過 0.08 只用在單一主角數字。",
+  "_zones_note": "2026-11-08 v3：主畫面延伸到 78%（字幕單行頂端約 87%、雙行約 82%），內容垂直置中在主畫面，不要擠在上半部。",
+  "layout": {
+    "balance_tol": 0.12,
+    "min_fill_h": 0.45,
+    "min_dwell": 1.5,
+    "min_end_hold": 2.0,
+    "line_text_pad": 0.06
+  },
+  "_layout_note": "版面檢查（kit.Timed.check）：balance_tol＝內容中心偏離主畫面中心的容許（主畫面高的比例）；min_fill_h＝內容高度至少佔主畫面高；min_dwell＝元素出現後至少停留秒數；min_end_hold＝場景最後一個動作結束到轉場開始至少幾秒；line_text_pad＝線條離文字至少多遠。"
 }
