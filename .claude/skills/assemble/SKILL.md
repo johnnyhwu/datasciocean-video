@@ -49,7 +49,8 @@ uv run python lib/package.py <id>        # → out/<id>/deliver/<id>.mp4（−14
 | 字型（缺字、簡體字） | `lib/checks/fonts.py <id>` |
 | 標記與數字 | `lib/checks/claims.py <id>` |
 | 版面 | `out/<id>/layout-*.txt` 全部 OK |
-| 靜止段落 | `lib/checks/still.py <id>` |
+| 逐格：跳出、空畫面、靜止段落 | `lib/checks/frames.py <id>`（✗ 一定要修；靜止段落補有目的的小動作） |
+| 接縫 | `lib/checks/seams.py <id> -q h`（畫面一格不差＋接縫空檔 0.8～1.6 秒） |
 | 響度、長度、格數、C2PA | `deliver/checks.json` |
 | 結構指紋 | `lib/checks/fingerprint.py <id>`（最近 5 支） |
 

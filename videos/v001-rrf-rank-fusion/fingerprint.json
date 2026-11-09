@@ -1,8 +1,1 @@
-{"opening_mode": "反直覺問題",
- "skeleton": ["hook", "why", "warmup", "name", "calc", "knob", "twist", "fixes", "takeaway"],
- "visual_devices": ["排行榜", "橡皮尺", "翻牌看板", "公式逐項", "代入計算長條", "旋鈕", "空位＝0"],
- "music": [],
- "title_pattern": "疑問式",
- "mechanism_character": "翻牌看板",
- "background": "glow_left",
- "fixed_lines": ["intro-1", "takeaway-2", "blog-2"]}
+{"opening_mode": "反直覺問題", "skeleton": ["hook", "why", "warmup", "name", "calc", "knob", "twist", "fixes", "recap"], "visual_devices": ["一張大圖跟拍", "flash-forward", "橡皮尺", "公式逐項", "代入計算長條", "旋鈕", "空位＝0", "全景三點回顧", "卡片穿過 reranker 節點", "大括號接整份清單"], "music": [], "title_pattern": "疑問式", "mechanism_character": "正確答案（綠星）", "background": "flat", "fixed_lines": ["intro-1", "blog-1"]}

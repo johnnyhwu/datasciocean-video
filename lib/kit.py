@@ -445,6 +445,27 @@ def pop_in(m, run=0.4):
     return GrowFromCenter(m, rate_func=rate_functions.ease_out_back, run_time=run)
 
 
+class Highlight(Indicate):
+    """強調但不把底色填滿（v001 逐格檢查，2026-11-10）。Indicate 用 set_color 把整組換色：
+    有不透明底色的卡片會變成一整塊強調色，字母或星星看不見。這裡「有外框又有不透明底色」的形狀只換外框色並加粗，
+    其他部分（文字、線、沒有外框的圖示）照常換色；一樣放大再回來。卡片、方框一律用它，不要用 Indicate。"""
+
+    def __init__(self, mobject, color=GOLD, scale_factor=1.12, inner=True, **kw):
+        self.inner = inner        # False：裡面的字母／圖示保留原色（例如綠星一直是綠的），只有外框變色
+        super().__init__(mobject, scale_factor=scale_factor, color=color, **kw)
+
+    def create_target(self):
+        t = self.mobject.copy().scale(self.scale_factor)
+        for x in t.family_members_with_points():
+            if not isinstance(x, VMobject):
+                continue
+            if x.get_stroke_width() > 0 and x.get_fill_opacity() > 0.5:
+                x.set_stroke(self.color, width=x.get_stroke_width() * 1.7, family=False)
+            elif self.inner:
+                x.set_color(self.color, family=False)
+        return t
+
+
 def shake(m, n=4, run=0.35, amp=0.04):
     return Wiggle(m, scale_value=1 + amp, rotation_angle=0.03 * TAU, n_wiggles=n, run_time=run)
 
@@ -621,6 +642,7 @@ class Timed(MovingCameraScene):
         self.last_anim_end = 0.0
         self.seen = {}          # id(頂層物件) → [出現時間, 物件]（停留時間檢查）
         self.balance_log = []   # (時間, 內容中心偏移, 內容高度比例)
+        self.first_anim = None  # 第一個動作開始的時間（接縫空檔檢查，lib/checks/seams.py）
         self.faded = set()      # 被 FadeOut／Uncreate 這類動畫拿掉的物件（停留檢查只看這些；鏡頭移開、變形成別的不算）
         bg = self.sc.get("bg", self.BG)
         if bg != "flat":                 # flat＝平面底色（v4 預設；鏡頭移動時背景也不會露邊）
@@ -688,12 +710,49 @@ class Timed(MovingCameraScene):
                 yield from _flat(getattr(x, "animations", []) or [])
         self.faded |= {id(a.mobject) for a in _flat(anims) if getattr(a, "remover", False)}
         if anims:
+            if self.first_anim is None:
+                self.first_anim = self.anim_start
             n = max(1, round(run_time * fps))
+            paused = self._pause_live(list(_flat(anims)))
             self.play(*anims, run_time=n / fps, **kw)
+            for x, ups in paused:
+                for u in ups:
+                    x.add_updater(u)
             self.f += n
             self.last_anim_end = self.f / fps
         self.t = self.f / fps
         self.check()
+
+    def _pause_live(self, anims):
+        """Transform 類動畫（FadeIn／FadeOut／Indicate／Highlight／GrowFromEdge／.animate…）播放期間，
+        暫停被動畫物件（和包住它的群組）的 updater，播完由 at() 恢復。
+        原因（v001 逐格檢查，2026-11-10）：Transform 會複製物件，複本也帶著 updater，每格被重畫回原樣。
+        結果是 Live 讀數、always_redraw 圖形做 FadeOut 不會淡（結束時一次消失）、FadeIn／GrowFromEdge 直接跳出來、
+        Indicate 沒反應。Write／Create 不受影響，不暫停。"""
+        paused, seen = [], set()
+
+        def hold(x):
+            if x.updaters and id(x) not in seen:
+                seen.add(id(x))
+                x.update(0)                      # 先更新到現在的值，再凍結
+                paused.append((x, list(x.updaters)))
+                x.clear_updaters(recursive=False)
+        for a in anims:
+            if not isinstance(a, Transform) or a.mobject is None:
+                continue
+            for m in (a.mobject, getattr(a, "target_mobject", None)):
+                if m is not None:
+                    for x in m.get_family():
+                        hold(x)
+            # 被動畫的是某個 always_redraw 群組裡的子物件：包住它的群組自己的 updater 也要停
+            for top in self.mobjects:
+                fam = top.get_family()
+                if top is a.mobject or not any(x is a.mobject for x in fam):
+                    continue
+                for x in fam:
+                    if x is not a.mobject and any(y is a.mobject for y in x.get_family()):
+                        hold(x)
+        return paused
 
     # --- 鏡頭（v4：一張大圖，鏡頭跟著走） ---
     @staticmethod
@@ -1053,3 +1112,6 @@ class Timed(MovingCameraScene):
         ODIR.mkdir(parents=True, exist_ok=True)
         (ODIR / f"layout-{self.SID}.txt").write_text("\n".join(dict.fromkeys(self.problems)) or "OK")
         (ODIR / f"sfx-{self.SID}.json").write_text(json.dumps(self.cues))
+        # 接縫空檔：開頭多久才第一個動作、最後一個動作結束後還停多久（seams.py 把前一場的 tail 加下一場的 head）
+        (ODIR / f"idle-{self.SID}.json").write_text(json.dumps(
+            {"head": round(self.first_anim or 0.0, 3), "tail": round(self.sc["frames"] / config.frame_rate - self.last_anim_end, 3)}))

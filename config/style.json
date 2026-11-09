@@ -89,7 +89,11 @@
     "min_fill_h": 0.45,
     "min_dwell": 1.5,
     "min_end_hold": 2.0,
-    "line_text_pad": 0.06
+    "line_text_pad": 0.06,
+    "seam_idle": [
+      0.8,
+      1.6
+    ]
   },
   "_layout_note": "版面檢查（kit.Timed.check）：balance_tol＝內容中心偏離主畫面中心的容許（主畫面高的比例）；min_fill_h＝內容高度至少佔主畫面高；min_dwell＝元素出現後至少停留秒數；min_end_hold＝場景最後一個動作結束到轉場開始至少幾秒；line_text_pad＝線條離文字至少多遠。"
 }

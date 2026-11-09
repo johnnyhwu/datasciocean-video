@@ -19,6 +19,8 @@ tag ∈ card_claim | prerequisite | illustration | framing | fixed_line
 8. 代入計算（使用者 2026-11-07 同意）：card_claim 可以有 "calc": {"expr": "1/(60+3)+1/(60+3)", "result": "0.0317"}。
    程式驗算 expr（只允許數字與 + - * / ( )），結果要和 result 相符（依 result 的小數位數四捨五入）；
    expr 裡的每個數字都要出現在引用主張的文字裡；句子裡的 result 數字不再列為「不在卡上」。
+9. 觀眾看得到的文字（旁白、字幕、畫面）不能出現內部用語（使用者 2026-11-08：「觀念卡」是我們內部的溝通方式，
+   觀眾不知道也不應該知道）：觀念卡、卡上、這張卡、作者說、作者認為……（INTERNAL）。代入計算的畫面標註寫「代入公式計算」。
 """
 import json
 import re
@@ -34,6 +36,7 @@ TAGS = {"card_claim", "prerequisite", "illustration", "framing", "fixed_line"}
 NUM = re.compile(r"\d+(?:\.\d+)?%?|[一二三四五六七八九十百千萬億兩]+(?:成|倍|個百分點|分之)")
 COMPARE = re.compile(r"更|最|比|超過|不到|勝過|贏|輸|提升|下降|高於|低於|倍|全部|都|從不|總是|一定|幾乎|大幅|完全")
 EXAMPLE = re.compile(r"假設|舉個例子|舉例|比方說|比如|例如")
+INTERNAL = re.compile(r"觀念卡|卡上|卡裡|這張卡|來源卡|wiki|作者說|作者認為|作者提到|作者舉")
 CAUSAL = re.compile(r"因為|所以|導致|造成|使得|讓.*變|因此|由於|結果")
 
 
@@ -142,6 +145,11 @@ def main():
             if (S.get(s["id"]) or {}).get("tag") == "illustration" or len(texts) > 1:
                 for t in texts:
                     shown |= nums(t)
+    for s in sents:
+        for t in [s["display"], s.get("say") or "", *s.get("screen", [])]:
+            m = INTERNAL.search(t)
+            if m:
+                problems.append(f"{s['id']} 觀眾看得到的文字有內部用語「{m.group(0)}」：{t}")
     items = [(s["id"], s["display"], S.get(s["id"]), s["id"]) for s in sents]
     items += [(f"畫面：{t}", t, SCR.get(t), s["id"]) for s in sents for t in s.get("screen", [])]
     for key, text, rec, owner in items:

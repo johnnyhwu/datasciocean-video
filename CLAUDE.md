@@ -24,10 +24,11 @@
 |---|---|
 | 資料來源 | 只有 concept-wiki，而且唯讀（hook 擋寫入）。**不讀 blog、不讀原論文。** 只用 `status: normal` 與 `author_confirmed` 的主張；`pending_author_confirmation` 一律不用 |
 | 知識範圍 | 影片傳達的知識不超出觀念卡。唯一例外：教科書等級的前置知識，佔比 ≤ 1/3 |
-| 忠實 | 不加卡上沒有的事實、數字、比較、因果；不說得比卡更強；**限定條件不得刪除**，旁白至少完整說一次。新數字只有一種來源可以出現：**把卡上的數字代進卡上的公式**算出來（使用者 2026-11-07 同意），畫面要標「依卡上公式計算」，查核紀錄要寫出算式（`calc`），由程式驗算；其他自行推算一律不行 |
+| 忠實 | 不加卡上沒有的事實、數字、比較、因果；不說得比卡更強；**限定條件不得刪除**，旁白至少完整說一次。新數字只有一種來源可以出現：**把卡上的數字代進卡上的公式**算出來（使用者 2026-11-07 同意），畫面要標「代入公式計算」，查核紀錄要寫出算式（`calc`），由程式驗算；其他自行推算一律不行 |
 | 翻譯 | 英文、簡體的標題、說明、字幕只翻譯，不多加說法 |
 | 論文圖 | 一律依主張文字重新製作，不放原圖，不逐筆描摹；只能估讀的只畫示意，並由旁白交代是示意 |
 | 舉例 | 自己補的數字、例子，旁白要說出這是舉例（「假設」「我們來舉個例子」「比方說」），畫面不放「示意」標籤（使用者 2026-11-08）；`claims.py` 檢查 |
+| 觀眾看得到的字 | 旁白、字幕、畫面、說明欄不出現內部用語：觀念卡、卡上、「作者說／作者認為」（我們就是作者）。「觀念卡」是我們內部的溝通方式，觀眾不知道也不該知道（使用者 2026-11-08）；`claims.py` 檢查 |
 | 授權 | 只用允許營利的工具、字型（OFL）、音樂（使用者的曲庫）；不複製 3b1b/videos 的程式碼與素材（CC BY-NC-SA） |
 | 不進 git | API 金鑰、OAuth 憑證、音檔、渲染的影片、音樂檔、使用者的聲音錄音（`.gitignore` 已排除；不論 repo 是否公開都一樣） |
 | 人審關卡 | 四個關卡都要使用者核准，紀錄用 `state.py approve` 寫入，才能往下走 |
@@ -70,6 +71,11 @@
 - **旁白先行**：先有聲音才有時間軸，動畫用 `A(句 id, 比例)` 錨在旁白上，不寫絕對秒數。
 - **能用程式檢查的，一律交給 `lib/`**：字幕、響度、版面、字型、標記、數字、狀態都由程式檢查。LLM 只做判斷。
 - **Claude 看不到畫面、聽不到聲音。** 每次都要跑程式檢查並看縮圖；沒經過人耳確認的地方要明講，不要假裝確認過。
+- **品質基準是 v001 第四版**（使用者 2026-11-08：「相當滿意」）。做法寫在 `.claude/skills/animate/SKILL.md` 的「視覺語言 v4」與「收尾」，範例是 `videos/v001-rrf-rank-fusion/`（`design-v4.md`、`scenes.py`）。每次都要守住的四件事：
+  - 一張大圖加鏡頭跟拍；
+  - 接縫一格不差，而且不停格（`seams.py`）；
+  - 動畫進行中也要乾淨：沒有東西突然跳出或消失，也沒有空畫面（`frames.py` 逐格掃描）；交關卡 3 前用 `filmstrip.py` 逐秒看完整片（使用者 2026-11-10：「檢查每個 frame」）；
+  - 最後一個畫面是全集的概念圖加三點回顧。
 - **每支影片都要實質不同**：開場模式、骨架、視覺手法、機制角色、背景音樂都要換。結構指紋由程式比對最近 5 支。最大的風險是 YouTube 的「通用或重複內容」政策。
 - **省額度**：
   - 細節放在 skill 裡，執行到該步驟才載入；
@@ -91,7 +97,7 @@ concept-wiki/             submodule，唯讀
 config/                   style.json（版面、配色、字幕）、voice.json（TTS 聲音）、zh-cn-terms.yaml
 rules/                    資料性質的規則：卡格式、語速、固定句、研究提煉、外部規則、from-social-media/、from-podcast/、from-poc/、from-skills/
 lib/                      程式：kit.py（Manim 工具箱＋吉祥物）、tts_gemini.py、timeline.py、render.py、mix.py、package.py、
-                          cards.py、state.py、checks/（claims、fonts、sheet、still、fingerprint）
+                          cards.py、state.py、checks/（claims、fonts、sheet、seams、frames、filmstrip、fingerprint）
 assets/                   fonts/（OFL）、brand/logo.png、music-library.yaml（曲庫授權紀錄）；music/、voice/ 不進 git
 videos/<影片 ID>/          一支影片的文字產物：state.json、plan.md、script.json、factcheck.json、timeline.json、
                           scenes.py、fingerprint.json、review/、upload.md、d7.json、d28.json
