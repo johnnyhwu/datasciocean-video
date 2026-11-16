@@ -99,16 +99,26 @@ def synth_openrouter(text, voice, model, style):
 def synth_once(client, text, voice, model, style, provider="gemini"):
     if provider == "openrouter":
         return synth_openrouter(text, voice, model, style)
+    # 直接打 REST：google-genai 3.0.0 的 client.interactions / client.voices 會回 404（2026-11-10 實測），REST 正常。
+    import urllib.error
+    import urllib.request
     content = {"type": "text", "text": text}
     if style:
         content["annotations"] = [{"type": "speech_metadata", "style": style}]
-    it = client.interactions.create(
-        model=model,
-        input=[{"type": "user_input", "content": [content]}],
-        response_format={"type": "audio"},
-        generation_config={"speech_config": [{"voice": voice}]},
-    )
-    raw = base64.b64decode(it.output_audio.data)
+    body = {"model": model, "input": [{"type": "user_input", "content": [content]}],
+            "response_format": {"type": "audio"}, "generation_config": {"speech_config": [{"voice": voice}]}}
+    req = urllib.request.Request("https://generativelanguage.googleapis.com/v1beta/interactions", data=json.dumps(body).encode(),
+                                 headers={"x-goog-api-key": os.environ["GEMINI_API_KEY"], "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=180) as r:
+            res = json.loads(r.read())
+    except urllib.error.HTTPError as e:
+        raise RuntimeError(f"HTTP {e.code}: {e.read()[:300]!r}")
+    datas = [c["data"] for st in res.get("steps", []) if st.get("type") == "model_output"
+             for c in st.get("content", []) if c.get("type") == "audio" and c.get("data")]
+    if not datas:
+        raise RuntimeError(f"回應沒有音訊：{json.dumps(res, ensure_ascii=False)[:300]}")
+    raw = b"".join(base64.b64decode(d) for d in datas)
     if len(raw) < 2000:
         raise RuntimeError("回傳音訊過短（疑似空音訊）")
     return to_pcm(raw)
@@ -144,10 +154,7 @@ def main():
     voices = json.loads((ROOT / "config/voice.json").read_text())
     used = {voices[s.get("speaker", "narrator")].get("provider", "openrouter") for sc in spec["scenes"] for s in sc["sentences"]}
     load_env(tuple({"openrouter": "OPENROUTER_API_KEY", "gemini": "GEMINI_API_KEY"}[p] for p in used))
-    client = None
-    if "gemini" in used:
-        from google import genai
-        client = genai.Client()
+    client = None  # 直連走 REST（見 synth_once），不需要 SDK client
     od = out_dir(a.vid) / "audio"
     (od / "cache").mkdir(parents=True, exist_ok=True)
     rep_path = od / "report.json"

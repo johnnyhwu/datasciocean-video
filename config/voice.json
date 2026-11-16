@@ -1,15 +1,15 @@
 {
- "_note": "speaker → 聲音。provider：openrouter（預設，只能用 Gemini 預設聲音）或 gemini（直連，複製聲音只能走這條）。narrator 目前是 podcast 用的 Zubenelgenubi，盲聽定案前的暫定值。mascot 是吉祥物台詞的聲音（暫定）。",
+ "_note": "speaker → 聲音。provider 一律 gemini（直連，金鑰 GEMINI_API_KEY；使用者 2026-11-10：不用 OpenRouter）。narrator 是使用者本人的複製聲音（voice_create.py 建立，2026-11-10 盲聽定案：勝過 Zubenelgenubi）。mascot 是吉祥物台詞的聲音（暫定）。openrouter 路徑仍保留在 tts_gemini.py，但只能用預設聲音。",
  "narrator": {
-  "voice": "Zubenelgenubi",
+  "voice": "voice_671rii51x0an",
+  "provider": "gemini",
   "model": "gemini-3.8-flash-tts",
-  "style": "用台灣人的口音，像在跟朋友講一個有趣的發現，清楚、有精神",
-  "provider": "openrouter"
+  "style": "用台灣人的口音，像在跟朋友講一個有趣的發現，清楚、有精神"
  },
  "mascot": {
-  "voice": "Puck",
+  "voice": "puck",
   "model": "gemini-3.8-flash-tts",
   "style": "用台灣人的口音，語氣活潑、好奇，短句",
-  "provider": "openrouter"
+  "provider": "gemini"
  }
 }

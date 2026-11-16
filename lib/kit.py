@@ -631,6 +631,12 @@ class Timed(MovingCameraScene):
     LAY = S.get("layout", {})
     HUD = False      # v4：不放頂端進度條（框架元素讓畫面像投影片）
     CARDS = False    # v4：不放章節卡與角落章節標籤；章節只寫進 YouTube 說明欄（chapters.txt）
+    END_VEIL = None  # 最後一場設 0～1：片尾畫面保留最後一格並壓暗到這個不透明度（None＝淡成乾淨的空畫面）
+
+    def end_idle(self, frames):
+        """片尾畫面期間做什麼（預設靜止）。子類別可以改寫，必須剛好用掉 frames 格。"""
+        if frames > 0:
+            self.wait(frames / config.frame_rate)
 
     def setup(self):
         super().setup()
@@ -835,9 +841,19 @@ class Timed(MovingCameraScene):
             else:
                 self.wait((clean - n - self.f) / fps)
                 self.f = clean - n
-            self.play(*[FadeOut(m) for m in self.content()], run_time=n / fps)
-            self.f += n
-            self.wait(max(0, end - self.f) / fps)
+            if self.END_VEIL:
+                # 片尾畫面保留最後一個畫面（全景圖），蓋一層半透明底色壓暗，不淡成全黑（v001，2026-11-16）
+                fr = self.camera.frame
+                veil = Rectangle(width=fr.width * 1.1, height=fr.height * 1.1).set_fill(config.background_color, self.END_VEIL) \
+                    .set_stroke(width=0).move_to(fr).set_z_index(300)
+                veil.nocheck = True
+                self.play(FadeIn(veil), run_time=n / fps)
+                self.f += n
+                self.end_idle(max(0, end - self.f))
+            else:
+                self.play(*[FadeOut(m) for m in self.content()], run_time=n / fps)
+                self.f += n
+                self.wait(max(0, end - self.f) / fps)
             self.f = end
         elif mode == "fade":
             self._hold_check(end - nf)

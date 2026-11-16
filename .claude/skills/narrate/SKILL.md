@@ -9,9 +9,10 @@ description: 影片第 5 步「旁白」：用 Gemini TTS 逐句合成唸法稿�
 
 1. **先估金額，等使用者同意**：句數與預估秒數 × 每秒約 25 tokens × 單價（`rules/external-rules.md`）。一支 10 分鐘的影片約 US$0.14，2027-01-01 起約加倍。已經同意過「每支照常合成」就不用每次問。
 2. 確認 `config/voice.json` 的 `narrator` 是定案的聲音。
-   - 複製聲音的 voice ID 由 `lib/voice_create.py` 建立。
-   - 盲聽定案前，用 podcast 的預設聲音 Zubenelgenubi 當備案。
-3. 金鑰放在 `.env`：`OPENROUTER_API_KEY`（預設路徑，只能用預設聲音）或 `GEMINI_API_KEY`（直連，複製聲音要用這個）。每個聲音走哪條路徑看 `config/voice.json` 的 `provider`。**不要讀出或印出 `.env`**，也不要向使用者要金鑰。
+   - 定案（2026-11-10）：使用者本人的複製聲音 `voice_671rii51x0an`，盲聽勝過 Zubenelgenubi。最後一次使用後保留 1 年，過期就用 `lib/voice_create.py` 重建（錄音稿在 `docs/voice-recording.md`）。
+   - 同意錄音只能念一種語言的聲明；中英都念會被拒。
+3. 一律直連 Gemini（使用者 2026-11-10：不用 OpenRouter），金鑰是 `.env` 的 `GEMINI_API_KEY`。直連走 REST，`google-genai` 3.0.0 的 SDK 會回 404。
+   - **不要讀出或印出 `.env`，連遮罩過的也不行**（2026-11-10 遮罩指令因格式不同把金鑰印了出來）。只用程式確認變數有沒有值。也不要向使用者要金鑰。
 
 ## 合成
 
@@ -27,10 +28,15 @@ uv run python lib/timeline.py <id>                 # 以實測時長建立時間
 
 ## 回聽檢查（語音辨識）
 
-規格要求把每句音檔轉回文字，和唸法稿比對字錯率。這道檢查**在旁白實驗證實可靠之後才保留**；在那之前，用人耳抽查。
+```bash
+uv run python lib/checks/stt.py <id>               # 每句轉回文字比對；--only 只重查重骰過的句子
+```
 
-- 候選工具：podcast 用的 whisper-large-v3-turbo（mlx_audio），參數要設 `temperature=0`、`condition_on_previous_text=False`、`hallucination_silence_threshold=2.0`，否則會幻聽。
-- 字錯率只是篩選器。同音字（argmax 被聽成「阿瑪」）不算錯，逐條看過再放行。
+- 模型預設 **Qwen3-ASR-1.7B**（`mlx-community/Qwen3-ASR-1.7B-bf16`，Apache-2.0，本機共用 Hugging Face 快取，離線載入）。v001 實測比 podcast 的 whisper-large-v3-turbo 準：平均相似度 0.952 → 0.975，無標記 67 → 74 句。熱詞自動取稿子裡的英文專有名詞，不放整句（否則念錯也聽不出來）。`--model whisper` 可換回。
+- 比對與正規化照搬 podcast 的 `pipeline/verify.py`。語速和這支影片自己的中位數比（0.6～1.6 倍），不用 podcast 的絕對門檻（短句加使用者的聲音會被大量誤標）；另抓句中超過 1 秒的停頓。
+- 標記：相似度 < 0.90、語速離群、句中長停頓、轉錄比稿子長 15% 以上（幽靈音）、語氣提示被念出來。
+- 唸法稿漏寫是真的會出錯的：v001 f13 沒有 `say`，TTS 把「1 ÷ (k + 名次)」連括號一起念出來。畫面字有符號或數字的句子一定要寫 `say`。
+- 字錯率只是篩選器。同音字（argmax 被聽成「阿瑪」、DataSci 被聽成 DataSide）不算錯，逐條看過再放行。
 - 唸錯的句子：改寫唸法稿，記進 `rules/pronunciation.md`，然後重骰。
 
 ## 片長

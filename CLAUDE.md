@@ -97,7 +97,7 @@ concept-wiki/             submodule，唯讀
 config/                   style.json（版面、配色、字幕）、voice.json（TTS 聲音）、zh-cn-terms.yaml
 rules/                    資料性質的規則：卡格式、語速、固定句、研究提煉、外部規則、from-social-media/、from-podcast/、from-poc/、from-skills/
 lib/                      程式：kit.py（Manim 工具箱＋吉祥物）、tts_gemini.py、timeline.py、render.py、mix.py、package.py、
-                          cards.py、state.py、checks/（claims、fonts、sheet、seams、frames、filmstrip、fingerprint）
+                          cards.py、state.py、checks/（claims、fonts、sheet、seams、frames、filmstrip、stt、fingerprint）
 assets/                   fonts/（OFL）、brand/logo.png、music-library.yaml（曲庫授權紀錄）；music/、voice/ 不進 git
 videos/<影片 ID>/          一支影片的文字產物：state.json、plan.md、script.json、factcheck.json、timeline.json、
                           scenes.py、fingerprint.json、review/、upload.md、d7.json、d28.json

@@ -24,6 +24,10 @@
 - **輸出**：24 kHz、單聲道、16-bit WAV，附 SynthID 浮水印。文件沒有提到時間戳。
 - **輸入限制**：合成語音，或帶 SynthID、C2PA 的錄音會被拒收，所以參考錄音一定要是真人原始錄音。
 - **多人對話**：複製聲音不能放進多說話者請求，要每句各自合成再串接。
+- **實測（2026-11-10）**：
+  - 同意錄音只能念**一種語言**；中英各念一次會回 400 invalid argument，切出英文那段就成功了。
+  - `google-genai` 3.0.0 的 `client.voices.create` 和 `client.interactions.create` 都回 404，直接打 REST 才正常（`lib/voice_create.py`、`lib/tts_gemini.py` 已改）。
+  - 建立聲音沒有另外顯示費用。
 - 價格與 OpenRouter 支援：這次沒有查到。研究 I 寫「音訊輸出 US$9/1M tokens，2027-01-01 起加倍」。**預設直連 Gemini API。**
 
 ## OpenRouter（查證 2026-11-07）

@@ -216,7 +216,8 @@ class Live(VGroup):
         self.add_updater(lambda m: m[0].become(m._make()))
 
     def _make(self):
-        t = M(self.fmt(self.tr.get_value()), self.fr, self.col, self.it)
+        v = self.tr.get_value()
+        t = M(self.fmt(v), self.fr, self.col(v) if callable(self.col) else self.col, self.it)
         self.place(t)
         return t
 
@@ -282,7 +283,7 @@ class Sc01(Sheet):
         self.at(A("h2", .55), Write(sv), lv.animate.set_stroke(width=SW * 1.6), run_time=.7, sfx="tick")
         self.at(A("h2", .85), lv.animate.set_stroke(width=SW), run_time=.4)
         self.at(A("h3", .5), Write(sf), lf.animate.set_stroke(width=SW * 1.6), run_time=.7, sfx="tick")
-        self.at(A("h3", .85), lf.animate.set_stroke(width=SW), run_time=.4)
+        self.at(A("h3", .8), lf.animate.set_stroke(width=SW), run_time=.25)
         # h4（錘錘）它總共幾分？：兩個分數複製出去，組成算式
         eq = VGroup(M("0.83", .05, SCORE), M("+", .05), M("12.4", .05, SCORE), M("=", .05), M("?", .05, TXT_STRONG)) \
             .arrange(RIGHT, buff=.14).scale(.74).move_to(SIG + RIGHT * 2.3)
@@ -297,13 +298,14 @@ class Sc01(Sheet):
                      M("kg", .05, MUTED, italic=True), M("=", .05), M("?", .05, TXT_STRONG))
         eq2.arrange(RIGHT, buff=.12).scale(.7).move_to(eq)
         eq2[1].shift(LEFT * .05); eq2[4].shift(LEFT * .05)
-        self.at(A("h5", .45), ReplacementTransform(eq[0], eq2[0]), ReplacementTransform(eq[1], eq2[2]), ReplacementTransform(eq[2], eq2[3]),
+        self.at(A("h5", .1), ReplacementTransform(eq[0], eq2[0]), ReplacementTransform(eq[1], eq2[2]), ReplacementTransform(eq[2], eq2[3]),
                 ReplacementTransform(eq[3], eq2[5]), ReplacementTransform(eq[4], eq2[6]), run_time=.8)
-        self.at(A("h5", .62), Write(eq2[1]), Write(eq2[4]), run_time=.6)
+        self.at(A("h5", .36), Write(eq2[1]), run_time=.5)          # 單位各自跟著旁白的「公尺」「公斤」出現（原本兩個一起、晚了半句）
+        self.at(A("h5", .66), Write(eq2[4]), run_time=.5)
         # h6 算得出來，但沒有意義：算式變暗，一條細線劃掉
         st = Line(eq2.get_left() + LEFT * .1, eq2.get_right() + RIGHT * .1).set_stroke(MUTED, 2.2, .9)
         st.cross_ok = True
-        self.at(A("h6", .35), eq2.animate.set_opacity(.45), Create(st), *pl.shake_head(), run_time=.8)
+        self.at(A("h6", .35), eq2.animate.set_opacity(.45), Create(st), *pl.shake_head(), run_time=.8, sfx="scratch", gain=.35)
         # h7 RRF：分數，不看了
         self.at(A("h7", .3), FadeOut(sv, shift=DOWN * .15), FadeOut(sf, shift=DOWN * .15), FadeOut(eq2, shift=DOWN * .15),
                 FadeOut(st, shift=DOWN * .15), *pl.straighten(), run_time=.7)
@@ -351,12 +353,12 @@ class Sc02(Sheet):
         # i2 快轉一眼：總榜上，正確答案從第 1 名被擠到第 4 名
         tot = W["tot"]
         self.at(A("i2", .0), Create(tot.link), LaggedStart(*[Create(s) for s in tot.slots], lag_ratio=.1), Write(tot.head),
-                LaggedStart(*[Write(n) for n in tot.nums], lag_ratio=.1), run_time=1.1)
+                LaggedStart(*[Write(n) for n in tot.nums], lag_ratio=.1), run_time=1.0)
         fut = [tot_card("*", 0), tot_card("C", 1), tot_card("D", 2), tot_card("N", 3)]
         self.at(A("i2", .2), LaggedStart(*[FadeIn(c, shift=LEFT * .25) for c in fut], lag_ratio=.15), run_time=1.0)
         fut[0].set_z_index(3)        # 往下掉的正確答案從其他卡前面經過，整段都看得到（不要被擋住）
         self.at(A("i2", .55), fut[0].animate.move_to(tot_slot(3)), *[fut[i].animate.move_to(tot_slot(i - 1)) for i in (1, 2, 3)],
-                run_time=1.4, sfx="slide")
+                run_time=1.25, sfx="slide")
         self.at(A("i2", .8), Highlight(fut[0], color=ANS, scale_factor=1.15), run_time=.8)
         # w1 為什麼會有兩個分數？倒帶：總榜清空；兩條線各送一個分數到 Σ
         self.at(A("w1", .1), *[FadeOut(c, shift=RIGHT * .25) for c in fut], run_time=.7)
@@ -371,7 +373,7 @@ class Sc02(Sheet):
         idf_t = T("IDF 加權", .04, MUTED).next_to(idf_n, RIGHT, buff=.18)
         cer = T("Cerebras 內部知識庫", .05, TXT).move_to(np.array([-.75, .05, 0]))
         self.at(A("w3", .1), Write(cer), run_time=1.0)
-        self.at(A("w3", .55), Create(idf_l), DrawBorderThenFill(idf_n), Write(idf_t), run_time=.9)
+        self.at(A("w3", .55), Create(idf_l), DrawBorderThenFill(idf_n), Write(idf_t), run_time=.8)
         self.at(A("w3", .7), Indicate(W["rv"].node, color=VEC), Indicate(W["rf"].node, color=FTS), run_time=.8)
         # w4 比的東西不一樣
         mv_ = T("意思像不像", .04, VEC).set_opacity(.85).move_to(np.array([-2.6, 2.6, 0]))
@@ -659,7 +661,7 @@ class Sc04(Sheet):
             c.set_z_index(2)
         # n1 有沒有一種東西，每一路都有？鏡頭回到管線（拉到看得見上方公式帶）
         bench = [B[k] for k in ("va", "fa", "ed", "vr", "fr", "lo", "hi", "rd", "ghost", "arr")] + [*B["vd"].values(), *B["fd"].values()]
-        self.at(A("n1", .05), self.cam(STAGE, STAGE_W), *[FadeOut(b, rate_func=rate_functions.rush_into) for b in bench], run_time=2.2,
+        self.at(A("n1", .1), self.cam(STAGE, STAGE_W), *[FadeOut(b, rate_func=rate_functions.rush_into) for b in bench], run_time=2.2,
                 sfx="whoosh", gain=.5)
         self.at(A("n1", .6), Indicate(W["sv"], color=SCORE, scale_factor=1.08), Indicate(W["sf"], color=SCORE, scale_factor=1.08), run_time=1.0)
         # n2 有：名次。分數從卡片後面穿過去，變成名次
@@ -682,8 +684,8 @@ class Sc04(Sheet):
         x1 = Line(mini.get_corner(DL) + DL * .05, mini.get_corner(UR) + UR * .05).set_stroke(MUTED, 2.4)
         x1.cross_ok = True
         self.at(A("n5", .1), FadeIn(mini, shift=UP * .1), run_time=.6)
-        self.at(A("n5", .45), Create(x1), mini.animate.set_opacity(.4), run_time=.6)
-        self.at(A("n5", .85), FadeOut(mini), FadeOut(x1), run_time=.5)
+        self.at(A("n5", .33), Create(x1), mini.animate.set_opacity(.4), run_time=.6)
+        self.at(A("n5", .9), FadeOut(mini), FadeOut(x1), run_time=.5)
         # n6 這就是 RRF：Σ 下的 RRF 複製到上方，寫出全名
         rrf2 = M("RRF", .07, GOLD).move_to(np.array([-3.4, FORM_Y + .05, 0]))
         full = M("Reciprocal Rank Fusion", .052, TXT_STRONG).next_to(rrf2, RIGHT, buff=.45)
@@ -879,14 +881,23 @@ def rank_bars_static():
     return VGroup(base, labs, head)
 
 
+def lead_color(lk_value, which):
+    """領先的那一條是金色，落後的是分數紫。兩條長條各自除以較大的那個，差 1% 時長度幾乎一樣，
+    「誰領先」只能從四位小數讀（2026-11-16 回看）；改用顏色。交叉點附近（差距 ±0.6%）平滑過渡，不會跳色。"""
+    a, b = ab_score(lk_value, "a"), ab_score(lk_value, "b")
+    d = (a - b) / max(a, b) * (1 if which == "a" else -1)
+    return interpolate_color(ManimColor(SCORE), ManimColor(GOLD), float(np.clip(d / .012 + .5, 0, 1)))
+
+
 def ab_bars(lk):
     k = np.exp(lk)
     a, b = 2 / (k + 3), 1 / (k + 1) + 1 / (k + 8)
     m = max(a, b)
     g = VGroup()
-    for v, y in ((a, .45), (b, -.45)):
+    for v, y, which in ((a, .45, "a"), (b, -.45, "b")):
         w = AB_W * v / m
-        g.add(Rectangle(width=w, height=.42).set_stroke(SCORE, 1.5).set_fill(SCORE, .55).move_to(AB0 + UP * y + RIGHT * w / 2))
+        c = lead_color(lk, which)
+        g.add(Rectangle(width=w, height=.42).set_stroke(c, 1.5).set_fill(c, .55).move_to(AB0 + UP * y + RIGHT * w / 2))
     return g
 
 
@@ -902,7 +913,7 @@ def ab_vals(lk):
             v = lk.get_value()
             w = AB_W * ab_score(v, which) / max(ab_score(v, "a"), ab_score(v, "b"))
             return t.next_to(AB0 + UP * y + RIGHT * w, RIGHT, buff=.18)
-        return Live(lk, lambda v: f"{ab_score(v, which):.4f}", .046, SCORE, place=place)
+        return Live(lk, lambda v: f"{ab_score(v, which):.4f}", .046, lambda v: lead_color(v, which), place=place)
     g = VGroup(mk("a", .45), mk("b", -.45))
     g.overlap_ok = True
     return g
@@ -955,7 +966,7 @@ class Sc06(Sheet):
         self.at(A("k1", .55), Write(rd), Create(rs[0]), Write(rs[2]), LaggedStart(*[Write(x) for x in rs[1]], lag_ratio=.15),
                 GrowFromEdge(bars, DOWN), run_time=1.1)
         # k2 k 越大（例如 200）：前幾名的差距被壓平
-        self.at(A("k2", .3), lk.animate.set_value(np.log(200)), run_time=2.6, sfx="slide")
+        self.at(A("k2", .3), lk.animate.set_value(np.log(200)), run_time=2.6, sfx="slide", rate_func=rate_functions.ease_in_out_sine)
         # k3 偏好多路累積：A、B 的合併長條
         self.at(A("k3", .05), Create(abs_[0]), Write(abs_[1]), Write(abs_[2]), Write(abs_[3]), Write(abs_[4]), run_time=1.0)
         av = ab_vals(lk)
@@ -963,11 +974,13 @@ class Sc06(Sheet):
         self.at(A("k3", .42), Write(av), FadeIn(ab_note()), run_time=.6)
         self.at(A("k3", .7), Indicate(abs_[1], color=TXT_STRONG), run_time=.8)
         # k4 k 越小（例如 1）：第一名的獎勵懸殊
-        self.at(A("k4", .25), lk.animate.set_value(0), run_time=2.8, sfx="slide")
+        self.at(A("k4", .25), lk.animate.set_value(0), run_time=2.8, sfx="slide", rate_func=rate_functions.ease_in_out_sine)   # 預設的 smooth 中段太快，看不到直條慢慢變陡
+        self.sfx("pop", t=A("k4", .25) + 1.85, gain=.4)                          # k ≈ 3.7：B 超過 A（金色換邊）
         # k5 相信單一路的強訊號：B 領先
         self.at(A("k5", .3), Indicate(abs_[2], color=TXT_STRONG), Indicate(abs_[4], color=RANK), run_time=1.0)
         # k6 選 60
-        self.at(A("k6", .25), lk.animate.set_value(np.log(60)), run_time=2.2, sfx="slide")
+        self.at(A("k6", .25), lk.animate.set_value(np.log(60)), run_time=2.2, sfx="slide", rate_func=rate_functions.ease_in_out_sine)
+        self.sfx("pop", t=A("k6", .25) + .85, gain=.4)                            # A 再超回來
         self.at(A("k6", .85), Indicate(rd, color=KC, scale_factor=1.15), run_time=.7)
         # k7 寧可相信共識
         self.at(A("k7", .3), Circumscribe(VGroup(abs_[1], abs_[3]), color=TXT_STRONG, buff=.1), run_time=1.4)
@@ -1125,7 +1138,7 @@ class Sc07(Sheet):
         # t3 正確答案在一路完全沒被撈到：全文那排的綠星掉出去，E 補進來
         gh = ghost_star()
         ecard = card("E").move_to(row_pos("f", 2))
-        self.at(A("t3", .35), ReplacementTransform(nf[2], gh.card), run_time=1.0, sfx="thud", gain=.6)
+        self.at(A("t3", .35), ReplacementTransform(nf[2], gh.card), run_time=.9, sfx="thud", gain=.6)
         self.at(A("t3", .6), Write(gh.lab), FadeIn(ecard, shift=DOWN * .2), run_time=.8)
         # t4 那一路貢獻 0：綠星 ＝ 1/(60+1) + 0 ≈ 0.0164
         sl, nl, note = star_line(), noise_line(), calc_note7()
@@ -1194,7 +1207,7 @@ class Sc07(Sheet):
         x2 = Line(perp.get_corner(DL) + DL * .08, perp.get_corner(UR) + UR * .08).set_stroke(BAD, 3)
         x2.cross_ok = True
         self.at(A("t17", .3), Write(perp), run_time=.7)
-        self.at(A("t17", .6), Create(x2), *[a.animate.set_stroke(opacity=.5) for a in B3["links"]], run_time=.7)
+        self.at(A("t17", .6), Create(x2), *[a.animate.set_stroke(opacity=.5) for a in B3["links"]], run_time=.7, sfx="scratch", gain=.35)
         # t18 權宜解法：兩排的第 1 名都釘在總榜最前面
         pins = VGroup(pin(tot_slot(0) + LEFT * .72), pin(tot_slot(1) + LEFT * .72))
         self.at(A("t18", .0), self.cam(STAGE, STAGE_W), run_time=1.8, sfx="whoosh", gain=.5)
@@ -1318,6 +1331,24 @@ def fin_slot(i):
 
 class Sc08(Sheet):
     SID = "sc08"
+    END_VEIL = .72     # 片尾 20 秒：全景圖壓暗留著（不淡成全黑），上面可以疊 YouTube 的片尾元素
+
+    def end_idle(self, frames):
+        """片尾畫面不要完全靜止：一道金色的光每 5 秒沿管線走一次（在暗幕上面，所以是亮的）。"""
+        fps = config.frame_rate
+        run, gap = round(2.6 * fps), round(2.4 * fps)
+        while frames >= run + round(1.5 * fps):
+            fl = [x.copy().set_stroke(GOLD, 5, .85).set_z_index(320) for x in self.end_flow]
+            for x in fl:
+                x.nocheck = True
+            self.play(LaggedStart(*[ShowPassingFlash(x, time_width=.5) for x in fl], lag_ratio=.18), run_time=run / fps)
+            frames -= run
+            w = min(gap, frames)
+            if w > 0:
+                self.wait(w / fps)
+                frames -= w
+        if frames > 0:
+            self.wait(frames / fps)
 
     def construct(self):
         A, E = self.A, self.E
@@ -1344,6 +1375,7 @@ class Sc08(Sheet):
         c1 = cutoff(100)
         self.at(A("f2", .75), Transform(c0, c1), Succession(Wait(.75), st.animate(run_time=.5).set_fill(ANS, 1).scale(1.25)),
                 run_time=1.3, sfx="slide")
+        self.sfx("ding", t=A("f2", .75) + 1.0, gain=.35)                         # 截斷線掃過，綠星亮起（被撈回來）
         # f3 很多單路缺席，其實是候選在截斷線外被切掉
         cut_lab = T("截斷線", .05, TXT_STRONG).next_to(cutoff(4), DOWN, buff=.1).shift(RIGHT * .25)   # 放在虛線下方；放右上會和綠星連成「截斷線 ★」
         ghost_c = cutoff(4).set_stroke(opacity=.35)
@@ -1366,7 +1398,7 @@ class Sc08(Sheet):
         a_s.cross_ok = True
         a_f = Arrow(ocr.get_right(), MF_P + LEFT * .3 + DOWN * .12, buff=.05, stroke_width=3, max_tip_length_to_length_ratio=.25).set_color(FTS)
         self.at(A("f5", .15), GrowArrow(a_s), DrawBorderThenFill(ocr[0]), Write(ocr[1]), run_time=1.1)
-        self.at(A("f5", .45), GrowArrow(a_f), run_time=.8)
+        self.at(A("f5", .45), GrowArrow(a_f), run_time=.8, sfx="click", gain=.6)
         self.at(A("f5", .7), FadeOut(B3["x2"]), Indicate(B3["perp"], color=GOOD), B3["zero"].animate.set_opacity(.3), run_time=.9)
         # f7 ③ 最根本的一層：reranker（接在總榜後面）
         rr = rr_node()
@@ -1415,7 +1447,8 @@ class Sc08(Sheet):
         self.at(A("f11", .0), self.cam(RECAP_C, RECAP_W), FadeOut(union_l), FadeOut(fbars), FadeOut(qchip), FadeOut(qlink),
                 FadeOut(rr[2][0]), *dim_sig(W, 1.0), run_time=2.0, sfx="swoosh", gain=.4)
         flow = [*W["ql"], W["iv"], W["if_"], W["ov"], W["of"], W["tot"].link, lk_]
-        self.at(A("f11", .5), LaggedStart(*[ShowPassingFlash(x.copy().set_stroke(GOLD, 6, 1), time_width=.5) for x in flow],
+        self.end_flow = flow
+        self.at(A("f11", .56), LaggedStart(*[ShowPassingFlash(x.copy().set_stroke(GOLD, 6, 1), time_width=.5) for x in flow],
                                           lag_ratio=.18), run_time=1.8)
         # 三個元件的框、連到下方的回顧項目
         # fr3 左邊要夾在大括號（約 5.61）和「reranker」字（約 5.84）之間
@@ -1424,13 +1457,13 @@ class Sc08(Sheet):
         ln1, ln2, ln3 = recap_link(fr1, it1), recap_link(fr2, it2), recap_link(fr3, it3)
         # f12 ① 只看名次：框住兩排名次
         self.at(A("f12", .05), Create(fr1), run_time=.9)
-        self.at(A("f12", .3), Create(ln1), Write(it1), run_time=1.1)
+        self.at(A("f12", .3), Create(ln1), Write(it1), run_time=1.1, sfx="tick", gain=.6)
         self.at(A("f12", .65), Indicate(W["rv_"], color=RANK, scale_factor=1.15), Indicate(W["rf_"], color=RANK, scale_factor=1.15),
                 run_time=1.0)
         # f13 ② 每一路 1/(k + 名次)，加總：框住 Σ
         self.at(A("f13", .0), fr1.animate.set_stroke(opacity=.3), ln1.animate.set_stroke(opacity=.3), it1.animate.set_opacity(.5),
                 Create(fr2), run_time=.9)
-        self.at(A("f13", .3), Create(ln2), Write(it2), run_time=1.1)
+        self.at(A("f13", .3), Create(ln2), Write(it2), run_time=1.1, sfx="tick", gain=.6)
         self.at(A("f13", .7), ShowPassingFlash(W["ov"].copy().set_stroke(VEC, 7), time_width=.4),
                 ShowPassingFlash(W["of"].copy().set_stroke(FTS, 7), time_width=.4), Indicate(W["sig"].sym, color=GOLD, scale_factor=1.3),
                 run_time=1.0)
@@ -1440,7 +1473,7 @@ class Sc08(Sheet):
         self.at(A("f14", .0), fr2.animate.set_stroke(opacity=.3), ln2.animate.set_stroke(opacity=.3), it2.animate.set_opacity(.5),
                 Highlight(tc[0], color=ANS, scale_factor=1.2), run_time=1.0)
         self.at(A("f14", .4), Create(fr3), run_time=.9)
-        self.at(A("f14", .62), Create(ln3), Write(it3), run_time=1.1)
+        self.at(A("f14", .62), Create(ln3), Write(it3), run_time=1.1, sfx="tick", gain=.6)
         # f15 補救：最根本的是 reranker，正確答案回到第 1；三點全部亮起＝最後的全景
         self.at(A("f15", .25), Highlight(rr[0], color=TXT_STRONG, scale_factor=1.15), run_time=.9)
         self.at(A("f15", .5), Highlight(fin[0], color=ANS, scale_factor=1.2), Flash(fin[0], color=ANS, line_length=.2), run_time=.9)
@@ -1459,5 +1492,5 @@ class Sc08(Sheet):
         self.at(A("f16", .2), Write(art), *pl.look(DOWN), run_time=.9)
         self.at(A("f16", .5), *pl.hop(-.22), run_time=.45)
         self.at(A("f16", .64), *pl.hop(-.22), run_time=.45)
-        self.at(A("f16", .9), *pl.blink(), run_time=.3)
+        self.at(A("f16", .8), *pl.blink(), run_time=.3)
         self.finish()
