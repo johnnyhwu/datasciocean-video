@@ -31,10 +31,10 @@
 
 | 檔案 | 看什麼 |
 |---|---|
-| `design-v4.md` | 一張大圖怎麼設計；每一輪使用者的回饋和對應的修改 |
+| `design.md` | 一張大圖怎麼設計；每一輪使用者的回饋和對應的修改 |
 | `script.json` | 腳本格式、留白、品牌音樂的設定 |
 | `scenes.py` | 動畫的寫法、可以複製的元件 |
-| `review/gate3.md`、`upload.md` | 審查包和上傳清單怎麼寫 |
+| `plan.md`、`review/`、`upload.md` | 規劃、審查包、上傳清單怎麼寫（`plan.md` 的視覺構想已被 `design.md` 取代） |
 
 ### 每支都一樣的（頻道識別）
 
@@ -105,7 +105,7 @@
 | 外部規則現況（YouTube、Gemini） | `rules/external-rules.md`（每季重查） |
 | 環境、聲音重建、YouTube 帳號設定 | `docs/setup.md`、`docs/voice-recording.md`、`docs/youtube-upload.md` |
 
-背景資料，平常不用讀：`rules/research-distilled.md`（開站前的研究結論）、`rules/from-poc/`（更早的試做經驗）、`rules/from-skills/`（外部動畫 skill 的研究紀錄）、`pre-plan/`（原始規劃書）。它們和 skill 衝突時，以 skill 為準。
+背景資料，平常不用讀：`rules/research-distilled.md`（開站前的研究結論）、`pre-plan/`（原始規劃書與研究報告，不動）。它們和 skill 衝突時，以 skill 為準。
 
 ## 目錄
 
@@ -116,7 +116,7 @@ CLAUDE.md                 本檔：頻道定位、硬性限制、工作原則
 .claude/hooks/            protect_wiki.py：擋寫入 concept-wiki
 concept-wiki/             submodule，唯讀
 config/                   style.json（版面、配色、字幕）、voice.json（TTS 聲音）、zh-cn-terms.yaml
-rules/                    卡格式、語速、固定句、發音、外部規則；from-*/ 是背景資料
+rules/                    卡格式、語速、固定句、發音、外部規則、研究結論；from-social-media/、from-podcast/ 是寫稿用的參考
 lib/                      kit.py（Manim 工具箱、錘錘、片尾動畫）、cards.py、state.py、tts_gemini.py、timeline.py、
                           render.py、mix.py、sfx.py、package.py、upload.py、analytics.py、
                           checks/（claims、fonts、sheet、seams、frames、filmstrip、stt、fingerprint）
@@ -128,7 +128,7 @@ videos/<影片 ID>/          一支影片的文字產物：state.json、plan.md�
 out/<影片 ID>/             音檔、渲染、成片（不進 git）
 state/                    inventory.md（題材庫存）、cards.yaml（卡的 waiting／unsuitable 與原因）
 docs/                     給人看的：環境、聲音錄音、YouTube 設定、吉祥物設計
-experiments/、pre-plan/   實驗紀錄、原始規劃書（不動）
+pre-plan/                 原始規劃書與研究報告（不動）
 ```
 
 影片 ID 的格式是 `v<三位數>-<主題 slug>`，例如 `v001-rrf-rank-fusion`。

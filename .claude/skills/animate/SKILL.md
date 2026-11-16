@@ -7,7 +7,7 @@ description: 影片第 6 步「動畫」：用 ManimCE 與 lib/kit.py 逐場寫�
 
 **品質基準是 v001 的成片**（使用者 2026-11-08「相當滿意」，2026-11-16 定版）。開始前先讀這三個檔，新影片照同樣的結構做，換的是內容：
 
-- `videos/v001-rrf-rank-fusion/design-v4.md`：設計怎麼來的，以及每一輪改了什麼；
+- `videos/v001-rrf-rank-fusion/design.md`：設計怎麼來的，以及每一輪改了什麼；
 - `videos/v001-rrf-rank-fusion/scenes.py`：完整範例；
 - `lib/kit.py` 的 `Timed` 類別：`at()`、`cam()`、`finish()`、版面檢查。
 
@@ -23,7 +23,7 @@ v001 重做了四版才到這個水準。前三版被退的原因（「像小學
 - **ManimCE 0.22.1**（Cairo），透過 `lib/kit.py`。環境見 `docs/setup.md`（從零建立用 `scripts/setup.sh`）。
 - 畫靜態圖（草圖、縮圖）不設 `YTV_VIDEO`：`PYTHONPATH=lib uv run python -m manim -qh -s <檔案> <場景>`。
 - 不混用 ManimGL 的 API。不複製或改作 3b1b/videos 的程式碼。
-- 要試其他工具（Remotion、HyperFrames、three.js）可以，但要限定時間與範圍、寫進 `experiments/`、用同一個題材比較，最後由使用者決定。
+- 工具已經定案。想換工具先問使用者。
 
 ## 結構：一張大圖，鏡頭跟著走
 

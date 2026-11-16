@@ -7,4 +7,3 @@
 | 31% | 百分之三十一 | 數字一律寫成國字 | 預設 |
 | 1/(k+rank) | 一除以 k 加名次 | 公式要寫成口語 | 預設 |
 
-PoC（Kokoro 引擎）的多音字清單在 `rules/from-poc/04_LESSONS_LEARNED.md` §二，可以當作候選，但 Gemini 不一定會錯，要實測。
