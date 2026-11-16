@@ -18,7 +18,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from paths import ROOT, video_dir  # noqa: E402
 
-W = {"opening_mode": 2, "skeleton": 1.5, "visual_devices": 2, "music": 1, "title_pattern": 1, "mechanism_character": 1, "background": 0.5, "fixed_lines": 0.5}
+W = {"opening_mode": 2, "skeleton": 1.5, "visual_devices": 2, "title_pattern": 1, "mechanism_character": 1, "fixed_lines": 0.5}
+# 背景（一律 flat）和音樂（一律品牌音樂）是全頻道固定的，2026-11-16 起不列入比對
 THRESH = 0.6
 
 

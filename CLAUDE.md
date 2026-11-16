@@ -29,8 +29,8 @@
 | 論文圖 | 一律依主張文字重新製作，不放原圖，不逐筆描摹；只能估讀的只畫示意，並由旁白交代是示意 |
 | 舉例 | 自己補的數字、例子，旁白要說出這是舉例（「假設」「我們來舉個例子」「比方說」），畫面不放「示意」標籤（使用者 2026-11-08）；`claims.py` 檢查 |
 | 觀眾看得到的字 | 旁白、字幕、畫面、說明欄不出現內部用語：觀念卡、卡上、「作者說／作者認為」（我們就是作者）。「觀念卡」是我們內部的溝通方式，觀眾不知道也不該知道（使用者 2026-11-08）；`claims.py` 檢查 |
-| 授權 | 只用允許營利的工具、字型（OFL）、音樂（使用者的曲庫）；不複製 3b1b/videos 的程式碼與素材（CC BY-NC-SA） |
-| 不進 git | API 金鑰、OAuth 憑證、音檔、渲染的影片、音樂檔、使用者的聲音錄音（`.gitignore` 已排除；不論 repo 是否公開都一樣） |
+| 授權 | 只用允許營利的工具、字型（OFL）、音樂（使用者的曲庫，紀錄在 `assets/music-library.yaml`）、音效（CC0 或允許營利，紀錄在 `assets/sfx-library.yaml`）；不複製 3b1b/videos 的程式碼與素材（CC BY-NC-SA） |
+| 不進 git | API 金鑰、OAuth 憑證、音檔、渲染的影片、音樂檔、音效檔、使用者的聲音錄音（`.gitignore` 已排除；不論 repo 是否公開都一樣）。**不讀出、不印出 `.env`**，連遮罩過的也不行；只用程式確認變數有沒有值 |
 | 人審關卡 | 四個關卡都要使用者核准，紀錄用 `state.py approve` 寫入，才能往下走 |
 | 失敗 | 同一項失敗 3 次（查核改寫 3 輪、場景渲染 3 次、同一句 TTS 3 次）就停下來回報；**不自動換成投影片式的備援畫面** |
 | 揭露 | 每支影片的「AI use」欄位都要有明確的建議答案；上傳前檢查 C2PA |
@@ -63,7 +63,7 @@
 | 研究結論（敘事、手法、政策、授權） | `rules/research-distilled.md`。原文在 `pre-plan/research/`，平常不要載入 |
 | 外部規則現況（YouTube、Gemini） | `rules/external-rules.md`（每季重查） |
 | PoC 的經驗（使用者滿意的兩支試做） | `rules/from-poc/`：`03_CREATIVE_PLAYBOOK.md`（哪些創意有效）、`04_LESSONS_LEARNED.md`（踩過的坑） |
-| 外部動畫 skill 的研究（版面、線條、停留的規則從哪來） | `rules/from-skills/README.md`。原文在 `vendor/`（MIT），平常不要載入 |
+| 外部動畫 skill 的研究（規則的出處；研究紀錄，不是現行規則） | `rules/from-skills/README.md`。原文在 `vendor/`（MIT），平常不要載入 |
 | 原始規劃書 | `pre-plan/spec/for_claude_code.md`（背景用；和本 repo 的規則衝突時，以本 repo 為準） |
 
 ## 跨步驟原則
@@ -71,13 +71,16 @@
 - **旁白先行**：先有聲音才有時間軸，動畫用 `A(句 id, 比例)` 錨在旁白上，不寫絕對秒數。
 - **能用程式檢查的，一律交給 `lib/`**：字幕、響度、版面、字型、標記、數字、狀態都由程式檢查。LLM 只做判斷。
 - **Claude 看不到畫面、聽不到聲音。** 每次都要跑程式檢查並看縮圖；沒經過人耳確認的地方要明講，不要假裝確認過。
-- **品質基準是 v001 第四版**（使用者 2026-11-08：「相當滿意」）。做法寫在 `.claude/skills/animate/SKILL.md` 的「視覺語言 v4」與「收尾」，範例是 `videos/v001-rrf-rank-fusion/`（`design-v4.md`、`scenes.py`）。每次都要守住的四件事：
-  - 一張大圖加鏡頭跟拍；
+- **品質基準是 v001 的成片**（使用者 2026-11-08：「相當滿意」；2026-11-16 定版）。它重做了四版才到這個水準，做法都寫進各步驟的 skill，範例是 `videos/v001-rrf-rank-fusion/`（`design-v4.md`、`scenes.py`、`script.json`）。新影片照同樣的結構做，換的是內容。每次都要守住：
+  - 一張大圖加鏡頭跟拍，規劃時就定好大圖和主角；
   - 接縫一格不差，而且不停格（`seams.py`）；
   - 動畫進行中也要乾淨：沒有東西突然跳出或消失，也沒有空畫面（`frames.py` 逐格掃描）；交關卡 3 前用 `filmstrip.py` 逐秒看完整片（使用者 2026-11-10：「檢查每個 frame」）；
-  - 最後一個畫面是全集的概念圖加三點回顧。
-- **上游一改，下游的檢查全部重跑**：旁白重新合成或改句子後時間軸會變，先低畫質重渲、把版面檢查清到全部 OK 才渲 1080p（v001 漏了，6 個動作晚起步留到成片）。使用者說「沒問題」不等於不用再看：自己回看一輪還抓得到東西（`animate` 的「回看一輪才抓到的」）。
-- **每支影片都要實質不同**：開場模式、骨架、視覺手法、機制角色、背景音樂都要換。結構指紋由程式比對最近 5 支。最大的風險是 YouTube 的「通用或重複內容」政策。
+  - 收尾是全集的概念圖加三點回顧，錘錘指說明欄，最後接頻道片尾動畫；
+  - 音樂只當標點（片頭、章節轉場、片尾），不鋪在旁白下面；音效只放在轉折點。
+- **上游一改，下游全部重跑**：改句子、重新合成旁白、改留白都會改時間軸。順序固定：`timeline.py` → 低畫質重渲 → 版面檢查清到全部 OK → 1080p → 接縫與逐格檢查 → 重新混音打包。
+- **自己多看一輪**：使用者說「沒問題」不等於不用再看，v001 每一輪回看都還抓得到東西。回饋是感受（「粗糙」「吵」「沒活力」）時，先找出具體原因（對照範例、量測、逐格看）再改，並把原因告訴使用者。
+- **固定的和要換的**：一張大圖的結構、收尾方式、品牌音樂、片尾動畫、錘錘、配色是頻道識別，每支都一樣。開場模式、骨架、大圖本身、主角、視覺手法、機制角色每支都要實質不同，結構指紋由程式比對最近 5 支。最大的風險是 YouTube 的「通用或重複內容」政策。
+- **交東西時說清楚**：這一版改了什麼、和上一版差在哪、哪些沒有經過人眼或人耳確認、要使用者特別看哪個時間點；成片附上開啟指令。
 - **省額度**：
   - 細節放在 skill 裡，執行到該步驟才載入；
   - 程式檢查過了才送圖，每場只送 1 張縮圖表；
@@ -98,8 +101,8 @@ concept-wiki/             submodule，唯讀
 config/                   style.json（版面、配色、字幕）、voice.json（TTS 聲音）、zh-cn-terms.yaml
 rules/                    資料性質的規則：卡格式、語速、固定句、研究提煉、外部規則、from-social-media/、from-podcast/、from-poc/、from-skills/
 lib/                      程式：kit.py（Manim 工具箱＋吉祥物）、tts_gemini.py、timeline.py、render.py、mix.py、package.py、
-                          cards.py、state.py、checks/（claims、fonts、sheet、seams、frames、filmstrip、stt、fingerprint）
-assets/                   fonts/（OFL）、brand/logo.png、music-library.yaml（曲庫授權紀錄）；music/、voice/ 不進 git
+                          cards.py、state.py、sfx.py、checks/（claims、fonts、sheet、seams、frames、filmstrip、stt、fingerprint）
+assets/                   fonts/（OFL）、brand/logo.png、music-library.yaml 與 sfx-library.yaml（授權紀錄）；music/、sfx/ 的音檔、voice/ 不進 git
 videos/<影片 ID>/          一支影片的文字產物：state.json、plan.md、script.json、factcheck.json、timeline.json、
                           scenes.py、fingerprint.json、review/、upload.md、d7.json、d28.json
 out/<影片 ID>/             音檔、渲染、成片（不進 git）

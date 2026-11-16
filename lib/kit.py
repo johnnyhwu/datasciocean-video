@@ -10,11 +10,13 @@
 場景寫法（videos/<id>/scenes.py）：
     from kit import *
     class Sc01(Timed):
-        SID = "sc01"; BG = "glow_center"
+        SID = "sc01"
         def construct(self):
-            big = B("期望值", 0.11, C["ev"]).move_to(cell(1, 1, 1, 4))
-            self.at(self.A("a1", 0.6), pop_in(big), run_time=0.4, sfx="pop")   # a1 念到 60% 時彈出
+            A = self.A
+            eq = M("0.83 + 12.4 = ?", 0.07)
+            self.at(A("a1", 0.6), Write(eq), run_time=1.2)   # a1 念到 60% 時開始寫
             self.finish()
+完整範例是 videos/v001-rrf-rank-fusion/scenes.py；做法寫在 .claude/skills/animate/SKILL.md。
 
 規則（規格 §6.2、§6.4）：
 - 每個 at() 都要對應某一句旁白（用 A()/E() 錨定），標不出來就刪掉；同一時間只有一個焦點。
@@ -627,7 +629,7 @@ def bbox_in(m, frame):
 class Timed(MovingCameraScene):
     """旁白錨定的場景基底。時間全部來自 timeline.json（旁白先行），不寫絕對秒數。"""
     SID = None
-    BG = "glow_center"
+    BG = "flat"      # 平面底色；鏡頭會動，漸層背景會露邊
     LAY = S.get("layout", {})
     HUD = False      # v4：不放頂端進度條（框架元素讓畫面像投影片）
     CARDS = False    # v4：不放章節卡與角落章節標籤；章節只寫進 YouTube 說明欄（chapters.txt）

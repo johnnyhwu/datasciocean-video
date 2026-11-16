@@ -31,7 +31,7 @@ def build(vid: str, estimate: bool):
             sys.exit("沒有 out/<id>/audio/report.json；先跑 tts_gemini.py，或加 --estimate。")
         rep = json.loads(rp.read_text())
     gap = spec.get("gap", 0.25)
-    default_pad = spec.get("scene_pad", [0.4, 0.5])
+    default_pad = spec.get("scene_pad", [0.15, 0.4])
     labels = {k: v.get("label", "") for k, v in spec.get("speakers", {}).items()}
     t, cues, scenes = 0.0, [], []
     for i, sc in enumerate(spec["scenes"]):
