@@ -79,3 +79,19 @@
 - sc08：片尾 20 秒不再淡成全空的畫面，全景圖壓暗留著（`END_VEIL`），金色的光每 5 秒沿管線走一次。
 - 音效 36 → 45 個，只加在轉折點：劃掉算式、領先換邊、劃掉「正交」、綠星被撈回、源頭分開、三點回顧。
 - 修掉 6 個「starts late」（前一個動作還沒播完，晚 0.06～0.28 秒）。
+
+## v4.3：背景音樂與錄音音效（2026-11-16，使用者：「因為是第一次製作影片，可以你來找嗎」「按照你的建議做做看」）
+
+- 背景音樂三首（Kevin MacLeod，CC BY 4.0，說明欄要標示）：sc01～06 Clean Soul、sc07 Floating Cities、sc08 Perspectives。紀錄在 `assets/music-library.yaml`。
+- 音效 9 種換成 CC0 錄音檔（Kenney、OpenGameArt，經 kmilo93sd/agent-video-editor 整理）：tick、click、pop、thud、ding、slide、scratch，加兩個新種類
+  `knob`（開始轉旋鈕，原本用 slide）和 `bell`（全片一次：正確答案回到第 1 名，原本用 ding）。whoosh、swoosh 維持合成音。
+- `package.py` 在編碼前加限幅器（有音樂時 AAC 編碼後峰值 −0.8 dBFS，超過門檻）。
+- 選曲與選檔都沒有經過人耳確認。
+- 使用者聽完第一批音樂：「幾乎聽不到」「好低沉」「沒什麼活力」。量測後原因是曲子能量集中在 250 Hz 以下。改成 sc01～03 與 sc08 Digital Lemonade（開頭和結尾同一首）、
+  sc04～06 Getting it Done、sc07 Living Voyage；音量以 200 Hz 以上計，說話時比旁白低 16 dB（原本約 34 dB）。
+- 使用者聽完第二批：「有比較好，但干擾人聲」「一直持續存在有點吵」「可以參考 podcast 的開場音」。改成音樂只當標點，用 podcast 的品牌音樂
+  （Jonas Blakewood / Presentation）：片頭在 h7 說完時進來、三次章節轉場（sc04、sc07、sc08 開頭）、片尾 23 秒。
+  sc02 前置從 0.15 秒改成 2.4 秒（全片 +2.25 秒），鏡頭拉遠提前到這段空檔並拉長到 4.4 秒；i1 說到「RRF」時強調一下 RRF 標籤。
+- 使用者聽完標點式音樂：「這樣還可以，只差結尾」「希望有一個屬於這個頻道的 ending animation，基於 logo 去發想」。片尾 20 秒從「全景圖壓暗」改成頻道片尾動畫
+  （`kit.Timed.brand_outro`，`END_BRAND = True`）：海水 8 層漲上來 → 錘錘從上方垂進海裡（入水有漣漪和氣泡）→ 在深處亮起來 → 寫出字標，繩子改掛在字標下面；
+  之後海浪起伏、光暈呼吸、錘錘微擺和眨眼。加 3 個音效（whoosh、pop、ding，都很小聲）。片長不變。

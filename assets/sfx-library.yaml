@@ -1,0 +1,21 @@
+# 音效庫紀錄（進 git）；音效檔在 assets/sfx/（不進 git）。
+# 來源：github.com/kmilo93sd/agent-video-editor（commit 8e32c0a）的 skills/editing-videos/library/sfx/。
+# 授權：全部 CC0 1.0，可用於營利影片，不需標示。原始出處是 Kenney（kenney.nl）與 OpenGameArt，
+#       逐檔出處見 assets/sfx/LICENSES-upstream.md（上游的 LICENSES.md 原文）。
+# 2026-11-16：使用者同意由 Claude 代找並換上；選檔依程式量測（起音、長度、頻率），沒有經過人耳確認。
+#
+# 寫法：種類 → 幾個變化（同一種類的提示點輪流用，避免每次都一模一樣）。
+#   "a"          用 assets/sfx/a.wav
+#   "a@0.85-1.2" 只取第 0.85～1.2 秒
+#   "a+b*0.5"    兩個檔疊在一起（b 的音量乘 0.5）
+# 沒列在這裡的種類（whoosh、swoosh…）沿用 lib/sfx.py 的合成音：上游的 whoosh 也是合成的，換了沒有差別。
+kinds:
+  tick:    ["tap", "key-press"]                      # 數字、清單一項一項寫出
+  click:   ["click-soft"]                            # 接上、鎖定
+  knob:    ["switch-1"]                              # 開始轉旋鈕
+  pop:     ["pop-1", "drop-item"]                    # 冒出、領先換邊
+  thud:    ["dry-thud+impact-wood-light*0.5"]        # 落空、歸零（低頻加一層木頭聲，手機喇叭才聽得到）
+  ding:    ["bell-ding"]                             # 答案、命名
+  bell:    ["success-bell"]                          # 全片只用一次：正確答案回到第 1 名
+  slide:   ["drag-item", "slide-2"]                  # 卡片、尺滑動
+  scratch: ["pencil-write@0.85-1.25"]                # 劃掉（鉛筆的一筆）

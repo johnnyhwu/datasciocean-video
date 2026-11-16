@@ -347,9 +347,11 @@ class Sc02(Sheet):
             FadeIn(W["mv"]), FadeIn(W["mf"]), Create(W["iv"]), Create(W["if_"])),
             AnimationGroup(DrawBorderThenFill(W["rv"].node), DrawBorderThenFill(W["rf"].node),
                            FadeIn(W["rv"].icon, scale=.6), FadeIn(W["rf"].icon, scale=.6)))
-        self.at(A("i1", .05), self.cam(STAGE, STAGE_W), ReplacementTransform(d, W["sig"]), ReplacementTransform(rrf, W["rrf"]),
-                ReplacementTransform(nv, W["rv"].lab), ReplacementTransform(nf, W["rf"].lab), build, run_time=3.2,
-                sfx="swoosh", gain=.5)
+        # 片頭音樂在 h7 說完時進來（sc02 前置 2.4 秒）：鏡頭在音樂裡拉遠，i1 開口時管線已經大致成形
+        self.at(.2, self.cam(STAGE, STAGE_W), ReplacementTransform(d, W["sig"]), ReplacementTransform(rrf, W["rrf"]),
+                ReplacementTransform(nv, W["rv"].lab), ReplacementTransform(nf, W["rf"].lab), build, run_time=4.4,
+                sfx="swoosh", gain=.4, rate_func=rate_functions.ease_in_out_sine)   # 預設的 smooth 起步太慢，音樂進來後畫面像停住 2 秒
+        self.at(A("i1", .8), Indicate(W["rrf"], color=W["rrf"].get_color(), scale_factor=1.25), run_time=.8)   # 「排名融合 RRF」
         # i2 快轉一眼：總榜上，正確答案從第 1 名被擠到第 4 名
         tot = W["tot"]
         self.at(A("i2", .0), Create(tot.link), LaggedStart(*[Create(s) for s in tot.slots], lag_ratio=.1), Write(tot.head),
@@ -966,7 +968,7 @@ class Sc06(Sheet):
         self.at(A("k1", .55), Write(rd), Create(rs[0]), Write(rs[2]), LaggedStart(*[Write(x) for x in rs[1]], lag_ratio=.15),
                 GrowFromEdge(bars, DOWN), run_time=1.1)
         # k2 k 越大（例如 200）：前幾名的差距被壓平
-        self.at(A("k2", .3), lk.animate.set_value(np.log(200)), run_time=2.6, sfx="slide", rate_func=rate_functions.ease_in_out_sine)
+        self.at(A("k2", .3), lk.animate.set_value(np.log(200)), run_time=2.6, sfx="knob", rate_func=rate_functions.ease_in_out_sine)
         # k3 偏好多路累積：A、B 的合併長條
         self.at(A("k3", .05), Create(abs_[0]), Write(abs_[1]), Write(abs_[2]), Write(abs_[3]), Write(abs_[4]), run_time=1.0)
         av = ab_vals(lk)
@@ -974,12 +976,12 @@ class Sc06(Sheet):
         self.at(A("k3", .42), Write(av), FadeIn(ab_note()), run_time=.6)
         self.at(A("k3", .7), Indicate(abs_[1], color=TXT_STRONG), run_time=.8)
         # k4 k 越小（例如 1）：第一名的獎勵懸殊
-        self.at(A("k4", .25), lk.animate.set_value(0), run_time=2.8, sfx="slide", rate_func=rate_functions.ease_in_out_sine)   # 預設的 smooth 中段太快，看不到直條慢慢變陡
+        self.at(A("k4", .25), lk.animate.set_value(0), run_time=2.8, sfx="knob", rate_func=rate_functions.ease_in_out_sine)   # 預設的 smooth 中段太快，看不到直條慢慢變陡
         self.sfx("pop", t=A("k4", .25) + 1.85, gain=.4)                          # k ≈ 3.7：B 超過 A（金色換邊）
         # k5 相信單一路的強訊號：B 領先
         self.at(A("k5", .3), Indicate(abs_[2], color=TXT_STRONG), Indicate(abs_[4], color=RANK), run_time=1.0)
         # k6 選 60
-        self.at(A("k6", .25), lk.animate.set_value(np.log(60)), run_time=2.2, sfx="slide", rate_func=rate_functions.ease_in_out_sine)
+        self.at(A("k6", .25), lk.animate.set_value(np.log(60)), run_time=2.2, sfx="knob", rate_func=rate_functions.ease_in_out_sine)
         self.sfx("pop", t=A("k6", .25) + .85, gain=.4)                            # A 再超回來
         self.at(A("k6", .85), Indicate(rd, color=KC, scale_factor=1.15), run_time=.7)
         # k7 寧可相信共識
@@ -1331,24 +1333,13 @@ def fin_slot(i):
 
 class Sc08(Sheet):
     SID = "sc08"
-    END_VEIL = .72     # 片尾 20 秒：全景圖壓暗留著（不淡成全黑），上面可以疊 YouTube 的片尾元素
+    END_BRAND = True   # 片尾 20 秒：頻道的片尾動畫（kit.Timed.brand_outro）
 
-    def end_idle(self, frames):
-        """片尾畫面不要完全靜止：一道金色的光每 5 秒沿管線走一次（在暗幕上面，所以是亮的）。"""
-        fps = config.frame_rate
-        run, gap = round(2.6 * fps), round(2.4 * fps)
-        while frames >= run + round(1.5 * fps):
-            fl = [x.copy().set_stroke(GOLD, 5, .85).set_z_index(320) for x in self.end_flow]
-            for x in fl:
-                x.nocheck = True
-            self.play(LaggedStart(*[ShowPassingFlash(x, time_width=.5) for x in fl], lag_ratio=.18), run_time=run / fps)
-            frames -= run
-            w = min(gap, frames)
-            if w > 0:
-                self.wait(w / fps)
-                frames -= w
-        if frames > 0:
-            self.wait(frames / fps)
+    def end_clear(self):
+        tgt = self.pl_end.copy()                       # 全景鏡頭高 10.8：要拉到畫面上緣之外
+        tgt.bodyg.shift(UP * (self.camera.frame.get_top()[1] + 1.2 - tgt.bodyg.get_bottom()[1]))
+        tgt.rope.become(tgt._straight_rope())
+        return [Transform(self.pl_end, tgt, rate_func=rate_functions.ease_in_cubic), FadeOut(self.art_end)]
 
     def construct(self):
         A, E = self.A, self.E
@@ -1441,7 +1432,7 @@ class Sc08(Sheet):
         # f10 不管從哪一路來：進了聯集，就有機會排到最前面
         self.at(A("f10", .1), LaggedStart(*[GrowFromEdge(b, LEFT) for b in fbars], lag_ratio=.2), Write(fnums), run_time=1.2)
         self.at(A("f10", .55), Highlight(fin[0], color=ANS, scale_factor=1.2), Flash(fin[0], color=ANS, line_length=.2), run_time=1.0,
-                sfx="ding", gain=.5)
+                sfx="bell", gain=.5)
         # ---- 收尾（v5，使用者 2026-11-08）：最後一個畫面是整個方法的全景圖，三點回顧各對應圖上的一個元件 ----
         # f11 把整條路再看一次：拉到全景，一道光從查詢流到最後的第 1 名
         self.at(A("f11", .0), self.cam(RECAP_C, RECAP_W), FadeOut(union_l), FadeOut(fbars), FadeOut(qchip), FadeOut(qlink),
@@ -1493,4 +1484,5 @@ class Sc08(Sheet):
         self.at(A("f16", .5), *pl.hop(-.22), run_time=.45)
         self.at(A("f16", .64), *pl.hop(-.22), run_time=.45)
         self.at(A("f16", .8), *pl.blink(), run_time=.3)
+        self.pl_end, self.art_end = pl, art
         self.finish()

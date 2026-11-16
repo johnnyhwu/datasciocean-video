@@ -40,7 +40,7 @@ def add(*xs):
     return out
 
 def make(kind):
-    k = kind
+    k = {"knob": "click", "bell": "chime"}.get(kind, kind)   # 只有錄音檔的種類，沒有檔案時的替代
     if k == "pop":    x = add(tone(900, 380, 0.12, 0.035, (1, 2)), 0.3 * noise(0.03, 2000, 6000, 0.008))
     elif k == "tick": x = tone(2400, 2200, 0.05, 0.012) * 0.6
     elif k == "click": x = add(noise(0.04, 1500, 7000, 0.006) * 0.8, tone(1500, 1400, 0.04, 0.01) * 0.4)

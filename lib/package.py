@@ -100,7 +100,7 @@ def main():
             f":measured_LRA={m['input_lra']}:measured_thresh={m['input_thresh']}:offset={m['target_offset']}:linear=true")
     final = dl / f"{vid}{'-nomusic' if nomusic else ''}.mp4"
     r = run(["-y", "-i", str(video), "-i", str(wav), "-i", str(od / "subs.zh-TW.srt"), "-i", str(od / "subs.zh-CN.srt"),
-             "-map", "0:v", "-map", "1:a", "-map", "2", "-map", "3", "-c:v", "copy", "-af", norm + ",aresample=48000",
+             "-map", "0:v", "-map", "1:a", "-map", "2", "-map", "3", "-c:v", "copy", "-af", norm + ",alimiter=limit=0.84:level=false,aresample=48000",  # 限制在約 −1.5 dBFS：AAC 編碼後峰值會多 0.2～0.5 dB
              "-c:a", "aac", "-b:a", "256k", "-c:s", "mov_text",
              "-metadata:s:s:0", "language=zho", "-metadata:s:s:0", "title=繁體中文",
              "-metadata:s:s:1", "language=zho", "-metadata:s:s:1", "title=简体中文", str(final)])

@@ -20,11 +20,12 @@
    "label": "錘錘"
   }
  },
- "music_duck_db": -7,
+ "music_duck_db": -6,
  "scenes": [
   {
    "id": "sc01",
    "name": "公斤加公尺",
+   "music": "bright_synth",
    "bg": "flat",
    "pad": [
     0.3,
@@ -99,13 +100,14 @@
   {
    "id": "sc02",
    "name": "為什麼會有兩個分數",
+   "music": "bright_synth",
    "chapter": [
     1,
     "為什麼要合併"
    ],
    "bg": "flat",
    "pad": [
-    0.15,
+    2.4,
     0.4
    ],
    "sentences": [
@@ -187,6 +189,7 @@
   {
    "id": "sc03",
    "name": "兩個電台",
+   "music": "bright_synth",
    "chapter": [
     2,
     "分數為什麼不能加"
@@ -315,6 +318,7 @@
   {
    "id": "sc04",
    "name": "翻牌看板",
+   "music": "clean_drive",
    "chapter": [
     3,
     "只看名次"
@@ -435,6 +439,7 @@
   {
    "id": "sc05",
    "name": "算給你看",
+   "music": "clean_drive",
    "bg": "flat",
    "pad": [
     0.15,
@@ -521,6 +526,7 @@
   {
    "id": "sc06",
    "name": "k 旋鈕",
+   "music": "clean_drive",
    "chapter": [
     4,
     "k 是一個旋鈕"
@@ -603,6 +609,7 @@
   {
    "id": "sc07",
    "name": "共識的盲點",
+   "music": "bright_mystery",
    "chapter": [
     5,
     "共識的盲點"
@@ -752,6 +759,7 @@
   {
    "id": "sc08",
    "name": "由淺到深",
+   "music": "bright_synth",
    "chapter": [
     6,
     "怎麼補救"
@@ -898,5 +906,26 @@
    ]
   }
  ],
- "_pad_note": "2026-11-08 v5：使用者說轉場時「卡住定格幾秒」。場景之間是同一張大圖，接縫前後的空檔（前一場最後一個動作結束 → 下一場第一個動作開始）由 seams.py 檢查在 0.8～1.6 秒之間；每場前置 0.15 秒、後置 0.4 秒，最後一句 hold ≤ 0.4。"
+ "_pad_note": "2026-11-08 v5：使用者說轉場時「卡住定格幾秒」。場景之間是同一張大圖，接縫前後的空檔（前一場最後一個動作結束 → 下一場第一個動作開始）由 seams.py 檢查在 0.8～1.6 秒之間；每場前置 0.15 秒、後置 0.4 秒，最後一句 hold ≤ 0.4。",
+ "music_level_db": -13,
+ "music_punct": {
+  "intro": {
+   "track": "brand_intro",
+   "after": "h7",
+   "lead": 1.25
+  },
+  "stings": {
+   "track": "brand_sting",
+   "before": [
+    "n1",
+    "t1",
+    "f1"
+   ]
+  },
+  "outro": {
+   "track": "brand_outro",
+   "pre": 3.0
+  }
+ },
+ "_music_note": "2026-11-16：音樂只當標點（片頭、三次章節轉場、片尾），和 podcast 同一首。sc02 前置 2.4 秒是片頭音樂的空間：h7 說完音樂進來，鏡頭同時拉遠，i1 才開始說。"
 }

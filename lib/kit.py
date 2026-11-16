@@ -638,6 +638,170 @@ class Timed(MovingCameraScene):
         if frames > 0:
             self.wait(frames / config.frame_rate)
 
+    END_BRAND = False  # 最後一場設 True：片尾畫面播頻道的片尾動畫（brand_outro：logo 的海、測深錘、字標）
+
+    def end_clear(self):
+        """片尾動畫開始時要一起收掉的東西（例如把場上的錘錘拉上去），回傳動畫 list；約 0.9 秒。"""
+        return []
+
+    def brand_outro(self, frames):
+        """頻道片尾動畫（2026-11-16 使用者：「屬於這個頻道的 ending animation，基於 logo 去發想」）。
+        logo＝字標下面一條測深繩，垂進一層比一層深的海，錘在深處發光。動起來就是：
+          海水從畫面下方漲上來蓋住最後的全景圖 → 錘錘從上方垂進海裡、下潛、減速 → 在深處亮起來 → 上方寫出字標，繩子改掛在字標下面。
+        之後海浪持續起伏、光暈呼吸、錘錘微微擺動，直到片尾結束。左右兩側留給 YouTube 的片尾元素。
+        全部用鏡頭畫面的相對座標，不管最後鏡頭多寬都一樣。必須剛好用掉 frames 格。"""
+        fps = config.frame_rate
+        F = lambda sec: round(sec * fps)
+        fr = self.camera.frame
+        k = fr.width / FW
+        O = fr.get_center().copy()
+        P = lambda x, y: O + np.array([x, y, 0.0]) * k
+        HW, HH = FW / 2 * 1.06, FH / 2 * 1.08
+        used = 0
+
+        def mark(*ms):
+            for m in ms:
+                m.nocheck = True
+            return ms
+
+        # --- 海：8 層，上淺下深（logo 的配色），每層的上緣是慢慢移動的波 ---
+        cols = ["#58A59F", "#2F8E8F", "#17757F", "#0D606C", "#084E59", "#063E48", "#042F38", "#03232B"]
+        SURF, STEP = 1.5, .7
+        rise = ValueTracker(-(SURF + HH) - .6)       # 整片海的垂直位移：從畫面下方之外漲到 0
+        xs = np.linspace(-HW, HW, 90)
+        rng = np.random.default_rng(7)
+        bands = VGroup()
+        for i, c in enumerate(cols):
+            b = VMobject().set_fill(c, 1).set_stroke(width=0).set_z_index(310 + i)
+            b.y0, b.t = SURF - i * STEP, 0.0
+            b.ph, b.ph2 = rng.uniform(0, TAU, 2)
+            b.w = (.42 + .06 * i) * (1 if i % 2 else -1)      # 相鄰兩層反方向流
+
+            def upd(m, dt=0):
+                m.t += dt
+                y = m.y0 + rise.get_value() + .085 * np.sin(.62 * xs + m.ph + m.w * m.t) + .04 * np.sin(1.45 * xs + m.ph2 - 1.3 * m.w * m.t)
+                bot = min(-HH, y.min() - .2)
+                pts = [P(x, yy) for x, yy in zip(xs, y)] + [P(HW, bot), P(-HW, bot)]
+                m.set_points_as_corners(pts + [pts[0]])
+            upd(b)
+            b.add_updater(upd)
+            bands.add(b)
+        mark(bands, *bands)
+        self.add(bands)
+
+        # 1. 海水漲上來，同時收掉場上的東西
+        n = F(2.0)
+        self.sfx("whoosh", gain=.35)
+        clear = self.end_clear()
+        # 水面以上：最後的畫面淡成底色（字標要寫在乾淨的地方）
+        sky = Rectangle(width=2 * HW * k, height=2 * HH * k).set_fill(config.background_color, 0).set_stroke(width=0).move_to(O).set_z_index(305)
+        mark(sky)
+        self.add(sky)
+        self.play(rise.animate(run_time=n / fps, rate_func=rate_functions.ease_in_out_cubic).set_value(0),
+                  sky.animate(run_time=1.5, rate_func=rate_functions.ease_in_out_sine).set_fill(config.background_color, 1),
+                  *([AnimationGroup(*clear, run_time=.9)] if clear else []))
+        used += n
+        self.f += n
+
+        # --- 錘錘：從畫面上方垂進海裡 ---
+        cx, depth = 0.0, -1.75
+        top = fr.get_top()[1] + .6
+        pl = Plumb(.5 * k, top_y=top).place(P(cx, HH + 2.2))
+        pl.set_mood("happy").set_z_index(340)
+        mark(pl, *pl.get_family())
+        glow_on, gt = ValueTracker(0), ValueTracker(0)
+        glow = VGroup(*[Circle(r * k).set_stroke(width=0).set_fill(GOLD, 0) for r in np.linspace(2.7, .35, 16)]).set_z_index(330)
+
+        def glow_upd(m, dt=0):
+            gt.increment_value(dt)
+            a = .036 * glow_on.get_value() * (1 + .14 * np.sin(1.25 * gt.get_value()))
+            m.move_to(pl.center())
+            for c in m:
+                c.set_fill(GOLD, a)
+        glow.add_updater(glow_upd)
+        mark(glow, *glow)
+        target = pl.copy().place(P(cx, depth))
+        # 入水的漣漪＋幾顆氣泡：尖端通過水面的那一刻開始
+        y_from, y_to = pl.tip.get_center()[1], target.tip.get_center()[1]
+        frac = (y_from - P(0, SURF)[1]) / (y_from - y_to)
+        a_hit = 1 - (1 - frac) ** (1 / 3)               # ease_out_cubic 的反函數
+        ring = Ellipse(width=1, height=.18).set_stroke(TXT_STRONG, 3, 0).set_fill(opacity=0).move_to(P(cx, SURF)).set_z_index(335)
+        bub = VGroup(*[Circle(r * k).set_stroke(TXT_STRONG, 2, 0).set_fill(opacity=0) for r in (.05, .035, .06, .04, .03)]).set_z_index(335)
+        bx = [-.22, .16, .3, -.1, .05]
+        mark(ring, bub, *bub)
+
+        def splash(m, a):
+            u = (a - a_hit) / max(1e-6, 1 - a_hit)
+            if u <= 0:
+                return
+            e = Ellipse(width=(.5 + 2.4 * u) * k, height=(.09 + .34 * u) * k).move_to(P(cx, SURF))
+            ring.set_points(e.points).set_stroke(TXT_STRONG, 3, .7 * (1 - u) ** 1.5)
+            for j, c in enumerate(bub):
+                v = np.clip(u * 1.25 - .06 * j, 0, 1)
+                c.move_to(P(cx + bx[j] * (1 + .4 * v), SURF - .35 - .28 * j + .55 * v))
+                c.set_stroke(TXT_STRONG, 2, .55 * np.sin(PI * v))
+        n = F(1.9)
+        self.add(glow, pl, ring, bub)
+        self.play(Transform(pl, target, rate_func=rate_functions.ease_out_cubic), UpdateFromAlphaFunc(ring, splash, rate_func=linear), run_time=n / fps)
+        self.sfx("pop", t=(self.f + a_hit * n) / fps, gain=.3)
+        used += n
+        self.f += n
+        self.remove(ring, bub)
+
+        # 2. 在深處亮起來（品牌的「深處的光」）
+        n = F(.9)
+        self.sfx("ding", gain=.45)
+        self.play(glow_on.animate.set_value(1), pl.facets[0].animate.set_fill(_GLOW, 1), pl.facets[1].animate.set_fill("#FFF3D0", 1),
+                  pl.facets[2].animate.set_fill(GOLD, 1), run_time=n / fps)
+        used += n
+        self.f += n
+
+        # 3. 字標：繩子先收到字標下面，再寫字
+        wm = Text("DataSci Ocean", font=FONT, weight=BOLD, color=TXT, font_size=fs(.078) * k)
+        for j, g in enumerate(wm):
+            g.shift(RIGHT * k * (.2 * j + (.42 if j >= 7 else 0)))
+        wm.move_to(P(cx, 3.0))
+        wm.set_z_index(345)
+        mark(wm, *wm)
+        pl.top_y = wm.get_bottom()[1] - .2 * k
+        n = F(.5)
+        self.play(Transform(pl.rope, pl._straight_rope(), rate_func=rate_functions.ease_in_out_sine), run_time=n / fps)
+        used += n
+        self.f += n
+        n = F(1.3)
+        self.play(Write(wm), run_time=n / fps)
+        used += n
+        self.f += n
+
+        # 4. 到片尾結束：錘錘微微擺動（繞繩子頂端）、偶爾眨眼；海浪和光暈由 updater 持續在動
+        pivot = pl.rope.get_end().copy() if pl.rope.get_end()[1] > pl.rope.get_start()[1] else pl.rope.get_start().copy()
+        eyes0 = pl.eyes.copy()
+        st = {"t": 0.0, "th": 0.0}
+        PER, AMP = 6.4, .03
+        blinks = [PER * (.25 + .5 * j) for j in range(1, 40, 3)]     # 在擺到最遠（速度是 0）的時候眨
+
+        def sway(m, dt):
+            st["t"] += dt
+            t = st["t"]
+            th = AMP * min(1, t / 2.5) * np.sin(TAU * t / PER)
+            m.rotate(th - st["th"], about_point=pivot)
+            st["th"] = th
+            for bt in blinks:
+                if abs(t - bt) < .14:
+                    m.eyes.become(eyes0.copy().stretch(max(.1, abs(t - bt) / .14), 1).rotate(th, about_point=pivot))
+                    break
+                if abs(t - bt) < .14 + 1.5 / fps:
+                    m.eyes.become(eyes0.copy().rotate(th, about_point=pivot))
+        pl.add_updater(sway)
+        rest = frames - used
+        if rest < 0:
+            self.problems.append(f"{self.SID}: 片尾動畫比片尾時段長 {-rest / fps:.2f}s")
+        elif rest:
+            self.wait(rest / fps)
+        self.f += max(0, rest)
+        for m in (pl, glow, *bands):
+            m.clear_updaters()
+
     def setup(self):
         super().setup()
         self.problems, self.cues = [], []
@@ -841,7 +1005,9 @@ class Timed(MovingCameraScene):
             else:
                 self.wait((clean - n - self.f) / fps)
                 self.f = clean - n
-            if self.END_VEIL:
+            if self.END_BRAND:
+                self.brand_outro(end - self.f)
+            elif self.END_VEIL:
                 # 片尾畫面保留最後一個畫面（全景圖），蓋一層半透明底色壓暗，不淡成全黑（v001，2026-11-16）
                 fr = self.camera.frame
                 veil = Rectangle(width=fr.width * 1.1, height=fr.height * 1.1).set_fill(config.background_color, self.END_VEIL) \

@@ -1,0 +1,67 @@
+# 曲庫授權紀錄（進 git）；音樂檔在 assets/music/（不進 git）。
+# 2026-11-16：使用者說「因為是第一次製作影片，可以你來找嗎」，這三首由 Claude 代找，尚未經使用者試聽確認。
+# 來源 incompetech.com（Kevin MacLeod）。網站 FAQ：CC BY 4.0，可用於營利的 YouTube 影片，必須標示。
+# 下載網址：https://incompetech.com/music/royalty-free/mp3-royaltyfree/<曲名>.mp3
+# 選曲要量頻率：200 Hz 以上的能量太少（低於約 20%）、2 kHz 以上幾乎沒有的曲子，手機喇叭聽起來又悶又小聲。
+# 2026-11-16 使用者聽完第一批（clean-soul、floating-cities、perspectives）：「幾乎聽不到」「好低沉」「沒什麼活力」，改用下面前三首。
+tracks:
+  # 品牌音樂：和 podcast 同一首（使用者 2026-11-16：「可以參考 podcast 的開場音」）。只當標點用，不鋪底。
+  # Jonas Blakewood / Presentation，Pixabay 曲目 524137，Pixabay Content License（可商用、免署名）。
+  # 選曲、裁切位置、授權存證都在 podcast 專案的 docs/MUSIC.md；原曲在 podcast 專案的 music/source/。
+  # brand-intro、brand-sting 直接複製 podcast 的 music/intro.wav、sting.wav；
+  # brand-outro-long 是影片另外切的：小節 27～31 加尾巴（22.95 秒），結尾和 podcast 的片尾是同一處，往前多取 4 小節給 20 秒的片尾畫面。
+  brand_intro:
+    file: "brand-intro.wav"
+    source: "Pixabay 524137（經 datasciocean-podcast）"
+    license: "Pixabay Content License"
+    attribution: ""
+    mood: "片頭識別，8 秒"
+  brand_sting:
+    file: "brand-sting.wav"
+    source: "Pixabay 524137（經 datasciocean-podcast）"
+    license: "Pixabay Content License"
+    attribution: ""
+    mood: "章節轉場，4 秒"
+  brand_outro:
+    file: "brand-outro-long.wav"
+    source: "Pixabay 524137（經 datasciocean-podcast）"
+    license: "Pixabay Content License"
+    attribution: ""
+    mood: "片尾，23 秒"
+  bright_synth:
+    file: "digital-lemonade.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Digital Lemonade Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "明亮、輕快（類比合成器加節拍，120 BPM）"
+  clean_drive:
+    file: "getting-it-done.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Getting it Done Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "明亮、有推進感（乾淨的合成器，135 BPM）"
+  bright_mystery:
+    file: "living-voyage.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Living Voyage Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "明亮帶一點神祕（長笛、打擊、合成器，122 BPM）"
+  # 以下三首使用者聽過覺得太低沉，留著紀錄，不要再用在講解段
+  calm_space:
+    file: "clean-soul.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Clean Soul Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "平靜、留白多；低頻為主（已淘汰）"
+  somber_mystic:
+    file: "floating-cities.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Floating Cities Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "低沉、神祕（已淘汰）"
+  calm_uplift:
+    file: "perspectives.mp3"
+    source: "incompetech.com"
+    license: "CC BY 4.0"
+    attribution: "Perspectives Kevin MacLeod (incompetech.com) Licensed under Creative Commons: By Attribution 4.0 https://creativecommons.org/licenses/by/4.0/"
+    mood: "平靜；偏悶（已淘汰）"
