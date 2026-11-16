@@ -11,8 +11,8 @@ description: 影片第 5 步「旁白」：用 Gemini TTS 逐句合成唸法稿�
 2. 確認 `config/voice.json` 的 `narrator` 是定案的聲音。
    - 定案（2026-11-10）：使用者本人的複製聲音 `voice_671rii51x0an`，盲聽勝過 Zubenelgenubi。最後一次使用後保留 1 年，過期就用 `lib/voice_create.py` 重建（錄音稿在 `docs/voice-recording.md`）。
    - 同意錄音只能念一種語言的聲明；中英都念會被拒。
-3. 一律直連 Gemini（使用者 2026-11-10：不用 OpenRouter），金鑰是 `.env` 的 `GEMINI_API_KEY`。直連走 REST，`google-genai` 3.0.0 的 SDK 會回 404。
-   - **不要讀出或印出 `.env`，連遮罩過的也不行**（2026-11-10 遮罩指令因格式不同把金鑰印了出來）。只用程式確認變數有沒有值。也不要向使用者要金鑰。
+3. 一律直連 Gemini，金鑰是 `.env` 的 `GEMINI_API_KEY`。直連走 REST，`google-genai` 3.0.0 的 SDK 會回 404。
+   - **不要讀出或印出 `.env`，連遮罩過的也不行**（遮罩指令曾經因格式不同把金鑰印了出來）。只用程式確認變數有沒有值。也不要向使用者要金鑰。
 
 ## 合成
 
@@ -32,7 +32,7 @@ uv run python lib/timeline.py <id>                 # 以實測時長建立時間
 uv run python lib/checks/stt.py <id>               # 每句轉回文字比對；--only 只重查重骰過的句子
 ```
 
-- 模型預設 **Qwen3-ASR-1.7B**（`mlx-community/Qwen3-ASR-1.7B-bf16`，Apache-2.0，本機共用 Hugging Face 快取，離線載入）。v001 實測比 podcast 的 whisper-large-v3-turbo 準：平均相似度 0.952 → 0.975，無標記 67 → 74 句。熱詞自動取稿子裡的英文專有名詞，不放整句（否則念錯也聽不出來）。`--model whisper` 可換回。
+- 模型預設 **Qwen3-ASR-1.7B**（`mlx-community/Qwen3-ASR-1.7B-bf16`，Apache-2.0，本機共用 Hugging Face 快取，離線載入）。比 whisper-large-v3-turbo 準。熱詞自動取稿子裡的英文專有名詞，不放整句（否則念錯也聽不出來）。`--model whisper` 可換回。
 - 比對與正規化照搬 podcast 的 `pipeline/verify.py`。語速和這支影片自己的中位數比（0.6～1.6 倍），不用 podcast 的絕對門檻（短句加使用者的聲音會被大量誤標）；另抓句中超過 1 秒的停頓。
 - 標記：相似度 < 0.90、語速離群、句中長停頓、轉錄比稿子長 15% 以上（幽靈音）、語氣提示被念出來。
 - 唸法稿漏寫是真的會出錯的：v001 f13 沒有 `say`，TTS 把「1 ÷ (k + 名次)」連括號一起念出來。畫面字有符號或數字的句子一定要寫 `say`。

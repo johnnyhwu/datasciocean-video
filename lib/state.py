@@ -78,6 +78,11 @@ def main():
         st["history"].append({"status": new, "at": now(), "note": a.note})
         if new == "成片" and not st.get("finished_at"):
             st["finished_at"] = now()
+        if new == "已發布" and not st.get("published_at"):
+            st["published_at"] = now()          # lib/analytics.py 用它算 d7、d28 的到期日
+            up = video_dir(vid) / "upload-result.json"
+            if up.exists():
+                st["url"] = json.loads(up.read_text()).get("url", "")
         save(vid, st)
     elif a.cmd == "approve":
         st = load(vid)

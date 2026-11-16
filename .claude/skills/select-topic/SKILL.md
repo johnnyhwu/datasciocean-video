@@ -8,7 +8,7 @@ description: 影片第 1 步「選題」：從 concept-wiki 找出下一支影�
 ## 做法
 
 1. 確認 submodule 是最新的：`git submodule update --remote concept-wiki`。記下 commit；如果有新卡，更新 `state/inventory.md`。
-2. 讀 `concept-wiki/wiki/index.md` 和 `state/inventory.md`，排除已做成影片的卡（`state.py list`）和 `state/cards.yaml` 標成 `unsuitable` 的卡。
+2. 讀 `concept-wiki/wiki/index.md` 和 `state/inventory.md`，排除已做成影片的卡（`state.py list`）和 `state/cards.yaml` 標成 `unsuitable` 的卡（這個檔在第一次執行 `state.py card` 時才會出現）。
 3. 對每個候選，用 `uv run python lib/cards.py <卡 ID>…` 讀**可用的主張**。pending 的不算；卡外的「名詞補充」不是主張。
 4. 依下面的標準判斷，挑 2～4 個候選寫進審查包。
 
@@ -30,6 +30,7 @@ description: 影片第 1 步「選題」：從 concept-wiki 找出下一支影�
 | 事實型 | 一定要有具體案例，或能逐項揭露的比較；沒有就標 `unsuitable` 或 `waiting` |
 | 常青 | 優先選常青的觀念與機制，不做「最新論文快報」 |
 | 不重複 | 和最近幾支的主題、開場、機制角色不要太像（反模板） |
+| 成效 | 有 `videos/*/d7.json`、`d28.json` 時先看一眼：哪種題目、哪種開場留得住人。樣本很少，只當線索 |
 
 標成 `waiting` 或 `unsuitable` 時要寫原因：`uv run python lib/state.py card <卡 ID> waiting --note "原因"`。
 
@@ -43,7 +44,8 @@ description: 影片第 1 步「選題」：從 concept-wiki 找出下一支影�
 - **一句話重點**（≤30 字，就是之後的承諾句草稿）；
 - **暖身例子的初步想法**（一兩句：用什麼小東西演出核心機制）；
 - 前置知識有哪些；
-- 可能的機制角色或世界觀。PoC 的例子：機器人評審、選秀舞台；每支都要不同。
+- **「一張大圖」的初步想法**：這個機制能畫成什麼形狀的圖（管線、時間軸、座標系），主角是什麼。想不出來的題目要註明，這會是最大的風險。
+- 可能的機制角色。每支都要不同。
 
 另外列出這次新標的 `waiting`、`unsuitable` 與原因。
 
@@ -54,9 +56,3 @@ uv run python lib/state.py new v<三位數>-<slug> --cards 卡1,卡2 --note "關
 uv run python lib/state.py approve v…-… 1 --note "…"
 uv run python lib/state.py set v…-… 規劃
 ```
-
-## 第一支試片的特別條件
-
-- 機制型、小例子清楚、前置知識少、長度約 5～8 分鐘、不需要拆集。
-- 緩衝的第二支選事實型。
-- 目前推薦的候選見 `state/inventory.md`。

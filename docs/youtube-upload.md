@@ -62,6 +62,16 @@ uv run python lib/upload.py <id> --go   # 上傳成私人
 2. 設定片尾畫面（最後 20 秒，元件放左右兩側）、自動配音。
 3. 把瀏覽權限改成「公開」。
 
+## 成效追蹤（`lib/analytics.py`）
+
+發布滿 7 天、28 天，Claude 會各抓一次這支影片的數據（觀看、平均觀看時間、觀眾在哪裡離開、流量來源），存成 `videos/<id>/d7.json`、`d28.json`。只讀取，不會改任何東西。
+
+多一個一次性設定：開 https://console.cloud.google.com/apis/library/youtubeanalytics.googleapis.com ，按「啟用」（和上傳用同一個專案、同一個憑證檔）。
+
+第一次抓的時候瀏覽器會再跳一次授權頁，這次只要求「查看 YouTube 數據分析報表」。
+
+曝光次數和點閱率 API 不提供。Claude 需要時會請你從 Studio 的「數據分析 → 觸及率」看那兩個數字。
+
 ## 已知的限制
 
 - **授權 7 天過期**：同意畫面在「測試中」時，授權只有 7 天。過期後程式會自動再開一次授權頁，按同意就好。
