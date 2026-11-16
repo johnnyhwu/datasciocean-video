@@ -11,7 +11,17 @@
 | 自動配音 | 官方說明頁列出繁體中文配英文。資格逐支影片判定：超過 120 分鐘、沒有語音、有版權聲明、語速太快的影片都不行。頻道資格各來源說法不一（一說 YPP 優先，一說所有頻道都可以） | 官方加第三方，**到 Studio 實際確認** |
 | A/B 測試（Test & Compare）、進階功能的開通條件 | 未查 | 未查，開通時到 Studio 確認 |
 
-**對製作的影響**：最後一個場景要留出 **20 秒**乾淨的畫面，取上限，讓使用者有彈性；章節每段至少 10 秒。
+**對製作的影響**：最後一個場景留 **20 秒**給頻道片尾動畫（片尾畫面的元件疊在左右兩側）；章節每段至少 10 秒。
+
+### 用 API 上傳（查證日期：2026-11-16；目前硬性限制是不上傳，這裡只記錄現況）
+
+| 項目 | 現況 | 可信度 |
+|---|---|---|
+| 未驗證的 API 專案 | 2026-11-02 起，`videos.insert` 上傳的影片**不再被鎖成私人**（推翻 2020-07-28 的規定）。沒指定 `status.privacyStatus` 時預設是公開，所以一定要明確指定 | 官方（developers.google.com/youtube/v3/revision_history、docs/videos/insert） |
+| 額度 | 上傳有自己的額度：每次 1 單位，每天 100 次。縮圖 `thumbnails.set` 50 單位、字幕 `captions.insert` 400 單位，算在一般的每天 10,000 單位 | 上傳：官方；縮圖與字幕：第三方引用官方計算器 |
+| 可以設定 | 標題、說明、多語標題與說明（localizations）、隱私狀態、排程（`publishAt`）、AI 揭露（`status.containsSyntheticMedia`）、為兒童製作、縮圖、字幕、加入播放清單 | 官方 |
+| 不能設定 | 片尾畫面、標題縮圖的 A/B 測試、自動配音。這些只能在 Studio 手動做 | 官方文件沒有對應的方法 |
+| 授權 | OAuth，範圍 `youtube.upload`（上傳）加 `youtube.force-ssl`（字幕）。同意畫面留在「測試」狀態時，refresh token 7 天過期，每次發片可能要重新登入 | 官方；7 天是 Google OAuth 的一般規定 |
 
 ## Gemini 3.8 Flash TTS 聲音複製（官方：aistudio.google.com/docs/voice-replication）
 

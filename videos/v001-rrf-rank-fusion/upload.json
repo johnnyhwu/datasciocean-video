@@ -1,0 +1,41 @@
+{
+ "title": "RRF 排名融合：一個公式、一個旋鈕、一個盲點",
+ "description": "同一個問題同時問向量搜尋和全文搜尋，兩邊給的分數尺度不同，不能直接相加。\nRRF（Reciprocal Rank Fusion）的做法是不看分數、只看名次：每一路給 1 ÷ (k + 名次)，再全部加起來。\n但它有一個盲點：正確答案如果在其中一路完全沒被撈到，可能被排到後面。這集也會講怎麼補救。\n\n延伸閱讀\n完整文章：https://datasciocean.com/paper-intro/cerebras-rag/\n\n章節\n0:00 分數能不能相加\n0:30 為什麼要合併\n1:13 分數為什麼不能加\n2:11 只看名次\n3:53 k 是一個旋鈕\n4:32 共識的盲點\n6:03 怎麼補救",
+ "language": "zh-TW",
+ "category_id": 28,
+ "tags": [
+  "RRF",
+  "Reciprocal Rank Fusion",
+  "排名融合",
+  "混合搜尋",
+  "hybrid search",
+  "RAG",
+  "向量搜尋",
+  "全文搜尋",
+  "reranker"
+ ],
+ "contains_synthetic_media": false,
+ "localizations": {
+  "en": {
+   "title": "Reciprocal Rank Fusion (RRF): One Formula, One Dial, One Blind Spot",
+   "description": "Ask vector search and full-text search the same question, and their scores come on different scales, so you can't simply add them.\nRRF (Reciprocal Rank Fusion) ignores the scores and looks only at ranks: each retriever contributes 1 ÷ (k + rank), and the contributions are summed.\nBut it has a blind spot: if the correct answer is completely missed by one of the retrievers, it can end up ranked lower. This episode also covers how to fix that.\n\nFurther reading\nFull article (in Chinese): https://datasciocean.com/paper-intro/cerebras-rag/\n\nChapters\n0:00 Can scores be added?\n0:30 Why merge at all\n1:13 Why scores can't be added\n2:11 Looking only at ranks\n3:53 k is a dial\n4:32 The blind spot of consensus\n6:03 How to fix it"
+  },
+  "zh-CN": {
+   "title": "RRF 排名融合：一个公式、一个旋钮、一个盲点",
+   "description": "同一个问题同时问向量搜索和全文搜索，两边给的分数尺度不同，不能直接相加。\nRRF（Reciprocal Rank Fusion）的做法是不看分数、只看名次：每一路给 1 ÷ (k + 名次)，再全部加起来。\n但它有一个盲点：正确答案如果在其中一路完全没被捞到，可能被排到后面。这集也会讲怎么补救。\n\n延伸阅读\n完整文章：https://datasciocean.com/paper-intro/cerebras-rag/\n\n章节\n0:00 分数能不能相加\n0:30 为什么要合并\n1:13 分数为什么不能加\n2:11 只看名次\n3:53 k 是一个旋钮\n4:32 共识的盲点\n6:03 怎么补救"
+  }
+ },
+ "thumbnail": "videos/v001-rrf-rank-fusion/thumbs/thumb.png",
+ "captions": [
+  {
+   "language": "zh-TW",
+   "name": "",
+   "file": "out/v001-rrf-rank-fusion/deliver/subs.zh-TW.srt"
+  },
+  {
+   "language": "zh-CN",
+   "name": "",
+   "file": "out/v001-rrf-rank-fusion/deliver/subs.zh-CN.srt"
+  }
+ ]
+}

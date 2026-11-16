@@ -1,6 +1,6 @@
 {
  "video": "v001-rrf-rank-fusion",
- "status": "發布準備",
+ "status": "已發布",
  "cards": [
   "rrf-rank-fusion"
  ],
@@ -17,6 +17,10 @@
   "3": {
    "at": "2026-11-16T22:12+08:00",
    "note": "使用者 2026-11-16：手機看完沒問題。n6 的 RRF 全名（Reciprocal Rank Fusion／倒數排名融合）照建議保留。"
+  },
+  "4": {
+   "at": "2026-11-16T22:52+08:00",
+   "note": "使用者 2026-11-16T22:52+0800 回報已設成公開。https://youtu.be/vVW26HKH7n0 。標題：RRF 排名融合：一個公式、一個旋鈕、一個盲點；縮圖 thumbs/thumb.png；Claude 用 lib/upload.py 上傳成私人，使用者自己按公開。"
   }
  },
  "history": [
@@ -64,7 +68,14 @@
    "status": "發布準備",
    "at": "2026-11-16T22:12+08:00",
    "note": ""
+  },
+  {
+   "status": "已發布",
+   "at": "2026-11-16T22:52+08:00",
+   "note": ""
   }
  ],
- "finished_at": "2026-11-16T19:36+08:00"
+ "finished_at": "2026-11-16T19:36+08:00",
+ "published_at": "2026-11-16T22:52+08:00",
+ "url": "https://youtu.be/vVW26HKH7n0"
 }

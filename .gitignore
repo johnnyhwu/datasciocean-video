@@ -36,3 +36,6 @@ tools/
 .sysdeps/
 .mamba/
 __pycache__/
+
+# YouTube 上傳的 OAuth 憑證與授權（lib/upload.py）
+secrets/
