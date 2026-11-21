@@ -862,6 +862,12 @@ class Timed(MovingCameraScene):
     def sfx(self, kind, t=None, gain=1.0):
         self.cues.append({"t": round(self.f / config.frame_rate if t is None else t, 3), "kind": kind, "gain": gain})
 
+    def get_time_progression(self, run_time, *a, **kw):
+        """Manim 用 np.arange(0, run_time, 1/fps) 算格數，浮點誤差有時會多一格（有 updater、等待要逐格畫的場景才會遇到）。
+        這裡先把 run_time 對到整數格再減半格，格數就一定等於 round(run_time × fps)。"""
+        fps = config.frame_rate
+        return super().get_time_progression((max(1, round(run_time * fps)) - .5) / fps, *a, **kw)
+
     def at(self, t, *anims, run_time=0.8, sfx=None, gain=1.0, **kw):
         """等到第 t 秒（精確到影格）播放動畫；同時發生的放在同一個 at()。晚於 t 就記一筆 starts late。"""
         fps = config.frame_rate

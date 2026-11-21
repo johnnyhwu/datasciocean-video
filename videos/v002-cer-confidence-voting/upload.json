@@ -1,0 +1,41 @@
+{
+ "title": "同一題問 AI 五次，答案不一樣，該信哪個？｜CER",
+ "description": "同一道題讓 AI 算好幾次，再用多數決選答案，這是 Self-Consistency（SC）的做法。但它把每一條推理路徑都算成一票，聽不到模型的猶豫。\nCER 讓猶豫的票變輕：替每一條路徑算一個信心分數，再把支持同一個答案的分數加起來。分數怎麼算，要回答兩個問題：看哪幾步？每一步都算，越後面的步驟越重。每一步怎麼量？只看中間答案那幾個 token 的機率。它不需要訓練任何模型。\n這集也會講它的極限：模型原本沒有的知識，信心怎麼算都補不了。\n\n延伸閱讀\n完整文章：https://datasciocean.com/paper-intro/cer/\n原始論文（ACL 2025）：CER: Confidence Enhanced Reasoning in LLMs\nhttps://aclanthology.org/2025.acl-long.390/\narXiv：https://arxiv.org/abs/2502.14634\n\n章節\n0:00 五票的難題\n0:30 多數決怎麼做\n1:15 每一票都一樣重\n1:45 讓票有輕重\n2:37 看哪幾步\n3:39 每一步怎麼量\n5:01 合成一張票\n5:52 它的極限\n6:45 三點回顧",
+ "language": "zh-TW",
+ "category_id": 28,
+ "tags": [
+  "CER",
+  "Confidence Enhanced Reasoning",
+  "信心加權投票",
+  "Self-Consistency",
+  "多數決",
+  "LLM",
+  "推理",
+  "Chain of Thought",
+  "logits"
+ ],
+ "contains_synthetic_media": false,
+ "localizations": {
+  "en": {
+   "title": "Ask an AI the Same Question Five Times, Get Different Answers: Which One Do You Trust? | CER",
+   "description": "Ask an AI the same question several times and pick the answer by majority vote: that is Self-Consistency (SC). But it counts every reasoning path as one vote, so it cannot hear the model's hesitation.\nCER makes hesitant votes lighter: it gives each path a confidence score, then sums the scores of the paths that support the same answer. Computing the score means answering two questions. Which steps? Every step counts, and later steps weigh more. How is each step measured? Only by the probability of the tokens of the intermediate answer. It needs no model training.\nThis episode also covers its limit: no way of computing confidence can make up for knowledge the model never had.\n\nFurther reading\nFull article (in Chinese): https://datasciocean.com/paper-intro/cer/\nPaper (ACL 2025): CER: Confidence Enhanced Reasoning in LLMs\nhttps://aclanthology.org/2025.acl-long.390/\narXiv: https://arxiv.org/abs/2502.14634\n\nChapters\n0:00 A five-vote dilemma\n0:30 How majority voting works\n1:15 Every vote weighs the same\n1:45 Giving votes weight\n2:37 Which steps to look at\n3:39 How to measure each step\n5:01 Combining into one vote\n5:52 Its limits\n6:45 Three-point recap"
+  },
+  "zh-CN": {
+   "title": "同一题问 AI 五次，答案不一样，该信哪个？｜CER",
+   "description": "同一道题让 AI 算好几次，再用多数决选答案，这是 Self-Consistency（SC）的做法。但它把每一条推理路径都算成一票，听不到模型的犹豫。\nCER 让犹豫的票变轻：替每一条路径算一个信心分数，再把支持同一个答案的分数加起来。分数怎么算，要回答两个问题：看哪几步？每一步都算，越后面的步骤越重。每一步怎么量？只看中间答案那几个 token 的概率。它不需要训练任何模型。\n这集也会讲它的极限：模型原本没有的知识，信心怎么算都补不了。\n\n延伸阅读\n完整文章：https://datasciocean.com/paper-intro/cer/\n原始论文（ACL 2025）：CER: Confidence Enhanced Reasoning in LLMs\nhttps://aclanthology.org/2025.acl-long.390/\narXiv：https://arxiv.org/abs/2502.14634\n\n章节\n0:00 五票的难题\n0:30 多数决怎么做\n1:15 每一票都一样重\n1:45 让票有轻重\n2:37 看哪几步\n3:39 每一步怎么量\n5:01 合成一张票\n5:52 它的极限\n6:45 三点回顾"
+  }
+ },
+ "thumbnail": "videos/v002-cer-confidence-voting/thumbs/D.png",
+ "captions": [
+  {
+   "language": "zh-TW",
+   "name": "",
+   "file": "out/v002-cer-confidence-voting/deliver/subs.zh-TW.srt"
+  },
+  {
+   "language": "zh-CN",
+   "name": "",
+   "file": "out/v002-cer-confidence-voting/deliver/subs.zh-CN.srt"
+  }
+ ]
+}

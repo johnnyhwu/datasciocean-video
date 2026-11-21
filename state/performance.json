@@ -1,0 +1,223 @@
+{
+ "fetched_at": "2026-11-21T23:39+08:00",
+ "from": "2026-10-22",
+ "to": "2026-11-18",
+ "channel": {
+  "views": 2171,
+  "estimatedMinutesWatched": 5592,
+  "subscribersGained": 25,
+  "subscribersLost": 8
+ },
+ "traffic_sources": [
+  {
+   "source": "SUBSCRIBER",
+   "views": 585
+  },
+  {
+   "source": "YT_SEARCH",
+   "views": 566
+  },
+  {
+   "source": "NO_LINK_OTHER",
+   "views": 309
+  },
+  {
+   "source": "RELATED_VIDEO",
+   "views": 258
+  },
+  {
+   "source": "PLAYLIST",
+   "views": 161
+  },
+  {
+   "source": "EXT_URL",
+   "views": 147
+  },
+  {
+   "source": "YT_CHANNEL",
+   "views": 82
+  },
+  {
+   "source": "YT_OTHER_PAGE",
+   "views": 63
+  }
+ ],
+ "top_videos": [
+  {
+   "video_id": "eJCXFIoOwdw",
+   "views": 1324,
+   "minutes": 2515,
+   "avg_pct": 16.26,
+   "subs": 13,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "VFHxKl2G2sM",
+   "views": 213,
+   "minutes": 685,
+   "avg_pct": 25.319999999999997,
+   "subs": 2,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "w_CjIY2uR1Q",
+   "views": 125,
+   "minutes": 365,
+   "avg_pct": 19.45,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "HTOAi-jne3s",
+   "views": 86,
+   "minutes": 435,
+   "avg_pct": 37.56,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "9ND6-oFY7zA",
+   "views": 63,
+   "minutes": 108,
+   "avg_pct": 19.49,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "K5-6t1pHRwk",
+   "views": 60,
+   "minutes": 91,
+   "avg_pct": 30.94,
+   "subs": 1,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "vVW26HKH7n0",
+   "views": 47,
+   "minutes": 14,
+   "avg_pct": 10.8,
+   "subs": 0,
+   "ours": "v001-rrf-rank-fusion",
+   "reach": null
+  },
+  {
+   "video_id": "-VH4hu_pIoA",
+   "views": 44,
+   "minutes": 228,
+   "avg_pct": 44.39,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "k4y9EpZ0m5s",
+   "views": 42,
+   "minutes": 170,
+   "avg_pct": 40.17,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "jiwEsJ0CdfA",
+   "views": 38,
+   "minutes": 246,
+   "avg_pct": 44.27,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "5sIwU7NlJZA",
+   "views": 31,
+   "minutes": 227,
+   "avg_pct": 45.28,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "sy7jplrAnyc",
+   "views": 27,
+   "minutes": 138,
+   "avg_pct": 42.69,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "pIHGZTxtpVk",
+   "views": 26,
+   "minutes": 147,
+   "avg_pct": 33.85,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "mxnNAEBXT4U",
+   "views": 20,
+   "minutes": 55,
+   "avg_pct": 35.25,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "3hjVnq1qFjU",
+   "views": 12,
+   "minutes": 116,
+   "avg_pct": 59.27,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "Dgh1dhsUBZw",
+   "views": 11,
+   "minutes": 45,
+   "avg_pct": 51.92,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  },
+  {
+   "video_id": "Vv3bWFj81cU",
+   "views": 2,
+   "minutes": 0,
+   "avg_pct": 27.949999999999996,
+   "subs": 0,
+   "ours": null,
+   "reach": null
+  }
+ ],
+ "ours_lifetime": [
+  {
+   "video": "v001-rrf-rank-fusion",
+   "title": "RRF 排名融合：一個公式、一個旋鈕、一個盲點",
+   "published": "2026-11-16",
+   "days": 3,
+   "views": 47,
+   "estimatedMinutesWatched": 14,
+   "averageViewPercentage": 10.8,
+   "subscribersGained": 0,
+   "traffic_sources": {
+    "SUBSCRIBER": 36,
+    "RELATED_VIDEO": 4,
+    "NO_LINK_OTHER": 3,
+    "YT_SEARCH": 3,
+    "YT_OTHER_PAGE": 1
+   },
+   "subs_per_1k_views": 0.0,
+   "reach": null
+  }
+ ],
+ "reach_note": "reach 報表 0 份",
+ "_note": "top_videos 的 ours 為空的是頻道轉型前的舊影片（程式教學）。曝光與點閱率來自 Reporting API 的 reach 報表（每天一份，累計）。"
+}

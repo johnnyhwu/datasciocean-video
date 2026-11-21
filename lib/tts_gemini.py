@@ -11,6 +11,7 @@
 - 產出：out/<id>/audio/<句 id>.wav（24 kHz 單聲道，已修剪頭尾靜音）與 out/<id>/audio/report.json（每句時長）。
 - 錯誤：短暫錯誤拉長間隔重試；同一句失敗 3 次就停下回報；碰到每日上限（429 且訊息含 per day / daily）
   就存檔停止，下次從同一句接續（規格 §4.3）。
+- 花費：每合成一句（含重骰）在 videos/<id>/gemini-usage.jsonl 記一行；`uv run python lib/gemini.py cost <id>` 看總額。
 - 金鑰：環境變數 GEMINI_API_KEY（可放 .env，程式自動讀；不印出、不寫進任何檔案）。
 - 已知：Gemini 不回傳時間戳，seed 無效（重跑就是重骰），所以要靠快取鎖定已經滿意的版本。
 """
@@ -29,6 +30,7 @@ import numpy as np
 
 sys.path.insert(0, str(Path(__file__).parent))
 from paths import ROOT, load_script, out_dir  # noqa: E402
+from gemini import log_usage, tts_usage  # noqa: E402
 
 SR = 24000
 
@@ -116,12 +118,17 @@ def synth_once(client, text, voice, model, style, provider="gemini"):
         raise RuntimeError(f"HTTP {e.code}: {e.read()[:300]!r}")
     datas = [c["data"] for st in res.get("steps", []) if st.get("type") == "model_output"
              for c in st.get("content", []) if c.get("type") == "audio" and c.get("data")]
+    global LAST_RES
+    LAST_RES = res
     if not datas:
         raise RuntimeError(f"回應沒有音訊：{json.dumps(res, ensure_ascii=False)[:300]}")
     raw = b"".join(base64.b64decode(d) for d in datas)
     if len(raw) < 2000:
         raise RuntimeError("回傳音訊過短（疑似空音訊）")
     return to_pcm(raw)
+
+
+LAST_RES = {}  # 最後一次成功回應（取 usage 記帳）
 
 
 class DailyLimit(Exception):
@@ -175,7 +182,10 @@ def main():
         if not cache.exists():
             print(f"  {s['id']}：{text[:30]}…", flush=True)
             try:
-                x = trim(synth_retry(client, text, v["voice"], v["model"], style, provider=v.get("provider", "openrouter")))
+                raw = synth_retry(client, text, v["voice"], v["model"], style, provider=v.get("provider", "openrouter"))
+                i_tok, o_tok, est = tts_usage(LAST_RES if v.get("provider") == "gemini" else {}, text, len(raw) / SR)
+                log_usage(a.vid, v["model"], "tts", i_tok, o_tok, s["id"], estimated=est)
+                x = trim(raw)
             except DailyLimit as e:
                 rep_path.write_text(json.dumps(rep, ensure_ascii=False, indent=1))
                 sys.exit(f"碰到每日上限，已存檔；重置後再跑同一個指令會從 {s['id']} 接續。({e})")

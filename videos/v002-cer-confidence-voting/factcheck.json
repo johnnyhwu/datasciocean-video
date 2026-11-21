@@ -1,0 +1,1349 @@
+{
+ "sentences": {
+  "h1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「假設」交代整個例子；沒有夾帶事實"
+  },
+  "h2": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "375、400 是舉例數字，h1 已說「假設」；對應 P#c3（K 條路徑）"
+  },
+  "h3": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子步驟：多數決選票多的 375，對應 P#c3（選出現次數最多的答案）；h1 已說「假設」"
+  },
+  "h4": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子步驟：那三票算的時候不太確定，對應 P#c4（推導過程充滿猶豫的票權重一樣）；沒有新數字"
+  },
+  "h5": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12",
+    "cer-process-confidence-weighted-voting#c4"
+   ],
+   "verdict": "pass",
+   "note": "c12：SC 只計算每個答案出現了幾次；c4：每票權重一樣。「聽不到猶豫」是翻譯性的白話"
+  },
+  "h6": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c7",
+    "cer-process-confidence-weighted-voting#c13",
+    "cer-process-confidence-weighted-voting#c2"
+   ],
+   "verdict": "pass",
+   "note": "c7：中間猶豫的路徑權重大幅降低；c13：猶豫路徑貢獻很小；c2：CER 這個名稱。「變輕」是白話，沒有更強"
+  },
+  "i1": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "頻道介紹第 2 句，變數＝「信心加權投票 CER」（7 字，符合 2～10 字）；變數內容對應 P#c1（用自信度加權投票）"
+  },
+  "i2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c1",
+    "cer-process-confidence-weighted-voting#c1"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：改成「有局限」，忠於 P#c1、R#c1（在純知識檢索任務上有局限性）；完整限定在 e7～e11、f5 說"
+  },
+  "s1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：Self-Consistency（SC）"
+  },
+  "s2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：目前提升推理能力最主流的方法"
+  },
+  "s3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：對同一個問題生成 K 條不同的推理路徑"
+  },
+  "s4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：用多數決選出現次數最多的答案"
+  },
+  "s5": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「我們來舉個例子」；100、5 是自己補的例題數字"
+  },
+  "s6": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "三步與 500／100／125／400／375：500−100＝400、500−125＝375，算式自洽；s5 已說「舉個例子」；與 K#c8 的例（100、5、125）不矛盾"
+  },
+  "b1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：SC 隱含危險的假設，每條路徑平等"
+  },
+  "b2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4"
+  },
+  "b3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：推導過程充滿猶豫、最後剛好湊出的答案，權重一樣"
+  },
+  "b4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5：模型出現一致性幻覺時，很有信心地、反覆生成同一個錯誤答案；「有時」對應「當……出現」，沒有更強"
+  },
+  "b5": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5：SC 只看數量不看品質，會選出這個錯誤答案"
+  },
+  "t1": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "token：教科書等級（prerequisite）。「比方說這一步」交代畫面例句與 token 是舉例；沒有碰論文的說法或數字"
+  },
+  "t2": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "每個 token 有機率：教科書等級（prerequisite）。「比方說像這樣」交代畫面的機率數字是舉例，數字在這之後才出現，見 screen"
+  },
+  "t3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c2",
+    "cer-process-confidence-weighted-voting#c2"
+   ],
+   "verdict": "pass",
+   "note": "K#c2：不修改模型權重、不需外部 Reward Model，純粹利用 Logits（機率分佈）後處理；P#c2：不需要訓練額外獎勵模型、不需微調 LLM。「只讀這些機率」略去 Prompt（t10 補上），建議保留 t10 的說明"
+  },
+  "t4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：直接算整條路徑的自信度、整段平均機率會有雜訊"
+  },
+  "t5": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c3",
+    "cer-critical-token-confidence#c9"
+   ],
+   "verdict": "pass",
+   "note": "c3：功能性詞彙（如 Therefore）機率通常非常高；c9"
+  },
+  "t6": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：高分 token 稀釋掉真正關鍵的資訊"
+  },
+  "t7": {
+   "tag": "illustration",
+   "refs": [
+    "cer-critical-token-confidence#c3"
+   ],
+   "verdict": "pass",
+   "note": "「假設」；0.8＝t2 畫面六個舉例機率的平均（0.805）；公式（平均）對應 K#c3；代入值是舉例",
+   "calc": {
+    "expr": "(0.99+0.98+0.97+0.99+0.5+0.4)/6",
+    "result": "0.8"
+   }
+  },
+  "t8": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "t7 已說「假設」；例子裡關鍵數字 125 的信心低，對應 K#c3（關鍵運算數字被稀釋）"
+  },
+  "t9": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1",
+    "cer-critical-token-confidence#c9"
+   ],
+   "verdict": "pass",
+   "note": "c1：不算整句機率，只用標籤後的內容當關鍵字；c9：排除高機率但無資訊量的詞"
+  },
+  "t10": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6",
+    "cer-process-confidence-weighted-voting#c8"
+   ],
+   "verdict": "pass",
+   "note": "K#c6、P#c8：Prompt 要求每個推理步驟結束時依特定格式輸出中間答案"
+  },
+  "t11": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：數學任務「Answer: [數值]」，問答任務「Response: [實體/短語]」"
+  },
+  "t12": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1",
+    "cer-critical-token-confidence#c7"
+   ],
+   "verdict": "pass",
+   "note": "c1：用 Regex 抓標籤後面的內容當關鍵字；c7：Regex 提取"
+  },
+  "t13": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "c10：一個關鍵字可能由多個 token 組成。畫面的 12、5 是例子的切法（illustration，t7 的「假設」與 t15 的「例如」在同一場）"
+  },
+  "t14": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "c10：聯合機率，把所有組成 token 的機率相乘"
+  },
+  "t15": {
+   "tag": "illustration",
+   "refs": [
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "公式來自 K#c10（c_w = ∏ p_t）；0.5、0.4 是舉例的 token 機率，不是卡上的數字；旁白「例如」；0.5×0.4=0.2",
+   "calc": {
+    "expr": "0.5*0.4",
+    "result": "0.2"
+   }
+  },
+  "p1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：每一步有關鍵答案的自信度 c_aj。第 2 輪：screen 已清空，例子數字移到 p8"
+  },
+  "p2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：只評估最終答案忽略了錯誤往往發生在中間"
+  },
+  "p3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：第二步算錯，後面推導再完美，最終答案也是錯的"
+  },
+  "p4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：用線性加權平均把各步驟中間答案的自信度綜合起來"
+  },
+  "p5": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：j 是步驟序號，權重＝j"
+  },
+  "p6": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：越靠近最終答案的步驟，權重越重"
+  },
+  "p7": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c10"
+   ],
+   "verdict": "pass",
+   "note": "c10：推理是累積的，最後的 Step N 往往依賴前面所有步驟的正確性（保留「往往」）"
+  },
+  "p8": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「假設」；0.9、0.2、0.7 是舉例的信心值"
+  },
+  "p9": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式來自 P#c9；代入值 0.9、0.2、0.7 是 p8 假設的舉例，權重 1、2、3、分母 6＝1+2+3 來自步驟序號（c9）；(0.9+0.4+2.1)÷6=0.5667≈0.57",
+   "calc": {
+    "expr": "(1*0.9+2*0.2+3*0.7)/(1+2+3)",
+    "result": "0.57"
+   }
+  },
+  "p10": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "對應 P#c13（中間猶豫的路徑對總分貢獻小）；例子裡 0.2 的那一步；沒有新數字"
+  },
+  "v2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "c12：SC 只計算每個答案出現了幾次。畫面 3、2 是例子的票數（sc01 h2、h3 已說「假設」）"
+  },
+  "v3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "c12：把支持該答案的所有路徑的自信度加總"
+  },
+  "v4": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「假設」；五個分數是舉例（見 screen 的 calc）"
+  },
+  "v5": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "公式（加總）來自 P#c12；0.57、0.58、0.55 是 v4 假設的分數；0.57+0.58+0.55=1.70",
+   "calc": {
+    "expr": "0.57+0.58+0.55",
+    "result": "1.70"
+   }
+  },
+  "v6": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "公式（加總）來自 P#c12；0.93、0.95 是 v4 假設的分數；0.93+0.95=1.88",
+   "calc": {
+    "expr": "0.93+0.95",
+    "result": "1.88"
+   }
+  },
+  "v7": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "例子的結果：1.88＞1.70，依 c12「選總分最高的答案」400 勝出；與卡的機制不矛盾"
+  },
+  "v8": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c13"
+   ],
+   "verdict": "pass",
+   "note": "c13：猶豫的路徑貢獻很小；每一步都有把握的路徑對最終決策有決定性的影響"
+  },
+  "e1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-results-how-to-read#c4"
+   ],
+   "verdict": "pass",
+   "note": "P#c14、R#c4：消融實驗設了對照組 CER-LAST；「這個對照」＝只看最後一步 vs 看所有步驟，e2 接著說明"
+  },
+  "e2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-results-how-to-read#c4"
+   ],
+   "verdict": "pass",
+   "note": "c14：CER-LAST 只計算最後一個答案的自信度"
+  },
+  "e3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-results-how-to-read#c4"
+   ],
+   "verdict": "pass",
+   "note": "c14：「就它附上的這組比較結果而言，考慮所有步驟的 CER 在所有情況下都顯著優於 CER-LAST」；旁白保留「就這組比較結果來說」，「明顯」不強於「顯著」；比較對象 CER-LAST 由 e2 交代"
+  },
+  "e4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c5",
+    "cer-process-confidence-weighted-voting#c11"
+   ],
+   "verdict": "pass",
+   "note": "R#c5：模型可能在最後給出很有自信的錯誤答案，但中間推理已顯露猶豫；P#c11 限定。第 3 輪：拿掉「因為」，保留「可能」"
+  },
+  "e5": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「回到剛才假設的例子」（同一句有「假設」）；0.7、0.7、0.6、0.96、0.96 是例子五條路徑的最後一步信心（plan 第 3 節）。第 3 輪：順序改到 sc05，仍在同一句交代"
+  },
+  "e6": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-process-confidence-weighted-voting#c12",
+    "cer-results-how-to-read#c5"
+   ],
+   "verdict": "pass",
+   "note": "CER-LAST（P#c14）只取最後一步的信心，再依 P#c12 加總；0.7+0.7+0.6=2.0、0.96+0.96=1.92 是例子的數字；「被騙過去」對應 R#c5「只看最後一步就會被騙過」。第 3 輪：e6 現在在 e2 之前，先用「最後一步」的算法，refs 不變",
+   "calc": {
+    "expr": "0.7+0.7+0.6",
+    "result": "2.00"
+   }
+  },
+  "e7": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c1",
+    "cer-process-confidence-weighted-voting#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1：在純知識檢索任務上有局限性"
+  },
+  "e8": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "R#c6：數學上的表現通常比問答更穩定；比較對象（開放域問答）在句中；「知識問答」＝TriviaQA、HotPotQA 這類開放域問答"
+  },
+  "e9": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c7"
+   ],
+   "verdict": "pass",
+   "note": "R#c7：數學是邏輯推理，CER 可以透過自信度判斷邏輯是否連貫"
+  },
+  "e10": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c7"
+   ],
+   "verdict": "pass",
+   "note": "R#c7：問答是知識檢索，模型沒有這個知識，怎麼推理、自信度怎麼算都不可能答對"
+  },
+  "e11": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c1"
+   ],
+   "verdict": "pass",
+   "note": "R#c1：增強推理能力，不是彌補知識庫存"
+  },
+  "e12": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": "R#c11：提升幅度並不是均勻的"
+  },
+  "e13": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c10"
+   ],
+   "verdict": "pass",
+   "note": "R#c10：MathQA（難度較高）、OLMo-2-7B、7.4%；比較對象 Baseline，旁白「基準方法」忠於原文（卡上沒指明是哪一個，旁白也沒指明）"
+  },
+  "e14": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c12",
+    "cer-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": "R#c12：Llama 3.1 8B、GSM8K、約 0.4%；比較對象 Baseline＝句中的「基準方法」（忠於卡，沒有指明是哪一個）；R#c11：相對簡單的 GSM8K。第 2 輪：補上比較對象"
+  },
+  "e15": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c13"
+   ],
+   "verdict": "pass",
+   "note": "R#c13：強模型原本就很有信心且錯誤率極低，改進空間有限（blog 的解釋）"
+  },
+  "f1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "轉場"
+  },
+  "f2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c4",
+    "cer-process-confidence-weighted-voting#c1"
+   ],
+   "verdict": "pass",
+   "note": "c4：SC 每條路徑平等；c1：CER 看信心"
+  },
+  "f3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9",
+    "cer-process-confidence-weighted-voting#c6",
+    "cer-results-how-to-read#c4"
+   ],
+   "verdict": "pass",
+   "note": "P#c6：只看最終答案會忽略中間錯誤；R#c4：考慮所有步驟的 CER 優於只看最後一個答案的 CER-LAST（就那組比較結果）；P#c9：越靠近最終答案權重越重。「越後面的步驟越重」忠於 c9"
+  },
+  "f4": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1",
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "K#c1：每一步只用標籤後面的關鍵字；K#c10：關鍵字由多個 token 組成時，機率相乘"
+  },
+  "f5": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c1",
+    "cer-results-how-to-read#c1"
+   ],
+   "verdict": "pass",
+   "note": "P#c1：不需要訓練；R#c1：無法憑空創造缺失的知識。「補不了」忠於「無法憑空創造」"
+  },
+  "f6": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "blog 提示第 2 句，原句未改字；speaker mascot"
+  },
+  "c1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c1",
+    "cer-process-confidence-weighted-voting#c12",
+    "cer-process-confidence-weighted-voting#c13"
+   ],
+   "verdict": "pass",
+   "note": "c1：不要只數人頭，要看信心；c12：把自信度加總；c13：猶豫的路徑貢獻很小。「重量不一樣」是白話（權重不同），沒有更強"
+  },
+  "c2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9",
+    "cer-process-confidence-weighted-voting#c1"
+   ],
+   "verdict": "pass",
+   "note": "c9：每條路徑有一個分數 C_path，由各步驟自信度綜合而成；c1：自信度。「越有把握，分數越高」是自信度的定義，沒有新事實"
+  },
+  "c3": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "吉祥物提問，轉場；沒有事實"
+  },
+  "c4": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "預告接下來回答兩個問題（看哪幾步、每一步怎麼量），沒有事實"
+  },
+  "q0": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "轉場"
+  },
+  "q1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "「最直覺的想法」是修辭，沒有說任何方法的表現；接下來 p2、p3、e1～e4 才交代為什麼不夠（c6、c14）"
+  },
+  "p4a": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9",
+    "cer-results-how-to-read#c2"
+   ],
+   "verdict": "pass",
+   "note": "P#c9、R#c2：把各步驟的關鍵答案自信度綜合成路徑分數；「所以」承接 p2、p3、e3 的理由，沒有新數字"
+  },
+  "m2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "吉祥物提問，轉場"
+  },
+  "g1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "轉場提問"
+  },
+  "g2": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "「剛才假設的那五個分數」：v4 已說「假設」，且 p8 同場較前面說「假設」；0.58、0.55、0.93、0.95 的算式見 screen 的 calc；公式 P#c9"
+  },
+  "g3": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12",
+    "cer-process-confidence-weighted-voting#c13"
+   ],
+   "verdict": "pass",
+   "note": "例子的結果：依 c12 把支持同一答案的路徑自信度加總，猶豫的票貢獻小（c13），例子中 400 的 1.88 超過 375 的 1.70；句子本身沒有數字；p8 同場較前面說「假設」"
+  }
+ },
+ "screen": {
+  "CER": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c2"
+   ],
+   "verdict": "pass",
+   "note": "c2：名稱（h6、v3 都用）"
+  },
+  "375": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字：h2、s6 都在「假設」「舉個例子」之後"
+  },
+  "400": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字：同上"
+  },
+  "SC": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "K 條路徑": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：s3 的畫面"
+  },
+  "多數決": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "500": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例題的數字：500−100＝400（原價−折扣）、500−125＝375；s5 已說「舉個例子」"
+  },
+  "100": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例題的數字：500−100＝400（原價−折扣）、500−125＝375；s5 已說「舉個例子」"
+  },
+  "125": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例題的數字：500−100＝400（原價−折扣）、500−125＝375；s5 已說「舉個例子」"
+  },
+  "①": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "序號"
+  },
+  "②": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "序號"
+  },
+  "③": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "序號"
+  },
+  "token": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "教科書等級"
+  },
+  "0.99": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的 token 機率（plan 第 3 節）；t2 已說「比方說」，畫面數字在這之後才寫出，第 2 輪改"
+  },
+  "0.98": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的 token 機率（plan 第 3 節）；t2 已說「比方說」，畫面數字在這之後才寫出，第 2 輪改"
+  },
+  "0.97": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的 token 機率（plan 第 3 節）；t2 已說「比方說」，畫面數字在這之後才寫出，第 2 輪改"
+  },
+  "0.5": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的 token 機率（plan 第 3 節）；t2 已說「比方說」，畫面數字在這之後才寫出，第 2 輪改"
+  },
+  "0.4": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的 token 機率（plan 第 3 節）；t2 已說「比方說」，畫面數字在這之後才寫出，第 2 輪改"
+  },
+  "平均": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3"
+  },
+  "Therefore": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c3",
+    "cer-critical-token-confidence#c9"
+   ],
+   "verdict": "pass",
+   "note": "c3、c9：Therefore 是卡上的例子"
+  },
+  "≈ 0.8": {
+   "tag": "illustration",
+   "refs": [
+    "cer-critical-token-confidence#c3"
+   ],
+   "verdict": "pass",
+   "note": "t7 假設的平均，由 t2 畫面的六個舉例機率平均（0.99、0.98、0.97、0.99、0.5、0.4，代入值是舉例，不是卡上的數字）；(0.99+0.98+0.97+0.99+0.5+0.4)÷6=0.805≈0.8",
+   "calc": {
+    "expr": "(0.99+0.98+0.97+0.99+0.5+0.4)/6",
+    "result": "0.8"
+   }
+  },
+  "Prompt": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6"
+  },
+  "Answer:": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6",
+    "cer-critical-token-confidence#c1"
+   ],
+   "verdict": "pass",
+   "note": "c6"
+  },
+  "Response:": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6",
+    "cer-critical-token-confidence#c1"
+   ],
+   "verdict": "pass",
+   "note": "c6"
+  },
+  "Regex": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1",
+    "cer-critical-token-confidence#c7"
+   ],
+   "verdict": "pass",
+   "note": "c1、c7"
+  },
+  "12": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例句 token 12、5 是 125 的切法（舉例，卡上沒有）；t1 旁白已說「比方說」，畫面在這之後才寫出；t13、t15 同場有「例如」；卡上只說關鍵字可能由多個 token 組成（K#c10）"
+  },
+  "5": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例句 token 12、5 是 125 的切法（舉例，卡上沒有）；t1 旁白已說「比方說」，畫面在這之後才寫出；t13、t15 同場有「例如」；卡上只說關鍵字可能由多個 token 組成（K#c10）"
+  },
+  "c = ∏ p": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "c10：c_w = ∏ p_t"
+  },
+  "0.5 × 0.4 = 0.2": {
+   "tag": "illustration",
+   "refs": [
+    "cer-critical-token-confidence#c10"
+   ],
+   "verdict": "pass",
+   "note": "公式來自 K#c10；0.5、0.4 是舉例的 token 機率；t15 旁白「例如」",
+   "calc": {
+    "expr": "0.5*0.4",
+    "result": "0.2"
+   }
+  },
+  "代入公式計算": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "標記性文字；t15、p9、v6、e6 都有"
+  },
+  "0.9": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的步驟信心；現在出現在 p8（「假設」）與 e5（「假設的例子」），第 2 輪改"
+  },
+  "0.2": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的步驟信心；現在出現在 p8（「假設」）與 e5（「假設的例子」），第 2 輪改"
+  },
+  "0.7": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的步驟信心；現在出現在 p8（「假設」）與 e5（「假設的例子」），第 2 輪改"
+  },
+  "C = Σ j·c / Σ j": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9"
+  },
+  "× 1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：權重＝步驟序號 j，j＝1、2、3 是三步的序號"
+  },
+  "× 2": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：權重＝步驟序號 j，j＝1、2、3 是三步的序號"
+  },
+  "× 3": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：權重＝步驟序號 j，j＝1、2、3 是三步的序號"
+  },
+  "3": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子的票數（兩邊的票數）：h3 在 h1「假設」之後；v2 同"
+  },
+  "2": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "同上"
+  },
+  "0.57": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子分數：路徑 A；來源同 p9 的算式",
+   "calc": {
+    "expr": "(1*0.9+2*0.2+3*0.7)/(1+2+3)",
+    "result": "0.57"
+   }
+  },
+  "0.58": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子分數：路徑 C，步驟信心 0.8、0.3、0.7（plan 第 3 節）；公式 P#c9；3.5÷6=0.5833",
+   "calc": {
+    "expr": "(1*0.8+2*0.3+3*0.7)/(1+2+3)",
+    "result": "0.58"
+   }
+  },
+  "0.55": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子分數：路徑 D，步驟信心 0.9、0.3、0.6；公式 P#c9；3.3÷6=0.55",
+   "calc": {
+    "expr": "(1*0.9+2*0.3+3*0.6)/(1+2+3)",
+    "result": "0.55"
+   }
+  },
+  "0.93": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子分數：路徑 B，步驟信心 0.9、0.9、0.96；公式 P#c9；5.58÷6=0.93",
+   "calc": {
+    "expr": "(1*0.9+2*0.9+3*0.96)/(1+2+3)",
+    "result": "0.93"
+   }
+  },
+  "0.95": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子分數：路徑 E，步驟信心 0.9、0.96、0.96；公式 P#c9；5.7÷6=0.95",
+   "calc": {
+    "expr": "(1*0.9+2*0.96+3*0.96)/(1+2+3)",
+    "result": "0.95"
+   }
+  },
+  "1.70": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "公式（加總）P#c12；代入 v4 假設的 0.57、0.58、0.55",
+   "calc": {
+    "expr": "0.57+0.58+0.55",
+    "result": "1.70"
+   }
+  },
+  "1.88": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "公式（加總）P#c12；代入 v4 假設的 0.93、0.95",
+   "calc": {
+    "expr": "0.93+0.95",
+    "result": "1.88"
+   }
+  },
+  "CER-LAST": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14"
+   ],
+   "verdict": "pass",
+   "note": "c14"
+  },
+  "0.6": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子五條路徑的最後一步信心（路徑 D 的第 3 步；e5 說「假設的例子」）"
+  },
+  "0.96": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子最後一步信心（路徑 B、E 的第 3 步）"
+  },
+  "1.92": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "0.96+0.96",
+   "calc": {
+    "expr": "0.96+0.96",
+    "result": "1.92"
+   }
+  },
+  "數學": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "R#c6"
+  },
+  "問答": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "R#c6"
+  },
+  "MathQA · OLMo-2-7B": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c10"
+   ],
+   "verdict": "pass",
+   "note": "R#c10"
+  },
+  "+7.4%": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c10"
+   ],
+   "verdict": "pass",
+   "note": "R#c10：提升幅度 7.4%；比較對象 Baseline 在旁白 e13「基準方法」"
+  },
+  "GSM8K · Llama 3.1 8B": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c12",
+    "cer-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": "R#c12"
+  },
+  "≈ +0.4%": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c12"
+   ],
+   "verdict": "pass",
+   "note": "R#c12：約 0.4%"
+  },
+  "不只數票數": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1"
+  },
+  "完整文章": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "f6 固定句的畫面提示字"
+  },
+  "在說明欄": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "同上"
+  },
+  "100 元 × 5 本": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例數字：s5 已說「舉個例子」"
+  },
+  "打八折": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "舉例條件：s5 已說「舉個例子」；沒有新數字"
+  },
+  "原價": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "s6 旁白說的例題三步；例子標籤，沒有新事實"
+  },
+  "折扣": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "s6 旁白說的例題三步；例子標籤，沒有新事實"
+  },
+  "相減": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "s6 旁白說的例題三步；例子標籤，沒有新事實"
+  },
+  "2.00": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c14",
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "只取最後一步（c14）再依 c12 加總：0.7+0.7+0.6；畫面寫 2.00，旁白／字幕寫 2.0，同一個值",
+   "calc": {
+    "expr": "0.7+0.7+0.6",
+    "result": "2.00"
+   }
+  },
+  "1": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：每條路徑權重一樣，各算 1 票（「一票」）"
+  },
+  "the": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "t1 例句的 token（例子）；t5 旁白提到 Therefore；例子數字見 s5「舉個例子」；與 K#c3（功能性詞彙如 Therefore、the answer is）不矛盾"
+  },
+  "discount": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "t1 例句的 token（例子，對應 s5 的打折例題）；沒有事實主張"
+  },
+  "is": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "t1 例句的 token（例子）；K#c9 提到 is equal to 這類功能詞，不矛盾"
+  },
+  "數值": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6"
+   ],
+   "verdict": "pass",
+   "note": "K#c6：數學任務輸出「Answer: [數值]」"
+  },
+  "短語": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c6"
+   ],
+   "verdict": "pass",
+   "note": "K#c6：問答任務輸出「Response: [實體/短語]」"
+  },
+  "關鍵字": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1"
+   ],
+   "verdict": "pass",
+   "note": "K#c1：標籤後面的內容當關鍵字"
+  },
+  "(1×0.9 + 2×0.2 + 3×0.7) ÷ (1 + 2 + 3) ≈ 0.57": {
+   "tag": "illustration",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式來自 P#c9；代入值是 p8 假設的舉例；分母 1+2+3 是步驟序號之和（c9）；0.57 由算式得",
+   "calc": {
+    "expr": "(1*0.9+2*0.2+3*0.7)/(1+2+3)",
+    "result": "0.57"
+   }
+  },
+  "信心加總": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c12"
+   ],
+   "verdict": "pass",
+   "note": "c12：把支持同一答案的路徑自信度加總"
+  },
+  "邏輯推理": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c7"
+   ],
+   "verdict": "pass",
+   "note": "R#c7：數學是邏輯推理"
+  },
+  "知識檢索": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-results-how-to-read#c7"
+   ],
+   "verdict": "pass",
+   "note": "R#c7：問答是知識檢索"
+  },
+  "看哪幾步？": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "問題標題，沒有事實"
+  },
+  "每一步怎麼量？": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "問題標題，沒有事實"
+  },
+  "每一步都算": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-process-confidence-weighted-voting#c9",
+    "cer-process-confidence-weighted-voting#c6"
+   ],
+   "verdict": "pass",
+   "note": "P#c9：每一步都算進來（各步驟自信度加權平均）；c6"
+  },
+  "只看關鍵字": {
+   "tag": "card_claim",
+   "refs": [
+    "cer-critical-token-confidence#c1"
+   ],
+   "verdict": "pass",
+   "note": "K#c1：只用標籤後面的關鍵字"
+  }
+ },
+ "warmup_map": [
+  {
+   "step": "同一題算五次，三次 375、兩次 400，多數決選 375",
+   "card": "cer-process-confidence-weighted-voting#c3",
+   "ok": true
+  },
+  {
+   "step": "那三票在第二步很猶豫，卻和有把握的兩票一樣算一票",
+   "card": "cer-process-confidence-weighted-voting#c4",
+   "ok": true
+  },
+  {
+   "step": "（plan 提到「三條路徑反覆給同一個錯答案」：腳本 b4、b5 只用卡上的說法，沒有用例子演）",
+   "card": "cer-process-confidence-weighted-voting#c5",
+   "ok": true
+  },
+  {
+   "step": "整句平均約 0.8、連接詞 0.97～0.99、數字 125 的兩個 token 是 0.5、0.4",
+   "card": "cer-critical-token-confidence#c3、c5",
+   "ok": true
+  },
+  {
+   "step": "只取 Answer: 後面的 125",
+   "card": "cer-critical-token-confidence#c1、c6、c7",
+   "ok": true
+  },
+  {
+   "step": "0.5 × 0.4 = 0.2",
+   "card": "cer-critical-token-confidence#c10（calc）",
+   "ok": true
+  },
+  {
+   "step": "三步信心 0.9、0.2、0.7 → ≈0.57",
+   "card": "cer-process-confidence-weighted-voting#c9（calc）",
+   "ok": true
+  },
+  {
+   "step": "五條路徑 0.57、0.58、0.55（375）、0.93、0.95（400）→ 1.70 對 1.88",
+   "card": "cer-process-confidence-weighted-voting#c12（calc）",
+   "ok": true
+  },
+  {
+   "step": "只看最後一步：0.7＋0.7＋0.6=2.0 對 0.96＋0.96=1.92 → 又選錯",
+   "card": "cer-process-confidence-weighted-voting#c14、cer-results-how-to-read#c5（calc）",
+   "ok": true
+  }
+ ],
+ "figures": []
+}

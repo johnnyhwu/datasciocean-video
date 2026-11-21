@@ -7,9 +7,11 @@
     uv run python lib/analytics.py --due            # 列出每支已發布影片的 d7、d28 狀態（不連線）
     uv run python lib/analytics.py <影片 ID> d7      # 抓發布後第 1～7 天的數據（d28：第 1～28 天）
     uv run python lib/analytics.py <影片 ID> d7 --show   # 只印已經存好的結果
+    uv run python lib/analytics.py --overview       # 頻道總覽：最近 28 天哪些影片帶來觀看與訂閱＋我們每支影片的累計
 
 只讀取（範圍 yt-analytics.readonly），授權存在 secrets/youtube_analytics_token.json（不進 git）。設定見 docs/youtube-upload.md。
-API 沒有提供的：曝光次數與點閱率（CTR）。需要時請使用者從 Studio 的「觸及率」分頁看那一個數字。
+曝光次數與點閱率：Analytics API 沒有，改用 Reporting API 的 reach 報表（`reach()`，`--overview` 會一起抓）。
+GCP 專案要啟用兩個 API：YouTube Analytics API、YouTube Reporting API。
 數據大約延遲 2～3 天，所以發布後第 N+3 天才算到期。
 """
 import argparse
@@ -52,7 +54,7 @@ def due(today=None):
     return rows
 
 
-def service():
+def service(api="youtubeAnalytics", version="v2"):
     from google.auth.transport.requests import Request
     from google.oauth2.credentials import Credentials
     from google_auth_oauthlib.flow import InstalledAppFlow
@@ -70,7 +72,55 @@ def service():
         creds = InstalledAppFlow.from_client_secrets_file(str(SECRET), SCOPES).run_local_server(port=0)
         TOKEN.write_text(creds.to_json())
         TOKEN.chmod(0o600)
-    return build("youtubeAnalytics", "v2", credentials=creds)
+    return build(api, version, credentials=creds)
+
+
+# ---- 曝光次數與點閱率：YouTube Reporting API 的 reach 報表（2025-09 起提供） ----
+# Analytics API（即時查詢）沒有曝光與點閱率；Reporting API 有，但它是「每天產生一份 CSV」的批次報表：
+# 第一次要建立一個報表工作（job），之後 YouTube 每天自動產生，約 2 天後開始有檔案。只讀取，範圍同樣是 yt-analytics.readonly。
+REACH_TYPE = "channel_reach_basic_a1"
+REACH_DIR = ROOT / "out" / "_channel" / "reach"   # 原始 CSV（不進 git）
+
+
+def reach():
+    """建立（如果還沒有）reach 報表工作、下載所有新報表，回傳每支影片的累計曝光與點閱率。"""
+    import csv
+    import io
+    yr = service("youtubereporting", "v1")
+    jobs = yr.jobs().list().execute().get("jobs", [])
+    job = next((j for j in jobs if j["reportTypeId"] == REACH_TYPE), None)
+    if not job:
+        job = yr.jobs().create(body={"reportTypeId": REACH_TYPE, "name": "datasciocean reach"}).execute()
+        print(f"已建立報表工作 {REACH_TYPE}。YouTube 約 2 天後開始產生每日報表，之後再跑一次。")
+    REACH_DIR.mkdir(parents=True, exist_ok=True)
+    reps, tok = [], None
+    while True:
+        r = yr.jobs().reports().list(jobId=job["id"], pageToken=tok).execute()
+        reps += r.get("reports", [])
+        tok = r.get("nextPageToken")
+        if not tok:
+            break
+    for rep in reps:
+        f = REACH_DIR / f"{rep['startTime'][:10]}_{rep['id']}.csv"
+        if f.exists():
+            continue
+        resp, content = yr._http.request(rep["downloadUrl"])
+        if int(resp.status) != 200:
+            raise RuntimeError(f"下載 reach 報表失敗：HTTP {resp.status}")
+        f.write_bytes(content)
+    per = {}
+    for f in sorted(REACH_DIR.glob("*.csv")):
+        for row in csv.DictReader(io.StringIO(f.read_text())):
+            v = row.get("video_id")
+            imp = float(row.get("video_thumbnail_impressions") or 0)
+            ctr = float(row.get("video_thumbnail_impressions_ctr") or 0)
+            a = per.setdefault(v, {"impressions": 0, "clicks": 0.0, "days": set()})
+            a["impressions"] += imp
+            a["clicks"] += imp * ctr
+            a["days"].add(row.get("date"))
+    out = {v: {"impressions": int(a["impressions"]), "ctr": round(a["clicks"] / a["impressions"], 4) if a["impressions"] else None,
+               "days": len(a["days"])} for v, a in per.items()}
+    return {"reports": len(reps), "videos": out}
 
 
 def by_scene(curve, timeline):
@@ -113,15 +163,81 @@ def fetch(vid, window):
     daily = q(metrics="views,estimatedMinutesWatched", dimensions="day", sort="day")
     out = {"video": vid, "video_id": video_id, "window": window, "from": start.isoformat(), "to": end.isoformat(),
            "fetched_at": datetime.now().astimezone().isoformat(timespec="minutes"), "totals": totals,
-           "impressions_ctr": None, "_ctr_note": "API 不提供曝光與點閱率；需要時請使用者從 Studio「觸及率」分頁提供",
+           "impressions_ctr": None, "_ctr_note": "來自 Reporting API 的 reach 報表（發布至今累計）；None 表示報表還沒產生",
            "traffic_sources": [dict(zip(["source", "views", "minutes"], r)) for r in src.get("rows", [])],
            "daily": [dict(zip(["day", "views", "minutes"], r)) for r in daily.get("rows", [])],
            "retention": curve, "relative_retention": rel}
+    try:
+        out["impressions_ctr"] = reach()["videos"].get(video_id)
+    except Exception as e:  # noqa: BLE001
+        out["_ctr_note"] = f"reach 報表沒抓到：{str(e)[:160]}"
     if curve:
         tl = json.loads((video_dir(vid) / "timeline.json").read_text())
         out["scenes"], out["steepest_drops"], out["lost_first_30s"] = by_scene(curve, tl)
     (video_dir(vid) / f"{window}.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
     return out
+
+
+def overview(days=28):
+    """整個頻道最近 days 天的總覽，加上我們每支已發布影片從發布到現在的累計。存成 state/performance.json，歷史附加在 state/performance.jsonl。
+    目的：每支影片做完（使用者按公開後）、選下一個題目之前，看哪支帶來觀看和訂閱，帶進選題和包裝。"""
+    end = date.today() - timedelta(days=LAG)
+    start = end - timedelta(days=days - 1)
+    ya = service()
+    q = lambda s, e, **kw: ya.reports().query(ids="channel==MINE", startDate=s.isoformat(), endDate=e.isoformat(), **kw).execute()
+    row = lambda r: dict(zip([h["name"] for h in r["columnHeaders"]], r["rows"][0])) if r.get("rows") else {}
+    chan = row(q(start, end, metrics="views,estimatedMinutesWatched,subscribersGained,subscribersLost"))
+    ours = {v: n for n, _, v in published()}
+    top = q(start, end, metrics="views,estimatedMinutesWatched,averageViewPercentage,subscribersGained", dimensions="video", sort="-views", maxResults=25)
+    by_video = [dict(zip(["video_id", "views", "minutes", "avg_pct", "subs"], r), ours=ours.get(r[0])) for r in top.get("rows", [])]
+    src = q(start, end, metrics="views", dimensions="insightTrafficSourceType", sort="-views")
+    mine = []
+    for vid, pub, video_id in published():
+        t = row(q(pub, max(pub, end), metrics="views,estimatedMinutesWatched,averageViewPercentage,subscribersGained", filters=f"video=={video_id}"))
+        title = json.loads((video_dir(vid) / "upload.json").read_text()).get("title", "") if (video_dir(vid) / "upload.json").exists() else ""
+        mine.append({"video": vid, "title": title, "published": pub.isoformat(), "days": (end - pub).days + 1, **t})
+    for m, (_, _, video_id) in zip(mine, published()):
+        s = q(date.fromisoformat(m["published"]), max(date.fromisoformat(m["published"]), end), metrics="views",
+              dimensions="insightTrafficSourceType", filters=f"video=={video_id}", sort="-views")
+        m["traffic_sources"] = dict(s.get("rows", []))
+        v = m.get("views") or 0
+        m["subs_per_1k_views"] = round(1000 * (m.get("subscribersGained") or 0) / v, 1) if v else None
+    try:
+        rc = reach()
+        for m, (_, _, video_id) in zip(mine, published()):
+            m["reach"] = rc["videos"].get(video_id)
+        for v in by_video:
+            v["reach"] = rc["videos"].get(v["video_id"])
+        reach_note = f"reach 報表 {rc['reports']} 份"
+    except Exception as e:  # noqa: BLE001 — reach 抓不到不影響其他數字
+        reach_note = f"reach 報表沒抓到：{str(e)[:200]}"
+    out = {"fetched_at": datetime.now().astimezone().isoformat(timespec="minutes"), "from": start.isoformat(), "to": end.isoformat(),
+           "channel": chan, "traffic_sources": [dict(zip(["source", "views"], r)) for r in src.get("rows", [])],
+           "top_videos": by_video, "ours_lifetime": mine, "reach_note": reach_note,
+           "_note": "top_videos 的 ours 為空的是頻道轉型前的舊影片（程式教學）。曝光與點閱率來自 Reporting API 的 reach 報表（每天一份，累計）。"}
+    (ROOT / "state/performance.json").write_text(json.dumps(out, ensure_ascii=False, indent=1))
+    with open(ROOT / "state/performance.jsonl", "a") as f:
+        f.write(json.dumps(out, ensure_ascii=False) + "\n")
+    return out
+
+
+def show_overview(o):
+    c = o["channel"]
+    print(f"頻道 {o['from']} ～ {o['to']}：觀看 {c.get('views')}；觀看時間 {c.get('estimatedMinutesWatched')} 分；"
+          f"訂閱 +{c.get('subscribersGained')} −{c.get('subscribersLost')}")
+    print("  流量來源：", "、".join(f"{s['source']} {s['views']}" for s in o["traffic_sources"][:6]))
+    print("  觀看最多的影片：")
+    for v in o["top_videos"][:10]:
+        print(f"    {v['views']:>6} 次  {v['subs']:>3} 訂閱  {v['avg_pct']:.0f}%  {v['ours'] or '（舊影片）'}  {v['video_id']}")
+    print("  我們的影片（發布至今）：")
+    for m in o["ours_lifetime"]:
+        r = m.get("reach") or {}
+        ctr = f"曝光 {r['impressions']}、點閱率 {r['ctr'] * 100:.1f}%" if r.get("ctr") is not None else "曝光／點閱率：還沒有"
+        print(f"    {m['video']}  第 {m['days']} 天  觀看 {m.get('views')}  訂閱 +{m.get('subscribersGained')}（每千次 {m.get('subs_per_1k_views')}）"
+              f"  平均看完 {m.get('averageViewPercentage')}%  {ctr}  {m['title']}")
+        if m.get("traffic_sources"):
+            print("      來源：", "、".join(f"{k} {v}" for k, v in list(m["traffic_sources"].items())[:5]))
+    print(f"  {o.get('reach_note', '')}")
 
 
 def show(o):
@@ -150,7 +266,12 @@ def main():
     ap.add_argument("window", nargs="?", choices=list(WINDOWS))
     ap.add_argument("--due", action="store_true")
     ap.add_argument("--show", action="store_true")
+    ap.add_argument("--overview", action="store_true", help="頻道總覽＋每支已發布影片的累計（每支影片做完、選下一題之前跑）")
     a = ap.parse_args()
+    if a.overview:
+        p = ROOT / "state/performance.json"
+        show_overview(json.loads(p.read_text()) if a.show and p.exists() else overview())
+        return
     if a.due or not a.vid:
         rows = due()
         if not rows:

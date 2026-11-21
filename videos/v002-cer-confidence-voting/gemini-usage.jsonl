@@ -1,0 +1,2 @@
+{"time": "2026-11-21T23:07:28", "kind": "tts", "model": "gemini-3.8-flash-tts", "in_tok": 2114, "out_tok": 10710, "usd": 0.097449, "note": "補記：快取 91 個音檔共 428 秒（最終採用 85 句）", "estimated": true}
+{"time": "2026-11-21T23:08:59", "kind": "llm", "model": "gemini-3.8-flash", "in_tok": 2588, "out_tok": 7786, "usd": 0.031138, "note": "標題與縮圖大字候選"}

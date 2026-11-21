@@ -7,7 +7,25 @@ description: 發布之後的事：第 7、28 天自己抓 YouTube 成效並對�
 
 ## 1. 成效追蹤（Claude 主動做）
 
-使用者 2026-11-16：成效「要由你自己 track」。每次開始工作都跑：
+**目標是增加訂閱數和觀看數**（使用者 2026-11-21）。成效數據是用來改下一支影片的，不只是記錄。
+
+使用者 2026-11-16：成效「要由你自己 track」。使用者 2026-11-21：「每次完成一部 youtube 之後你也要去 track 過去已經發佈的影片的流量 從中學習來改善 video 的製作品質」。
+
+### 每支影片做完之後（使用者按公開後、選下一題之前）
+
+```bash
+uv run python lib/analytics.py --overview         # 存成 state/performance.json，歷史附加在 performance.jsonl
+uv run python lib/analytics.py --overview --show  # 之後再看一次，不連線
+```
+
+列出頻道最近 28 天的觀看與訂閱、流量來源、觀看最多的影片（含轉型前的舊程式教學影片），和我們每支影片從發布到現在的累計。
+
+1. **曝光次數和點閱率由程式自己抓**：`--overview` 會讀 YouTube Reporting API 的 reach 報表（第一次會建立報表工作，約 2 天後才有檔案）。使用者 2026-11-21：「我可能不能每次都報給你，所以你可能要自己想辦法，或是參考其他指標就好」。**不要每次都向使用者要數字。** reach 還沒有資料時，用這些指標代替：瀏覽／推薦流量（BROWSE、SUGGESTED、SUBSCRIBER）佔比（YouTube 願意推、縮圖有人點）、平均看完比例、每千次觀看的新訂閱數。縮圖「測試與比較」的結果只在使用者主動提起時記下。全部記進 `state/performance.md` 的表格。
+2. **讀出三件事**：哪支帶來最多訂閱、觀眾從哪裡來（搜尋、推薦、瀏覽）、點閱率和看完比例誰比較差。點閱率低就改包裝（標題、縮圖），看完比例低就改內容（看 d7 的流失位置）。
+3. **寫進 `state/performance.md`**：日期、數字、你的判斷、下一支要改的一兩件事。選下一個題目時先讀它（`select-topic`），包裝時也讀（`publish-prep`）。
+4. **規則**：影片不到 10 支之前，數據只當線索，不改規則；同一種現象出現在兩支以上才寫進 skill（第 3 節）。點閱率的目標只能用自己頻道的中位數，不要引用別的頻道的數字。
+
+### 每次開始工作
 
 ```bash
 uv run python lib/analytics.py --due
@@ -21,7 +39,7 @@ uv run python lib/analytics.py <id> d7 --show # 之後再看一次，不連線
 ```
 
 - 只讀取。第一次或授權過期時瀏覽器會跳出授權頁，要使用者按同意；先告訴他。GCP 專案要啟用 YouTube Analytics API（`docs/youtube-upload.md`）。
-- **API 不提供曝光次數和點閱率。** 請使用者從 Studio「數據分析 → 觸及率」告訴你這兩個數字，手動填進 json 的 `impressions_ctr`。
+- 曝光次數和點閱率不在 Analytics API 裡；`--overview` 從 Reporting API 的 reach 報表抓（GCP 要啟用 YouTube Analytics API 和 YouTube Reporting API）。
 - 觀看數很少時 YouTube 不給留存曲線，程式會說明；記下來，d28 再看。
 
 ### 抓到之後要做的

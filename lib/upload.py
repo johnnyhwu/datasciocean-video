@@ -6,6 +6,8 @@
 用法：
     uv run python lib/upload.py <影片 ID>          # 預演：印出會上傳什麼，不連線
     uv run python lib/upload.py <影片 ID> --go     # 真的上傳（第一次會開瀏覽器請使用者授權）
+    uv run python lib/upload.py <影片 ID> --update-meta --go   # 已上傳的影片：只更新標題、說明欄、標籤、翻譯（照 upload.json）
+                                                          # 不送 status，隱私維持原狀；送完再讀一次隱私狀態確認沒變
 
 讀 videos/<id>/upload.json（標題、說明、多語、縮圖、字幕）；結果寫 videos/<id>/upload-result.json。
 已經上傳過的步驟（影片、縮圖、各語字幕）會跳過，所以中途失敗可以重跑同一個指令。
@@ -82,6 +84,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("vid")
     ap.add_argument("--go", action="store_true", help="真的上傳（沒加就只預演）")
+    ap.add_argument("--update-meta", action="store_true", help="只更新已上傳影片的標題、說明欄、標籤、翻譯；不動隱私")
     a = ap.parse_args()
     spec, video, thumb, caps, body, problems = plan(a.vid)
     res_path = video_dir(a.vid) / "upload-result.json"
@@ -108,6 +111,28 @@ def main():
 
     from googleapiclient.http import MediaFileUpload
     yt = service()
+
+    if a.update_meta:
+        if "video_id" not in res:
+            sys.exit("還沒上傳過，沒有影片可以更新。")
+        live = yt.videos().list(part="status,localizations", id=res["video_id"]).execute()["items"][0]
+        before = live["status"]["privacyStatus"]
+        # 線上已有的語言版本保留（例如 YouTube 自動建立的預設語言版本），再蓋上 upload.json 的；預設語言用 snippet 的標題與說明
+        locs = {**live.get("localizations", {}), **body["localizations"]}
+        dl = body["snippet"]["defaultLanguage"]
+        if dl in locs:
+            locs[dl] = {"title": body["snippet"]["title"], "description": body["snippet"]["description"]}
+        # 只送 snippet 與 localizations；status 完全不送，所以隱私不會被改
+        yt.videos().update(part="snippet,localizations",
+                           body={"id": res["video_id"], "snippet": body["snippet"], "localizations": locs}).execute()
+        after = yt.videos().list(part="status,snippet", id=res["video_id"]).execute()["items"][0]
+        if after["status"]["privacyStatus"] != before:
+            sys.exit(f"隱私狀態從 {before} 變成 {after['status']['privacyStatus']}！請立刻到 Studio 檢查：{res['studio']}")
+        res["meta_updated_at"] = __import__("datetime").datetime.now().isoformat(timespec="minutes")
+        res_path.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+        print(f"已更新標題與說明欄（隱私維持 {before}）：{after['snippet']['title']}")
+        print(" ", res["studio"])
+        return
 
     def save():
         res_path.write_text(json.dumps(res, ensure_ascii=False, indent=1))
