@@ -98,3 +98,13 @@ RRF（Reciprocal Rank Fusion）的做法是不看分数、只看名次：每一�
 ## 發布後
 
 告訴我影片網址和發布時間，我記進狀態，之後可以做這支的回顧。
+
+## 著作權聲明（2026-11-22）
+
+YouTube 標記片尾 7:33–7:56 的音樂「Corporate Vision」（We Are Era Music AB 代表 Jonas Blakewood），影響只有營利。使用者當天以「授權」提出爭議，申訴文字：
+
+```
+I have a license to use this music. The audio at 7:33–7:56 is from "Presentation" by Jonas Blakewood, downloaded from Pixabay on 2026-09-19 (Pixabay track ID 524137: https://pixabay.com/music/corporate-presentation-524137/). It is used under the Pixabay Content License, which allows commercial use without attribution (https://pixabay.com/service/license-summary/). Please release this claim.
+```
+
+對方 30 天內（約 2026-12-22 前）回覆：撤回或逾期就結束；維持的話再決定要上訴還是接受。

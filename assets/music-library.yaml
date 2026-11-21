@@ -5,6 +5,9 @@
 # 音檔不見時怎麼重建：brand-intro.wav、brand-sting.wav 直接複製 podcast 的 music/intro.wav、sting.wav；
 # brand-outro-long.wav 是影片另外切的：原曲小節 27～31 加尾巴（22.95 秒），結尾和 podcast 的片尾是同一處。
 # 要加新曲子由使用者決定；Claude 不自己找音樂、不用 AI 生成的音樂。
+# Content ID：這首被 We Are Era Music AB（代表 Jonas Blakewood）以「Corporate Vision」的曲名登記。v001 片尾（7:33–7:56）2026-11-22 被認領，
+#   影響只有營利；使用者當天以「授權」提出爭議（Pixabay 524137、下載日 2026-09-19），對方 30 天內回覆。之後的影片很可能都會被認領，
+#   收到時用同樣的理由申訴（申訴文字見 v001 的 upload.md）。
 tracks:
   brand_intro:
     file: brand-intro.wav
