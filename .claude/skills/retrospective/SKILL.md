@@ -11,7 +11,7 @@ description: 發布之後的事：第 7、28 天自己抓 YouTube 成效並對�
 
 使用者 2026-11-16：成效「要由你自己 track」。使用者 2026-11-21：「每次完成一部 youtube 之後你也要去 track 過去已經發佈的影片的流量 從中學習來改善 video 的製作品質」。
 
-### 每支影片做完之後（使用者按公開後、選下一題之前）
+### 每支影片做完之後（公開後、選下一題之前）
 
 ```bash
 uv run python lib/analytics.py --overview         # 存成 state/performance.json，歷史附加在 performance.jsonl

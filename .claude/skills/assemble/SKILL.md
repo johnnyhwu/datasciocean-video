@@ -93,5 +93,6 @@ uv run python lib/package.py <id> --nomusic # → 無音樂版（對照用）
 - 和最近影片的結構相似度。
 - 這次新增或修改的規則。
 - **沒經過人耳確認的部分**：旁白、音樂、音效。
+- **觀眾體驗自審**：兩輪的分數、修了什麼、沒修什麼和原因（`review/selfreview.md`，做法見 `make-video` 第 4 節）。自審在寫審查包之前做，標題與縮圖草案先照 `publish-prep` 1、2 節做好。
 
 使用者回饋後，只重做受影響的步驟與場景。核准後執行 `state.py approve <id> 3`，再 `set <id> 發布準備`，載入 `publish-prep`。

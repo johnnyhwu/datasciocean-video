@@ -1,0 +1,1263 @@
+{
+ "video": "v003-prompt-repetition",
+ "title": "把問題貼兩次，AI 就變準了？｜Prompt Repetition（暫定）",
+ "estimated": false,
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "duration": 584.47,
+ "frames": 17534,
+ "end_screen": 20,
+ "scenes": [
+  {
+   "id": "sc01",
+   "name": "貼兩次",
+   "bg": "flat",
+   "pad": [
+    0.3,
+    0.4
+   ],
+   "start": 0.0,
+   "duration": 28.7,
+   "sentences": [
+    {
+     "id": "h1",
+     "display": "有一個簡單到不行的技巧：把你的問題，原封不動再貼一次。",
+     "style": "輕快，像在分享一個小祕密",
+     "hold": 0.3,
+     "screen": [
+      "Ctrl+C",
+      "Ctrl+V",
+      "第 25 個是誰？"
+     ],
+     "start": 0.3,
+     "end": 6.92,
+     "abs": 0.3
+    },
+    {
+     "id": "h2",
+     "display": "在一個找名字的測驗裡，準確率從 21% 跳到 97%。",
+     "say": "在一個找名字的測驗裡，準確率從百分之二十一，跳到百分之九十七。",
+     "style": "數字要咬清楚，帶點驚喜",
+     "hold": 0.4,
+     "screen": [
+      "21%",
+      "97%"
+     ],
+     "start": 7.47,
+     "end": 15.53,
+     "abs": 7.47
+    },
+    {
+     "id": "h3",
+     "display": "什麼都沒加，只是貼兩次？這怎麼可能？",
+     "style": "不敢相信，歪頭",
+     "speaker": "mascot",
+     "hold": 0.3,
+     "screen": [],
+     "start": 16.18,
+     "end": 20.66,
+     "abs": 16.18
+    },
+    {
+     "id": "h4",
+     "display": "答案藏在 AI 讀字的方式裡。這個技巧叫 Prompt Repetition。",
+     "style": "停一拍再說名字",
+     "hold": 0.4,
+     "screen": [
+      "Prompt Repetition"
+     ],
+     "start": 21.21,
+     "end": 27.9,
+     "abs": 21.21
+    }
+   ],
+   "start_frame": 0,
+   "frames": 861
+  },
+  {
+   "id": "sc02",
+   "name": "只能回頭看",
+   "bg": "flat",
+   "pad": [
+    2.4,
+    0.4
+   ],
+   "chapter": [
+    1,
+    "AI 怎麼讀字"
+   ],
+   "start": 28.7,
+   "duration": 40.68,
+   "sentences": [
+    {
+     "id": "i1",
+     "display": "這裡是 DataSci Ocean。這集要講的是 Prompt Repetition。",
+     "hold": 0.3,
+     "screen": [
+      "Prompt Repetition Improves Non-Reasoning LLMs",
+      "Google Research",
+      "2025 年 12 月"
+     ],
+     "start": 2.4,
+     "end": 7.28,
+     "abs": 31.1
+    },
+    {
+     "id": "i2",
+     "display": "最後也會講到：什麼時候，它就沒什麼用了。",
+     "hold": 0.4,
+     "screen": [
+      "Non-Reasoning"
+     ],
+     "start": 7.83,
+     "end": 11.24,
+     "abs": 36.53
+    },
+    {
+     "id": "r1",
+     "display": "GPT-4、Gemini、Llama 這些主流的大型語言模型，",
+     "say": "GPT 4、Gemini、Llama 這些主流的大型語言模型，",
+     "hold": 0.1,
+     "screen": [
+      "GPT-4",
+      "Gemini",
+      "Llama"
+     ],
+     "start": 11.89,
+     "end": 16.97,
+     "abs": 40.59
+    },
+    {
+     "id": "r2",
+     "display": "大多是 Decoder-only 架構。",
+     "hold": 0.25,
+     "screen": [
+      "Decoder-only"
+     ],
+     "start": 17.32,
+     "end": 19.71,
+     "abs": 46.02
+    },
+    {
+     "id": "r3",
+     "display": "它們把你的 prompt 切成一個一個 token，從左讀到右。",
+     "hold": 0.25,
+     "screen": [
+      "token"
+     ],
+     "start": 20.21,
+     "end": 24.87,
+     "abs": 48.91
+    },
+    {
+     "id": "r4",
+     "display": "讀到第幾個 token，就只看得到它自己和前面的。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 25.37,
+     "end": 29.26,
+     "abs": 54.07
+    },
+    {
+     "id": "r5",
+     "display": "後面的，一個都看不到。",
+     "style": "放慢，加重",
+     "hold": 0.3,
+     "screen": [],
+     "start": 29.71,
+     "end": 34.0,
+     "abs": 58.41
+    },
+    {
+     "id": "r6",
+     "display": "就像每個 token 都戴著半邊眼罩：只能回頭看，不能往前看。",
+     "style": "俏皮",
+     "hold": 0.4,
+     "screen": [
+      "只能回頭看"
+     ],
+     "start": 34.55,
+     "end": 39.88,
+     "abs": 63.25
+    }
+   ],
+   "start_frame": 861,
+   "frames": 1220
+  },
+  {
+   "id": "sc03",
+   "name": "模糊的筆記",
+   "bg": "flat",
+   "chapter": [
+    2,
+    "The bark was rough"
+   ],
+   "start": 69.38,
+   "duration": 84.18,
+   "sentences": [
+    {
+     "id": "w1",
+     "display": "這會出什麼問題？我們來看一個例子：The bark was rough.",
+     "say": "這會出什麼問題？我們來看一個例子：The bark was rough.",
+     "hold": 0.3,
+     "screen": [
+      "The",
+      "bark",
+      "was",
+      "rough",
+      "."
+     ],
+     "start": 0.15,
+     "end": 5.39,
+     "abs": 69.53
+    },
+    {
+     "id": "w2",
+     "display": "bark 這個字有兩個意思：狗叫聲，或是樹皮。",
+     "hold": 0.3,
+     "screen": [
+      "狗叫聲",
+      "樹皮"
+     ],
+     "start": 5.94,
+     "end": 11.1,
+     "abs": 75.32
+    },
+    {
+     "id": "w3",
+     "display": "模型裡負責「回頭看」的，是 attention 層。",
+     "say": "模型裡負責回頭看的，是 attention 層。",
+     "style": "清楚強調 attention 這個詞",
+     "hold": 0.3,
+     "screen": [
+      "Attention 層"
+     ],
+     "start": 11.65,
+     "end": 16.04,
+     "abs": 81.03
+    },
+    {
+     "id": "w3b",
+     "display": "attention 層每讀一個 token，就留下一份筆記，叫 Key 和 Value。",
+     "hold": 0.2,
+     "screen": [
+      "Key",
+      "Value"
+     ],
+     "start": 16.59,
+     "end": 22.03,
+     "abs": 85.97
+    },
+    {
+     "id": "w4",
+     "display": "後面的 token 回頭看，看的就是這些筆記。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 22.48,
+     "end": 26.11,
+     "abs": 91.86
+    },
+    {
+     "id": "w5",
+     "display": "讀到 bark 的時候，模型只看得到 The bark。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 26.66,
+     "end": 30.8,
+     "abs": 96.04
+    },
+    {
+     "id": "w6",
+     "display": "它不知道是哪個意思，記下的筆記，可能是兩種意思混在一起的模糊版本。",
+     "style": "有點苦惱",
+     "hold": 0.4,
+     "screen": [
+      "狗叫聲？",
+      "樹皮？"
+     ],
+     "start": 31.25,
+     "end": 37.41,
+     "abs": 100.63
+    },
+    {
+     "id": "w7",
+     "display": "接著讀到 rough，粗糙的。它看得到整句，知道這是在講樹皮。",
+     "hold": 0.2,
+     "screen": [
+      "粗糙的",
+      "樹皮"
+     ],
+     "start": 38.06,
+     "end": 43.7,
+     "abs": 107.44
+    },
+    {
+     "id": "w8",
+     "display": "可是它回頭拿 bark 的筆記，拿到的，還是當初那份模糊的。",
+     "style": "語氣一沉",
+     "hold": 0.3,
+     "screen": [],
+     "start": 44.15,
+     "end": 50.91,
+     "abs": 113.53
+    },
+    {
+     "id": "w9",
+     "display": "蛤？看懂了也沒用？",
+     "style": "傻眼",
+     "speaker": "mascot",
+     "hold": 0.3,
+     "screen": [],
+     "start": 51.46,
+     "end": 54.1,
+     "abs": 120.84
+    },
+    {
+     "id": "w10",
+     "display": "對。那份筆記，是當初讀到 bark 時就寫好的。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 54.65,
+     "end": 59.12,
+     "abs": 124.03
+    },
+    {
+     "id": "w11",
+     "display": "那最後一個 token 呢？它可是看過所有內容了。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 59.67,
+     "end": 63.4,
+     "abs": 129.05
+    },
+    {
+     "id": "w12",
+     "display": "但它的理解，是把前面每一份筆記，照注意力的比重混在一起。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 63.85,
+     "end": 69.68,
+     "abs": 133.23
+    },
+    {
+     "id": "w13",
+     "display": "如果原料本身是糊的，比重調得再好，也還原不出完美的意思。",
+     "style": "肯定，帶點無奈",
+     "hold": 0.3,
+     "screen": [],
+     "start": 70.18,
+     "end": 77.63,
+     "abs": 139.56
+    },
+    {
+     "id": "w14",
+     "display": "我們把這叫做注意力的 Path Dependency：路徑依賴。",
+     "hold": 0.4,
+     "screen": [
+      "Path Dependency",
+      "路徑依賴"
+     ],
+     "start": 78.18,
+     "end": 83.38,
+     "abs": 147.56
+    }
+   ],
+   "start_frame": 2081,
+   "frames": 2526
+  },
+  {
+   "id": "sc04",
+   "name": "順序怎麼擺",
+   "bg": "flat",
+   "chapter": [
+    3,
+    "順序怎麼擺都有代價"
+   ],
+   "start": 153.56,
+   "duration": 54.37,
+   "sentences": [
+    {
+     "id": "o1",
+     "display": "這個限制，也讓模型對 prompt 的順序非常敏感。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 0.15,
+     "end": 4.26,
+     "abs": 153.71
+    },
+    {
+     "id": "o2",
+     "display": "比方說一題選擇題。先放選項、再放問題：",
+     "hold": 0.2,
+     "screen": [
+      "選項",
+      "問題"
+     ],
+     "start": 4.76,
+     "end": 9.24,
+     "abs": 158.32
+    },
+    {
+     "id": "o3",
+     "display": "讀選項的時候，還不知道問題是什麼，不知道該注意哪裡。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 9.69,
+     "end": 14.43,
+     "abs": 163.25
+    },
+    {
+     "id": "o4",
+     "display": "反過來，先放問題、再放一大段資料：",
+     "hold": 0.2,
+     "screen": [
+      "問題",
+      "資料"
+     ],
+     "start": 14.98,
+     "end": 19.1,
+     "abs": 168.54
+    },
+    {
+     "id": "o5",
+     "display": "理論上讀資料時比較有方向，但資料一長，問題可能被忘掉，注意力也被分散。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 19.55,
+     "end": 26.98,
+     "abs": 173.11
+    },
+    {
+     "id": "o6",
+     "display": "論文還設計了一個極端的例子：給 50 個名字，最後才問：第 25 個是誰？",
+     "say": "論文還設計了一個極端的例子：給五十個名字，最後才問：第二十五個是誰？",
+     "hold": 0.3,
+     "screen": [
+      "50 個名字",
+      "第 25 個是誰？"
+     ],
+     "start": 27.53,
+     "end": 34.57,
+     "abs": 181.09
+    },
+    {
+     "id": "o7",
+     "display": "讀到那個名字時，它還不知道要找哪一個，所以沒有特別記住。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 35.12,
+     "end": 39.75,
+     "abs": 188.68
+    },
+    {
+     "id": "o8",
+     "display": "等讀到問題，已經來不及回頭了。",
+     "style": "放慢",
+     "hold": 0.3,
+     "screen": [],
+     "start": 40.2,
+     "end": 45.78,
+     "abs": 193.76
+    },
+    {
+     "id": "o9",
+     "display": "那要怎麼讓前面的 token，也看得到後面？",
+     "style": "好奇，抓頭",
+     "speaker": "mascot",
+     "hold": 0.4,
+     "screen": [],
+     "start": 46.33,
+     "end": 53.57,
+     "abs": 199.89
+    }
+   ],
+   "start_frame": 4607,
+   "frames": 1631
+  },
+  {
+   "id": "sc05",
+   "name": "貼第二遍",
+   "bg": "flat",
+   "chapter": [
+    4,
+    "解法：貼兩次"
+   ],
+   "start": 207.93,
+   "duration": 56.48,
+   "sentences": [
+    {
+     "id": "p1",
+     "display": "Google Research 在 2025 年 12 月發表的論文，給的答案簡單到不行：",
+     "say": "Google Research 在二零二五年十二月發表的論文，給的答案簡單到不行：",
+     "hold": 0.2,
+     "screen": [
+      "Google Research",
+      "2025 年 12 月"
+     ],
+     "start": 0.15,
+     "end": 5.56,
+     "abs": 208.08
+    },
+    {
+     "id": "p2",
+     "display": "把 prompt 原封不動，再複製一遍。輸入從 P，變成 P、P。",
+     "say": "把 prompt 原封不動，再複製一遍。輸入從 P，變成 P、P。",
+     "style": "乾脆俐落",
+     "hold": 0.3,
+     "screen": [
+      "P",
+      "P ; P"
+     ],
+     "start": 6.01,
+     "end": 11.27,
+     "abs": 213.94
+    },
+    {
+     "id": "p3",
+     "display": "第一遍讀起來跟平常一樣，每個 token 還是只能回頭看。",
+     "hold": 0.25,
+     "screen": [
+      "第一遍"
+     ],
+     "start": 11.82,
+     "end": 16.05,
+     "abs": 219.75
+    },
+    {
+     "id": "p4",
+     "display": "但到了第二遍，每一個位置回頭看，都看得到整個第一遍。",
+     "style": "語氣上揚",
+     "hold": 0.3,
+     "screen": [
+      "第二遍"
+     ],
+     "start": 16.55,
+     "end": 21.75,
+     "abs": 224.48
+    },
+    {
+     "id": "p5",
+     "display": "第二遍的 bark 回頭一看：第一遍的 rough 就在那裡。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 22.3,
+     "end": 26.52,
+     "abs": 230.23
+    },
+    {
+     "id": "p6",
+     "display": "所以它寫下的筆記，是已經看過全文的版本：這是樹皮。",
+     "hold": 0.3,
+     "screen": [
+      "樹皮"
+     ],
+     "start": 26.97,
+     "end": 31.6,
+     "abs": 234.9
+    },
+    {
+     "id": "p7",
+     "display": "原來如此！讓前面的 token，也看到後面！",
+     "style": "恍然大悟，興奮",
+     "speaker": "mascot",
+     "hold": 0.4,
+     "screen": [],
+     "start": 32.15,
+     "end": 36.38,
+     "abs": 240.08
+    },
+    {
+     "id": "p8",
+     "display": "模型最後生成答案時，會高度依賴第二遍的這些筆記。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 37.03,
+     "end": 41.36,
+     "abs": 244.96
+    },
+    {
+     "id": "p9",
+     "display": "這等於不改模型架構，就模擬出雙向的注意力。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 41.86,
+     "end": 46.18,
+     "abs": 249.79
+    },
+    {
+     "id": "p10",
+     "display": "我們把它叫做：偽雙向注意力。",
+     "hold": 0.3,
+     "screen": [
+      "偽雙向注意力"
+     ],
+     "start": 46.63,
+     "end": 49.9,
+     "abs": 254.56
+    },
+    {
+     "id": "p11",
+     "display": "剛才的選擇題也一樣：第二遍讀選項時，已經知道問題是什麼了。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 50.45,
+     "end": 55.68,
+     "abs": 258.38
+    }
+   ],
+   "start_frame": 6238,
+   "frames": 1694
+  },
+  {
+   "id": "sc06",
+   "name": "之前的兩種解法",
+   "bg": "flat",
+   "chapter": [
+    5,
+    "之前的兩種解法"
+   ],
+   "start": 264.41,
+   "duration": 38.79,
+   "sentences": [
+    {
+     "id": "a1",
+     "display": "其實在這之前，就有兩種解法。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 0.15,
+     "end": 2.99,
+     "abs": 264.56
+    },
+    {
+     "id": "a2",
+     "display": "第一種是 Chain-of-Thought，思維鏈：叫模型一步一步想，或先複述問題。",
+     "say": "第一種是 Chain of Thought，思維鏈：叫模型一步一步想，或先複述問題。",
+     "hold": 0.2,
+     "screen": [
+      "Chain-of-Thought（CoT）"
+     ],
+     "start": 3.44,
+     "end": 9.96,
+     "abs": 267.85
+    },
+    {
+     "id": "a3",
+     "display": "它確實能修好理解的問題，但要多生成很多字，延遲和成本都上升。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 10.41,
+     "end": 17.34,
+     "abs": 274.82
+    },
+    {
+     "id": "a4",
+     "display": "第二種是像 BERT 那樣的雙向注意力，讓輸入的 token 互相看得見。",
+     "hold": 0.2,
+     "screen": [
+      "BERT"
+     ],
+     "start": 17.89,
+     "end": 23.32,
+     "abs": 282.3
+    },
+    {
+     "id": "a5",
+     "display": "它從根本上解決問題，但要改模型架構或訓練目標。",
+     "hold": 0.2,
+     "screen": [
+      "要改架構"
+     ],
+     "start": 23.77,
+     "end": 28.41,
+     "abs": 288.18
+    },
+    {
+     "id": "a6",
+     "display": "只能用 API 呼叫的現成模型，根本做不到。",
+     "say": "只能用 A P I 呼叫的現成模型，根本做不到。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 28.86,
+     "end": 32.85,
+     "abs": 293.27
+    },
+    {
+     "id": "a7",
+     "display": "這篇論文想做的，是不改架構，也不增加生成的延遲。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 33.35,
+     "end": 37.99,
+     "abs": 297.76
+    }
+   ],
+   "start_frame": 7932,
+   "frames": 1164
+  },
+  {
+   "id": "sc07",
+   "name": "免費的午餐",
+   "bg": "flat",
+   "chapter": [
+    6,
+    "為什麼不會變慢"
+   ],
+   "start": 303.2,
+   "duration": 80.29,
+   "sentences": [
+    {
+     "id": "l1",
+     "display": "等等，輸入變兩倍長，不會變慢嗎？",
+     "style": "懷疑，瞇眼",
+     "speaker": "mascot",
+     "hold": 0.3,
+     "screen": [],
+     "start": 0.15,
+     "end": 5.38,
+     "abs": 303.35
+    },
+    {
+     "id": "l2",
+     "display": "要回答這個，得先知道：模型回答你，分成兩個階段。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 5.93,
+     "end": 10.5,
+     "abs": 309.13
+    },
+    {
+     "id": "l3",
+     "display": "第一個階段叫 Prefill：一口氣讀完你的整段輸入。",
+     "hold": 0.2,
+     "screen": [
+      "Prefill"
+     ],
+     "start": 10.95,
+     "end": 15.72,
+     "abs": 314.15
+    },
+    {
+     "id": "l4",
+     "display": "這一步 GPU 可以高度平行：",
+     "say": "這一步 G P U 可以高度平行：",
+     "hold": 0.1,
+     "screen": [
+      "GPU"
+     ],
+     "start": 16.17,
+     "end": 18.49,
+     "abs": 319.37
+    },
+    {
+     "id": "l5",
+     "display": "算 1000 個 token 和 500 個 token，時間差通常只在毫秒等級。",
+     "say": "算一千個 token 和五百個 token，時間差通常只在毫秒等級。",
+     "hold": 0.3,
+     "screen": [
+      "1000",
+      "500"
+     ],
+     "start": 18.84,
+     "end": 23.92,
+     "abs": 322.04
+    },
+    {
+     "id": "l6",
+     "display": "第二個階段叫 Decode：一個 token 一個 token 吐出回答。",
+     "hold": 0.2,
+     "screen": [
+      "Decode"
+     ],
+     "start": 24.47,
+     "end": 29.03,
+     "abs": 327.67
+    },
+    {
+     "id": "l7",
+     "display": "這一步只能照順序來，受記憶體頻寬限制，是延遲的主要元兇。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 29.48,
+     "end": 35.55,
+     "abs": 332.68
+    },
+    {
+     "id": "l8",
+     "display": "貼兩次，多出來的字，全落在平行的 Prefill。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 36.1,
+     "end": 40.63,
+     "abs": 339.3
+    },
+    {
+     "id": "l9",
+     "display": "意思沒變，回答的長度也沒變，Decode 不會多花時間。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 41.08,
+     "end": 46.07,
+     "abs": 344.28
+    },
+    {
+     "id": "l10",
+     "display": "實驗裡，貼兩次和不貼的回答長度高度一致，端到端的延遲也幾乎沒有增加。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 46.57,
+     "end": 54.34,
+     "abs": 349.77
+    },
+    {
+     "id": "l11",
+     "display": "唯一的例外：Anthropic 的 Claude 處理極長文本時，延遲顯著增加。",
+     "hold": 0.2,
+     "screen": [
+      "例外",
+      "Claude ＋ 極長文本"
+     ],
+     "start": 54.89,
+     "end": 61.06,
+     "abs": 358.09
+    },
+    {
+     "id": "l12",
+     "display": "論文作者推測，可能和 Claude API 內部處理 Prefill 或快取的方式有關。",
+     "say": "論文作者推測，可能和 Claude A P I 內部處理 Prefill 或快取的方式有關。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 61.51,
+     "end": 67.67,
+     "abs": 364.71
+    },
+    {
+     "id": "l13",
+     "display": "所以論文大膽地說：在大多數情況下，這是一頓免費的午餐。",
+     "style": "帶點得意",
+     "hold": 0.2,
+     "screen": [
+      "免費的午餐"
+     ],
+     "start": 68.22,
+     "end": 73.59,
+     "abs": 371.42
+    },
+    {
+     "id": "l14",
+     "display": "用 Prefill 多出來的算力，換更精確的理解，使用者不必多等。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 74.04,
+     "end": 79.49,
+     "abs": 377.24
+    }
+   ],
+   "start_frame": 9096,
+   "frames": 2409
+  },
+  {
+   "id": "sc08",
+   "name": "證據",
+   "bg": "flat",
+   "chapter": [
+    7,
+    "真的有效嗎"
+   ],
+   "start": 383.49,
+   "duration": 88.46,
+   "sentences": [
+    {
+     "id": "e1",
+     "display": "那效果呢？論文測了 70 個「模型和任務」的組合。",
+     "say": "那效果呢？論文測了七十個模型和任務的組合。",
+     "hold": 0.2,
+     "screen": [
+      "70"
+     ],
+     "start": 0.15,
+     "end": 4.83,
+     "abs": 383.64
+    },
+    {
+     "id": "e2",
+     "display": "和不貼的版本比，Prompt Repetition 拿下 47 勝、0 敗，",
+     "say": "和不貼的版本比，Prompt Repetition 拿下四十七勝、零敗，",
+     "style": "數字一個一個敲出來",
+     "hold": 0.1,
+     "screen": [
+      "47 勝",
+      "0 敗",
+      "對照：不貼"
+     ],
+     "start": 5.28,
+     "end": 13.65,
+     "abs": 388.77
+    },
+    {
+     "id": "e3",
+     "display": "其餘是平手，或沒有顯著差異。",
+     "hold": 0.3,
+     "screen": [
+      "其餘：平手或不顯著"
+     ],
+     "start": 14.0,
+     "end": 17.43,
+     "abs": 397.49
+    },
+    {
+     "id": "e4",
+     "display": "跨越不同架構、不同大小的模型，一次都沒輸，我們覺得在機器學習裡非常少見。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 17.98,
+     "end": 25.44,
+     "abs": 401.47
+    },
+    {
+     "id": "e5",
+     "display": "選項放前面的排法，原本表現通常比較差；",
+     "hold": 0.1,
+     "screen": [
+      "選項在前"
+     ],
+     "start": 25.99,
+     "end": 29.83,
+     "abs": 409.48
+    },
+    {
+     "id": "e6",
+     "display": "貼兩次之後大幅進步，追平、甚至超越原本較好的「問題在前」。",
+     "hold": 0.2,
+     "screen": [
+      "問題在前"
+     ],
+     "start": 30.18,
+     "end": 36.42,
+     "abs": 413.67
+    },
+    {
+     "id": "e7",
+     "display": "這裡要特別注意的，是 OpenBookQA 和 MMLU-Pro 這兩個測驗上的結果。",
+     "say": "這裡要特別注意的，是 OpenBookQA 和 MMLU Pro 這兩個測驗上的結果。",
+     "hold": 0.3,
+     "screen": [
+      "OpenBookQA",
+      "MMLU-Pro"
+     ],
+     "start": 36.87,
+     "end": 42.53,
+     "abs": 420.36
+    },
+    {
+     "id": "e8",
+     "display": "回到開頭那 50 個名字的測驗，它叫 NameIndex，",
+     "hold": 0.1,
+     "screen": [
+      "NameIndex"
+     ],
+     "say": "回到開頭那五十個名字的測驗，它叫 Name Index，",
+     "start": 43.08,
+     "end": 47.36,
+     "abs": 426.57
+    },
+    {
+     "id": "e8b",
+     "display": "是論文特別設計的極端查找題。",
+     "hold": 0.2,
+     "screen": [
+      "極端查找題"
+     ],
+     "start": 47.71,
+     "end": 51.06,
+     "abs": 431.2
+    },
+    {
+     "id": "e9",
+     "display": "Gemini 2.0 Flash-Lite 原本只答對 21.33%，貼兩次之後是 97.33%。",
+     "say": "Gemini 二點零 Flash Lite 原本只答對百分之二十一點三三，貼兩次之後是百分之九十七點三三。",
+     "hold": 0.3,
+     "screen": [
+      "Gemini 2.0 Flash-Lite",
+      "21.33%",
+      "97.33%",
+      "不貼",
+      "貼兩次"
+     ],
+     "start": 51.51,
+     "end": 59.41,
+     "abs": 435.0
+    },
+    {
+     "id": "e10",
+     "display": "這組數字只來自這一個模型。",
+     "hold": 0.1,
+     "screen": [
+      "只有一個模型"
+     ],
+     "start": 59.96,
+     "end": 62.71,
+     "abs": 443.45
+    },
+    {
+     "id": "e10b",
+     "display": "我們的解釋是：第二遍，模型可能是帶著「要找第 25 個」去讀的。",
+     "hold": 0.4,
+     "screen": [],
+     "say": "我們的解釋是：第二遍，模型可能是帶著要找第二十五個的意圖去讀的。",
+     "start": 63.06,
+     "end": 69.42,
+     "abs": 446.55
+    },
+    {
+     "id": "e11",
+     "display": "會不會只是輸入變長，讓模型多了運算空間？",
+     "hold": 0.2,
+     "screen": [],
+     "start": 70.07,
+     "end": 73.89,
+     "abs": 453.56
+    },
+    {
+     "id": "e12",
+     "display": "論文也測了：在問題前面塞一排點號，把長度補上。結果完全沒用。",
+     "hold": 0.3,
+     "screen": [
+      "……"
+     ],
+     "start": 74.34,
+     "end": 81.05,
+     "abs": 457.83
+    },
+    {
+     "id": "e14",
+     "display": "所以我們認為，提升真的來自重複有意義的內容，讓前面看到後面。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 81.6,
+     "end": 87.66,
+     "abs": 465.09
+    }
+   ],
+   "start_frame": 11505,
+   "frames": 2653
+  },
+  {
+   "id": "sc09",
+   "name": "邊界",
+   "bg": "flat",
+   "chapter": [
+    8,
+    "什麼時候沒用"
+   ],
+   "start": 471.95,
+   "duration": 57.79,
+   "sentences": [
+    {
+     "id": "b1",
+     "display": "不過，它也有邊界。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 0.15,
+     "end": 2.18,
+     "abs": 472.1
+    },
+    {
+     "id": "b2",
+     "display": "論文另外強制模型一步一步想，也就是開了 CoT。",
+     "say": "論文另外強制模型一步一步想，也就是開了 C O T。",
+     "hold": 0.2,
+     "screen": [
+      "CoT"
+     ],
+     "start": 2.63,
+     "end": 7.23,
+     "abs": 474.58
+    },
+    {
+     "id": "b3",
+     "display": "和同樣開了 CoT、但不貼的版本比，效果變成中性到微幅正面：",
+     "say": "和同樣開了 C O T、但不貼的版本比，效果變成中性到微幅正面：",
+     "hold": 0.1,
+     "screen": [
+      "對照：同樣開 CoT、不貼"
+     ],
+     "start": 7.68,
+     "end": 13.49,
+     "abs": 479.63
+    },
+    {
+     "id": "b3b",
+     "display": "5 勝、1 敗、22 平。",
+     "say": "五勝、一敗、二十二平。",
+     "style": "一個一個敲出來",
+     "hold": 0.3,
+     "screen": [
+      "5 勝",
+      "1 敗",
+      "22 平"
+     ],
+     "start": 13.84,
+     "end": 19.15,
+     "abs": 485.79
+    },
+    {
+     "id": "b4",
+     "display": "我們的解讀是：開了 CoT，模型自己會在回答裡重新思考一遍，",
+     "hold": 0.1,
+     "screen": [],
+     "say": "我們的解讀是：開了 C O T，模型自己會在回答裡重新思考一遍，",
+     "start": 19.7,
+     "end": 25.26,
+     "abs": 491.65
+    },
+    {
+     "id": "b4b",
+     "display": "理解的問題已經修好了。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 25.61,
+     "end": 28.13,
+     "abs": 497.56
+    },
+    {
+     "id": "b5",
+     "display": "在輸入端再幫它重複一次，好處就變小了。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 28.58,
+     "end": 33.34,
+     "abs": 500.53
+    },
+    {
+     "id": "b6",
+     "display": "所以它最適合需要精準理解、但不需要複雜多步推理的任務，",
+     "hold": 0.1,
+     "screen": [],
+     "start": 33.89,
+     "end": 39.67,
+     "abs": 505.84
+    },
+    {
+     "id": "b7",
+     "display": "例如資訊提取、閱讀測驗。",
+     "hold": 0.3,
+     "screen": [
+      "資訊提取",
+      "閱讀測驗"
+     ],
+     "start": 40.02,
+     "end": 43.17,
+     "abs": 511.97
+    },
+    {
+     "id": "b8",
+     "display": "有趣的是，用強化學習訓練的推理模型，常會自己學會先把問題重說一遍。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 43.72,
+     "end": 50.69,
+     "abs": 515.67
+    },
+    {
+     "id": "b9",
+     "display": "也許，Prompt Repetition 只是把模型自己摸索出的策略，直接寫了出來。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 51.14,
+     "end": 56.99,
+     "abs": 523.09
+    }
+   ],
+   "start_frame": 14158,
+   "frames": 1734
+  },
+  {
+   "id": "sc10",
+   "name": "三點回顧",
+   "bg": "flat",
+   "pad": [
+    0.15,
+    2.4
+   ],
+   "chapter": [
+    9,
+    "三點回顧"
+   ],
+   "start": 529.74,
+   "duration": 54.73,
+   "sentences": [
+    {
+     "id": "x1",
+     "display": "最後，把整條長廊再看一次。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 0.15,
+     "end": 3.27,
+     "abs": 529.89
+    },
+    {
+     "id": "x2",
+     "display": "第一，模型讀前面的 token 時，還不知道後面；寫下的筆記可能是模糊的。",
+     "hold": 0.4,
+     "screen": [
+      "①",
+      "只能回頭看"
+     ],
+     "start": 3.82,
+     "end": 9.53,
+     "abs": 533.56
+    },
+    {
+     "id": "x3",
+     "display": "第二，把 prompt 貼兩次，第二遍的每個位置，都看得到整個第一遍。",
+     "hold": 0.4,
+     "screen": [
+      "②",
+      "第二遍看得到全文"
+     ],
+     "start": 10.18,
+     "end": 16.7,
+     "abs": 539.92
+    },
+    {
+     "id": "x4",
+     "display": "第三，多出來的字落在可以平行的 Prefill，大多數情況幾乎不會變慢。",
+     "hold": 0.3,
+     "screen": [
+      "③",
+      "多的字在 Prefill"
+     ],
+     "start": 17.35,
+     "end": 23.98,
+     "abs": 547.09
+    },
+    {
+     "id": "x5",
+     "display": "只是開了 CoT 之後，好處就不明顯了。",
+     "say": "只是開了 C O T 之後，好處就不明顯了。",
+     "hold": 0.6,
+     "screen": [],
+     "start": 24.53,
+     "end": 28.12,
+     "abs": 554.27
+    },
+    {
+     "id": "x6",
+     "display": "想看更多細節，完整的文章在說明欄。",
+     "speaker": "mascot",
+     "hold": 0.3,
+     "screen": [
+      "完整文章",
+      "在說明欄"
+     ],
+     "start": 28.97,
+     "end": 32.03,
+     "abs": 558.71
+    }
+   ],
+   "start_frame": 15892,
+   "frames": 1642
+  }
+ ]
+}

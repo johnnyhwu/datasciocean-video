@@ -1,13 +1,18 @@
-"""把成片上傳到 YouTube，**一律上傳成私人**。公開由使用者在 YouTube Studio 自己按。
+"""把成片上傳到 YouTube，**一律上傳成私人**；使用者說定版之後，可以排程在週六 09:00（台北）自動公開。
 
-使用者 2026-11-16 同意：Claude 可以用 API 上傳成私人並填好所有欄位；不得上傳成公開、不得排程、不得事後改成公開。
-這支程式沒有任何把影片設成公開的路徑；privacyStatus 寫死在 PRIVACY。
+使用者 2026-11-16 同意：Claude 可以用 API 上傳成私人並填好所有欄位；不得上傳成公開、不得事後直接改成公開。
+使用者 2026-11-23：「以後新的影片你都可以幫我設定每週六 9:00 發佈」→ 加 --schedule：維持 private，只設 publishAt。
+這支程式沒有任何直接設成公開的路徑；privacyStatus 寫死在 PRIVACY。
 
 用法：
     uv run python lib/upload.py <影片 ID>          # 預演：印出會上傳什麼，不連線
     uv run python lib/upload.py <影片 ID> --go     # 真的上傳（第一次會開瀏覽器請使用者授權）
     uv run python lib/upload.py <影片 ID> --update-meta --go   # 已上傳的影片：只更新標題、說明欄、標籤、翻譯（照 upload.json）
                                                           # 不送 status，隱私維持原狀；送完再讀一次隱私狀態確認沒變
+    uv run python lib/upload.py <影片 ID> --schedule           # 預演：算出下一個空著的週六 09:00（台北）
+    uv run python lib/upload.py <影片 ID> --schedule --go      # 真的排程（只在使用者說影片定版之後做）
+    uv run python lib/upload.py <影片 ID> --schedule --at 2026-12-05T09:00 --go   # 指定時間（台北時間）
+    uv run python lib/upload.py <影片 ID> --status             # 讀線上的隱私與排程時間，記進 upload-result.json（使用者自己在 Studio 排程時用）
 
 讀 videos/<id>/upload.json（標題、說明、多語、縮圖、字幕）；結果寫 videos/<id>/upload-result.json。
 已經上傳過的步驟（影片、縮圖、各語字幕）會跳過，所以中途失敗可以重跑同一個指令。
@@ -22,7 +27,10 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from paths import ROOT, out_dir, video_dir  # noqa: E402
 
-PRIVACY = "private"          # 不要改。公開由使用者自己按
+PRIVACY = "private"          # 不要改。公開只能靠排程（publishAt）或使用者自己按
+TZ = "Asia/Taipei"
+SLOT_WEEKDAY, SLOT_HOUR = 5, 9   # 週六 09:00（使用者 2026-11-23）
+MIN_LEAD_H = 24                   # 排程至少在 24 小時之後，留時間給使用者最後看一眼
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload", "https://www.googleapis.com/auth/youtube.force-ssl"]
 SECRET = ROOT / "secrets/youtube_client_secret.json"
 TOKEN = ROOT / "secrets/youtube_token.json"
@@ -47,6 +55,72 @@ def service():
         TOKEN.write_text(creds.to_json())
         TOKEN.chmod(0o600)
     return build("youtube", "v3", credentials=creds)
+
+
+def taken_slots(skip):
+    """其他影片已經排的或已發布的日期（台北），避免同一個週六排兩支。"""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    out = set()
+    for d in (ROOT / "videos").iterdir():
+        if d.name == skip or not d.is_dir():
+            continue
+        r = d / "upload-result.json"
+        if r.exists() and json.loads(r.read_text()).get("scheduled_at"):
+            out.add(datetime.fromisoformat(json.loads(r.read_text())["scheduled_at"]).astimezone(ZoneInfo(TZ)).date())
+        s = d / "state.json"
+        if s.exists() and json.loads(s.read_text()).get("published_at"):
+            out.add(datetime.fromisoformat(json.loads(s.read_text())["published_at"]).date())
+    return out
+
+
+def next_slot(vid):
+    from datetime import datetime, timedelta
+    from zoneinfo import ZoneInfo
+    now = datetime.now(ZoneInfo(TZ))
+    t = now.replace(hour=SLOT_HOUR, minute=0, second=0, microsecond=0)
+    t += timedelta(days=(SLOT_WEEKDAY - t.weekday()) % 7)
+    taken = taken_slots(vid)
+    while t - now < timedelta(hours=MIN_LEAD_H) or t.date() in taken:
+        t += timedelta(days=7)
+    return t
+
+
+def schedule(a):
+    from datetime import datetime, timezone
+    from zoneinfo import ZoneInfo
+    res_path = video_dir(a.vid) / "upload-result.json"
+    res = json.loads(res_path.read_text()) if res_path.exists() else {}
+    if "video_id" not in res:
+        sys.exit("還沒上傳過，沒有影片可以排程。")
+    if a.status:
+        live = service().videos().list(part="status", id=res["video_id"]).execute()["items"][0]["status"]
+        res["privacy"] = live["privacyStatus"]
+        if live.get("publishAt"):
+            res["scheduled_at"] = datetime.fromisoformat(live["publishAt"].replace("Z", "+00:00")).astimezone(ZoneInfo(TZ)).isoformat(timespec="minutes")
+        res_path.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+        print(f"隱私：{live['privacyStatus']}；排程：{res.get('scheduled_at', '無')}")
+        return
+    t = datetime.fromisoformat(a.at).replace(tzinfo=ZoneInfo(TZ)) if a.at else next_slot(a.vid)
+    if t <= datetime.now(ZoneInfo(TZ)):
+        sys.exit(f"{t} 已經過了")
+    print(f"排程公開：{t.isoformat(timespec='minutes')}（台北，週{'一二三四五六日'[t.weekday()]}）；在那之前維持 private")
+    if not a.go:
+        print("這是預演，沒有連線。確認無誤後加 --go。")
+        return
+    yt = service()
+    live = yt.videos().list(part="status", id=res["video_id"]).execute()["items"][0]["status"]
+    if live["privacyStatus"] != PRIVACY:
+        sys.exit(f"線上隱私是 {live['privacyStatus']}，不是 private；不動。請使用者到 Studio 確認：{res['studio']}")
+    keep = {k: live[k] for k in ("embeddable", "license", "publicStatsViewable", "selfDeclaredMadeForKids", "containsSyntheticMedia") if k in live}
+    utc = t.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    yt.videos().update(part="status", body={"id": res["video_id"], "status": {**keep, "privacyStatus": PRIVACY, "publishAt": utc}}).execute()
+    after = yt.videos().list(part="status", id=res["video_id"]).execute()["items"][0]["status"]
+    if after["privacyStatus"] != PRIVACY or not after.get("publishAt"):
+        sys.exit(f"排程後狀態不對：{after.get('privacyStatus')}、publishAt={after.get('publishAt')}。請立刻到 Studio 檢查：{res['studio']}")
+    res["scheduled_at"] = t.isoformat(timespec="minutes")
+    res_path.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+    print("已排程（目前仍是 private）：", res["scheduled_at"], res["studio"])
 
 
 def plan(vid):
@@ -85,7 +159,12 @@ def main():
     ap.add_argument("vid")
     ap.add_argument("--go", action="store_true", help="真的上傳（沒加就只預演）")
     ap.add_argument("--update-meta", action="store_true", help="只更新已上傳影片的標題、說明欄、標籤、翻譯；不動隱私")
+    ap.add_argument("--schedule", action="store_true", help="排程公開：下一個空著的週六 09:00（台北），影片維持 private 直到那時")
+    ap.add_argument("--at", help="和 --schedule 一起用：指定台北時間，例如 2026-12-05T09:00")
+    ap.add_argument("--status", action="store_true", help="讀線上的隱私與排程時間並記錄")
     a = ap.parse_args()
+    if a.schedule or a.status:
+        return schedule(a)
     spec, video, thumb, caps, body, problems = plan(a.vid)
     res_path = video_dir(a.vid) / "upload-result.json"
     res = json.loads(res_path.read_text()) if res_path.exists() else {}

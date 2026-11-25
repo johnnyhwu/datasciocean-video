@@ -1,0 +1,1112 @@
+{
+ "video": "v004-claude-code-loop",
+ "title": "Claude Code 拆開來看：裡面只有一個迴圈（暫定）",
+ "estimated": false,
+ "fps": 30,
+ "width": 1920,
+ "height": 1080,
+ "duration": 531.54,
+ "frames": 15946,
+ "end_screen": 20,
+ "scenes": [
+  {
+   "id": "sc01",
+   "name": "一個圈",
+   "bg": "flat",
+   "pad": [
+    0.3,
+    0.4
+   ],
+   "start": 0.0,
+   "duration": 31.15,
+   "sentences": [
+    {
+     "id": "h1",
+     "display": "一個 AI，會自己讀程式、改程式、跑測試，最後跟你說：修好了。",
+     "style": "輕快，像在介紹一個厲害的同事",
+     "hold": 0.3,
+     "screen": [],
+     "start": 0.3,
+     "end": 5.87,
+     "abs": 0.3
+    },
+    {
+     "id": "h2",
+     "display": "你可能會想，它裡面一定有規劃器、執行器、檢查器……",
+     "hold": 0.2,
+     "screen": [
+      "規劃器",
+      "執行器",
+      "檢查器",
+      "除錯器"
+     ],
+     "start": 6.42,
+     "end": 11.1,
+     "abs": 6.42
+    },
+    {
+     "id": "h3",
+     "display": "但 Claude Code 沒有另外掛規劃模組，也沒有執行模組。",
+     "style": "停一拍，否定",
+     "hold": 0.25,
+     "screen": [],
+     "start": 11.55,
+     "end": 18.84,
+     "abs": 11.55
+    },
+    {
+     "id": "h4",
+     "display": "規劃和執行，全都發生在同一個迴圈裡。",
+     "style": "放慢，揭曉",
+     "hold": 0.4,
+     "screen": [],
+     "start": 19.34,
+     "end": 25.17,
+     "abs": 19.34
+    },
+    {
+     "id": "h5",
+     "display": "就一個迴圈？那它怎麼知道下一步要做什麼？",
+     "style": "不敢相信，歪頭",
+     "speaker": "mascot",
+     "hold": 0.4,
+     "screen": [],
+     "start": 25.82,
+     "end": 30.35,
+     "abs": 25.82
+    }
+   ],
+   "start_frame": 0,
+   "frames": 934
+  },
+  {
+   "id": "sc02",
+   "name": "模型沒有手",
+   "bg": "flat",
+   "pad": [
+    2.4,
+    0.4
+   ],
+   "chapter": [
+    1,
+    "模型沒有手"
+   ],
+   "start": 31.15,
+   "duration": 39.77,
+   "sentences": [
+    {
+     "id": "i1",
+     "display": "這裡是 DataSci Ocean，這集我們來看 Claude Code 的迴圈。",
+     "hold": 0.3,
+     "screen": [
+      "Claude Code"
+     ],
+     "start": 2.4,
+     "end": 7.54,
+     "abs": 33.55
+    },
+    {
+     "id": "i2",
+     "display": "Claude Code 是 Anthropic 推出的 agent，在命令列裡幫你寫程式。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 8.09,
+     "end": 13.45,
+     "abs": 39.24
+    },
+    {
+     "id": "i3",
+     "display": "在我們看來，Claude Code 的中心，是一個凍結的模型。",
+     "hold": 0.1,
+     "screen": [
+      "模型"
+     ],
+     "start": 13.95,
+     "end": 18.51,
+     "abs": 45.1
+    },
+    {
+     "id": "i3b",
+     "display": "模型只會做一件事：讀進一段字，吐出一段字。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 18.86,
+     "end": 23.8,
+     "abs": 50.01
+    },
+    {
+     "id": "i4",
+     "display": "它沒有手：不能自己打開檔案，也不能自己按下執行。",
+     "style": "俏皮",
+     "hold": 0.3,
+     "screen": [],
+     "start": 24.3,
+     "end": 29.08,
+     "abs": 55.45
+    },
+    {
+     "id": "i5",
+     "display": "與其說 Claude Code 是一個會開檔案的聊天機器人，",
+     "hold": 0.1,
+     "screen": [],
+     "start": 29.63,
+     "end": 33.37,
+     "abs": 60.78
+    },
+    {
+     "id": "i6",
+     "display": "不如說是圍著這顆模型，搭起來的一整套執行架構：Harness。",
+     "hold": 0.4,
+     "screen": [
+      "Harness"
+     ],
+     "start": 33.72,
+     "end": 38.97,
+     "abs": 64.87
+    }
+   ],
+   "start_frame": 934,
+   "frames": 1194
+  },
+  {
+   "id": "sc03",
+   "name": "修一個測試",
+   "bg": "flat",
+   "chapter": [
+    2,
+    "舉例：修一個沒過的測試"
+   ],
+   "start": 70.92,
+   "duration": 65.23,
+   "sentences": [
+    {
+     "id": "w1",
+     "display": "我們來舉個例子：叫它修好一個沒過的測試。",
+     "hold": 0.25,
+     "screen": [
+      "修好這個沒過的測試"
+     ],
+     "start": 0.15,
+     "end": 4.16,
+     "abs": 71.07
+    },
+    {
+     "id": "w2",
+     "display": "這句任務，先寫進一條長長的紙卷：對話紀錄，transcript。",
+     "hold": 0.25,
+     "screen": [
+      "transcript"
+     ],
+     "start": 4.66,
+     "end": 9.7,
+     "abs": 75.58
+    },
+    {
+     "id": "w3",
+     "display": "模型讀完，想先看看測試檔。但它不能自己打開，只能開一張單子：Read。",
+     "hold": 0.25,
+     "screen": [
+      "Read"
+     ],
+     "start": 10.2,
+     "end": 16.78,
+     "abs": 81.12
+    },
+    {
+     "id": "w4",
+     "display": "Harness 接過單子，真的去讀檔，再把內容接到紙卷的尾巴。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 17.28,
+     "end": 22.5,
+     "abs": 88.2
+    },
+    {
+     "id": "w5",
+     "display": "第二圈，模型讀到更新過的紙卷，開一張 Edit，改掉可疑的那一行。",
+     "hold": 0.25,
+     "screen": [
+      "Edit"
+     ],
+     "start": 23.0,
+     "end": 29.79,
+     "abs": 93.92
+    },
+    {
+     "id": "w6",
+     "display": "第三圈，開一張 Bash：跑測試。",
+     "hold": 0.2,
+     "screen": [
+      "Bash"
+     ],
+     "start": 30.29,
+     "end": 33.34,
+     "abs": 101.21
+    },
+    {
+     "id": "w7",
+     "display": "結果還是沒過。一段紅色的錯誤訊息，原封不動接回紙卷。",
+     "style": "小小的失望",
+     "hold": 0.3,
+     "screen": [
+      "FAILED"
+     ],
+     "start": 33.79,
+     "end": 41.95,
+     "abs": 104.71
+    },
+    {
+     "id": "w8",
+     "display": "注意，中間沒有人幫它轉述。",
+     "style": "放慢，提醒",
+     "hold": 0.1,
+     "screen": [],
+     "start": 42.5,
+     "end": 47.5,
+     "abs": 113.42
+    },
+    {
+     "id": "w9",
+     "display": "失敗測試的錯誤訊息，直接變成下一輪的輸入。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 47.85,
+     "end": 52.09,
+     "abs": 118.77
+    },
+    {
+     "id": "w10",
+     "display": "第四圈，模型讀到錯誤，再改一次。第五圈，再跑一次測試：通過了。",
+     "style": "越講越快，最後鬆一口氣",
+     "hold": 0.3,
+     "screen": [
+      "PASSED"
+     ],
+     "start": 52.64,
+     "end": 58.04,
+     "abs": 123.56
+    },
+    {
+     "id": "w11",
+     "display": "這一次，模型不再開單，直接回答你：修好了。迴圈就停在這裡。",
+     "hold": 0.4,
+     "screen": [
+      "修好了"
+     ],
+     "start": 58.59,
+     "end": 64.43,
+     "abs": 129.51
+    }
+   ],
+   "start_frame": 2128,
+   "frames": 1956
+  },
+  {
+   "id": "sc04",
+   "name": "做、看、再做",
+   "bg": "flat",
+   "chapter": [
+    3,
+    "做、看、再做"
+   ],
+   "start": 136.15,
+   "duration": 48.5,
+   "sentences": [
+    {
+     "id": "n1",
+     "display": "把剛剛那五圈疊起來看，整個核心就只有這樣：",
+     "hold": 0.15,
+     "screen": [],
+     "start": 0.15,
+     "end": 4.31,
+     "abs": 136.3
+    },
+    {
+     "id": "n2",
+     "display": "一個能呼叫工具、觀察結果、再決定下一步的模型，",
+     "hold": 0.1,
+     "screen": [
+      "想",
+      "做",
+      "看"
+     ],
+     "start": 4.71,
+     "end": 9.77,
+     "abs": 140.86
+    },
+    {
+     "id": "n3",
+     "display": "一圈一圈地跑，直到它自己判斷：做完了。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 10.12,
+     "end": 14.44,
+     "abs": 146.27
+    },
+    {
+     "id": "n4",
+     "display": "那規劃在哪裡？就在每一圈裡：模型讀到剛剛的結果，自己推理出下一步。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 14.99,
+     "end": 21.07,
+     "abs": 151.14
+    },
+    {
+     "id": "n5",
+     "display": "原來規劃不是一個模組，是每一圈都在做的事！",
+     "style": "恍然大悟，很開心",
+     "speaker": "mascot",
+     "hold": 0.4,
+     "screen": [],
+     "start": 21.62,
+     "end": 25.67,
+     "abs": 157.77
+    },
+    {
+     "id": "n6",
+     "display": "還有一個關鍵：觀察和行動，用的是同一套介質。",
+     "hold": 0.5,
+     "screen": [],
+     "start": 26.32,
+     "end": 31.39,
+     "abs": 162.47
+    },
+    {
+     "id": "n7",
+     "display": "這就是它和 IDE 自動補全不一樣的地方：",
+     "hold": 0.1,
+     "screen": [
+      "自動補全"
+     ],
+     "start": 32.14,
+     "end": 35.7,
+     "abs": 168.29
+    },
+    {
+     "id": "n8",
+     "display": "自動補全預測的是下一個字，不是下一個動作。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 36.05,
+     "end": 40.63,
+     "abs": 172.2
+    },
+    {
+     "id": "n9",
+     "display": "也和早期「跟你的程式碼聊天」的助理不一樣：那種只能讀，不能動手。",
+     "hold": 0.4,
+     "screen": [
+      "只能讀"
+     ],
+     "start": 41.18,
+     "end": 47.7,
+     "abs": 177.33
+    }
+   ],
+   "start_frame": 4084,
+   "frames": 1456
+  },
+  {
+   "id": "sc05",
+   "name": "工具箱",
+   "bg": "flat",
+   "start": 184.65,
+   "duration": 41.21,
+   "sentences": [
+    {
+     "id": "t1",
+     "display": "那它的手，也就是工具，有哪些？",
+     "hold": 0.2,
+     "screen": [],
+     "start": 0.15,
+     "end": 3.47,
+     "abs": 184.8
+    },
+    {
+     "id": "t2",
+     "display": "Read、Glob、Grep 用來找和讀。",
+     "hold": 0.1,
+     "screen": [
+      "Read",
+      "Glob",
+      "Grep"
+     ],
+     "start": 3.92,
+     "end": 8.23,
+     "abs": 188.57
+    },
+    {
+     "id": "t3",
+     "display": "不用把整個專案塞進紙卷，也就是模型的 context，只要撈出需要的那幾段。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 8.58,
+     "end": 15.21,
+     "abs": 193.23
+    },
+    {
+     "id": "t4",
+     "display": "Edit 做精確的字串替換；Write 用來寫新檔，或整檔重寫。",
+     "hold": 0.25,
+     "screen": [
+      "Edit",
+      "Write"
+     ],
+     "start": 15.76,
+     "end": 21.84,
+     "abs": 200.41
+    },
+    {
+     "id": "t5",
+     "display": "Bash 能執行任何 shell 指令，是專用工具涵蓋不到時的逃生門。",
+     "hold": 0.25,
+     "screen": [
+      "Bash"
+     ],
+     "start": 22.34,
+     "end": 27.66,
+     "abs": 206.99
+    },
+    {
+     "id": "t6",
+     "display": "Task 把一段獨立的工作，交給一個有自己 context 的分身，只拿回摘要。",
+     "hold": 0.25,
+     "screen": [
+      "Task"
+     ],
+     "start": 28.16,
+     "end": 34.53,
+     "abs": 212.81
+    },
+    {
+     "id": "t7",
+     "display": "WebFetch、WebSearch，在程式碼回答不了時，去外面找資料。",
+     "say": "Web Fetch、Web Search，在程式碼回答不了時，去外面找資料。",
+     "hold": 0.4,
+     "screen": [
+      "WebFetch",
+      "WebSearch"
+     ],
+     "start": 35.03,
+     "end": 40.41,
+     "abs": 219.68
+    }
+   ],
+   "start_frame": 5540,
+   "frames": 1236
+  },
+  {
+   "id": "sc06",
+   "name": "收費站",
+   "bg": "flat",
+   "chapter": [
+    4,
+    "每次動手都要開單"
+   ],
+   "start": 225.86,
+   "duration": 55.85,
+   "sentences": [
+    {
+     "id": "g1",
+     "display": "回到那張單子。為什麼模型一定要開單，",
+     "hold": 0.05,
+     "screen": [],
+     "start": 0.15,
+     "end": 3.91,
+     "abs": 226.01
+    },
+    {
+     "id": "g2",
+     "display": "不能直接說：「我現在要去改檔案了」？",
+     "style": "模仿隨口一說的語氣",
+     "hold": 0.3,
+     "screen": [],
+     "start": 4.21,
+     "end": 7.82,
+     "abs": 230.07
+    },
+    {
+     "id": "g3",
+     "display": "因為一張明確的工具呼叫單，給了 Harness 一個乾淨的攔截點。",
+     "hold": 0.25,
+     "screen": [
+      "工具呼叫"
+     ],
+     "start": 8.37,
+     "end": 13.33,
+     "abs": 234.23
+    },
+    {
+     "id": "g4",
+     "display": "在動作真正發生之前，它可以先檢查權限、記下 log、觸發 Hook。",
+     "hold": 0.2,
+     "screen": [
+      "權限",
+      "log",
+      "Hook"
+     ],
+     "start": 13.83,
+     "end": 19.26,
+     "abs": 239.69
+    },
+    {
+     "id": "g5",
+     "display": "所以每一輪，都看得到、查得到。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 19.71,
+     "end": 22.74,
+     "abs": 245.57
+    },
+    {
+     "id": "g6",
+     "display": "而且，失敗只是另一種觀察結果。",
+     "style": "加重",
+     "hold": 0.2,
+     "screen": [],
+     "start": 23.29,
+     "end": 27.42,
+     "abs": 249.15
+    },
+    {
+     "id": "g7",
+     "display": "測試失敗、語法錯誤、權限被拒絕，都不會讓迴圈停下來，",
+     "hold": 0.1,
+     "screen": [],
+     "start": 27.87,
+     "end": 33.16,
+     "abs": 253.73
+    },
+    {
+     "id": "g8",
+     "display": "只會變成下一輪的輸入，讓模型重新規劃。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 33.51,
+     "end": 37.54,
+     "abs": 259.37
+    },
+    {
+     "id": "g9",
+     "display": "回頭看開場那張流程圖。如果它是一條沒料到會出錯的多階段管線，",
+     "hold": 0.1,
+     "screen": [],
+     "start": 38.09,
+     "end": 44.51,
+     "abs": 263.95
+    },
+    {
+     "id": "g10",
+     "display": "遇到意外，就顯得脆弱。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 44.86,
+     "end": 47.62,
+     "abs": 270.72
+    },
+    {
+     "id": "g11",
+     "display": "所以我們認為，能從錯誤中恢復的單一迴圈，比這種脆弱的管線穩健得多。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 48.12,
+     "end": 55.05,
+     "abs": 273.98
+    }
+   ],
+   "start_frame": 6776,
+   "frames": 1675
+  },
+  {
+   "id": "sc07",
+   "name": "犯錯要便宜",
+   "bg": "flat",
+   "chapter": [
+    5,
+    "讓犯錯便宜又可逆"
+   ],
+   "start": 281.71,
+   "duration": 64.87,
+   "sentences": [
+    {
+     "id": "s1",
+     "display": "但一個沒人看著、也能執行任意指令和改檔案的 Agent，",
+     "hold": 0.05,
+     "screen": [],
+     "start": 0.15,
+     "end": 4.49,
+     "abs": 281.86
+    },
+    {
+     "id": "s2",
+     "display": "安全就不能只靠模型每次都猜對。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 4.79,
+     "end": 7.84,
+     "abs": 286.5
+    },
+    {
+     "id": "s3",
+     "display": "我們認為，目標不是讓它不可能犯錯，而是讓犯錯便宜、可以挽回。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 8.34,
+     "end": 15.55,
+     "abs": 290.05
+    },
+    {
+     "id": "s5",
+     "display": "Claude Code 的權限是漸進式的，不是只有「全部允許」和「全部禁止」。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 16.1,
+     "end": 21.75,
+     "abs": 297.81
+    },
+    {
+     "id": "s6",
+     "display": "用哪一種權限模式，由使用者選，不是模型自己決定。",
+     "hold": 0.25,
+     "screen": [
+      "權限模式"
+     ],
+     "start": 22.25,
+     "end": 27.03,
+     "abs": 303.96
+    },
+    {
+     "id": "s7",
+     "display": "要不要跳出來問你，看的是這個動作能不能挽回。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 27.53,
+     "end": 31.54,
+     "abs": 309.24
+    },
+    {
+     "id": "s8",
+     "display": "讀檔、跑測試，幾乎在所有模式下都自動放行：就算錯了，代價也很低。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 32.04,
+     "end": 38.41,
+     "abs": 313.75
+    },
+    {
+     "id": "s10",
+     "display": "需要確認的動作會先問你；你不核准，這個拒絕也會接回紙卷，模型重新規劃。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 38.96,
+     "end": 46.05,
+     "abs": 320.67
+    },
+    {
+     "id": "s11",
+     "display": "最後還有一道防線：在容器，或範圍受限的環境裡執行。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 46.6,
+     "end": 51.94,
+     "abs": 328.31
+    },
+    {
+     "id": "s12",
+     "display": "就算權限放得很寬，一個錯誤的指令，也碰不到工作目錄以外的地方。",
+     "hold": 0.25,
+     "screen": [
+      "工作目錄"
+     ],
+     "start": 52.39,
+     "end": 58.12,
+     "abs": 334.1
+    },
+    {
+     "id": "s13",
+     "display": "權限和執行邊界，是兩道各自獨立的防線，不是互相取代。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 58.62,
+     "end": 64.07,
+     "abs": 340.33
+    }
+   ],
+   "start_frame": 8451,
+   "frames": 1946
+  },
+  {
+   "id": "sc08",
+   "name": "紙卷滿了",
+   "bg": "flat",
+   "chapter": [
+    6,
+    "紙卷滿了怎麼辦"
+   ],
+   "start": 346.58,
+   "duration": 61.76,
+   "sentences": [
+    {
+     "id": "c1",
+     "display": "迴圈每跑一圈，紙卷就長一截。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 0.15,
+     "end": 3.8,
+     "abs": 346.73
+    },
+    {
+     "id": "c2",
+     "display": "但 context window 有上限，長時間的工作，終究會逼近它。",
+     "hold": 0.25,
+     "screen": [
+      "上限"
+     ],
+     "start": 4.25,
+     "end": 8.76,
+     "abs": 350.83
+    },
+    {
+     "id": "c3",
+     "display": "Claude Code 不會盲目地把前面截掉，而是把比較早的對話，摘要成精簡的版本。",
+     "hold": 0.2,
+     "screen": [
+      "摘要"
+     ],
+     "start": 9.26,
+     "end": 15.36,
+     "abs": 355.84
+    },
+    {
+     "id": "c4",
+     "display": "對話接著走，你不用重開，也不用把之前的決定重講一次。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 15.81,
+     "end": 21.02,
+     "abs": 362.39
+    },
+    {
+     "id": "c5",
+     "display": "紙卷最前面，還釘著一份 CLAUDE.md：放在專案裡的記憶檔，開工時自動讀進來。",
+     "say": "紙卷最前面，還釘著一份 Claude 點 M D：放在專案裡的記憶檔，開工時自動讀進來。",
+     "hold": 0.2,
+     "screen": [
+      "CLAUDE.md"
+     ],
+     "start": 21.57,
+     "end": 29.24,
+     "abs": 368.15
+    },
+    {
+     "id": "c6",
+     "display": "它不屬於任何一次對話：一直都在，而且大家共用。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 29.69,
+     "end": 33.86,
+     "abs": 376.27
+    },
+    {
+     "id": "c7",
+     "display": "另一招是 Subagent：像「找出某個設定值在專案裡所有用到的地方」，",
+     "hold": 0.1,
+     "screen": [
+      "Subagent"
+     ],
+     "start": 34.41,
+     "end": 40.42,
+     "abs": 380.99
+    },
+    {
+     "id": "c8",
+     "display": "這種大範圍的搜尋，就交給一個分身去跑。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 40.77,
+     "end": 44.8,
+     "abs": 387.35
+    },
+    {
+     "id": "c9",
+     "display": "搜尋過程那堆雜亂的輸出，留在分身自己的紙卷裡；",
+     "hold": 0.1,
+     "screen": [],
+     "start": 45.25,
+     "end": 50.24,
+     "abs": 391.83
+    },
+    {
+     "id": "c9b",
+     "display": "回到主迴圈的，只有最後的摘要。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 50.59,
+     "end": 53.69,
+     "abs": 397.17
+    },
+    {
+     "id": "c10",
+     "display": "這讓 context 的長度變成鋸齒狀：",
+     "hold": 0.1,
+     "screen": [],
+     "start": 54.24,
+     "end": 57.23,
+     "abs": 400.82
+    },
+    {
+     "id": "c10b",
+     "display": "漲上去、又降下來，而不是一直往上堆。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 57.58,
+     "end": 60.96,
+     "abs": 404.16
+    }
+   ],
+   "start_frame": 10397,
+   "frames": 1853
+  },
+  {
+   "id": "sc09",
+   "name": "三個配件",
+   "bg": "flat",
+   "chapter": [
+    7,
+    "Skills、Hooks、MCP"
+   ],
+   "start": 408.34,
+   "duration": 68.53,
+   "sentences": [
+    {
+     "id": "e1",
+     "display": "不過，只有凍結的模型加上固定的工具，對寫程式的 Agent 來說還不夠彈性。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 0.15,
+     "end": 6.08,
+     "abs": 408.49
+    },
+    {
+     "id": "e2",
+     "display": "所以 Harness 另外留了三個擴充點。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 6.53,
+     "end": 9.54,
+     "abs": 414.87
+    },
+    {
+     "id": "e3",
+     "display": "第一個是 Skill：一個資料夾，裝著怎麼完成某件重複工作的說明。",
+     "hold": 0.2,
+     "screen": [
+      "Skill"
+     ],
+     "start": 10.04,
+     "end": 15.87,
+     "abs": 418.38
+    },
+    {
+     "id": "e4",
+     "display": "模型一開始只看得到每個 Skill 的一行描述；",
+     "hold": 0.1,
+     "screen": [],
+     "start": 16.32,
+     "end": 19.79,
+     "abs": 424.66
+    },
+    {
+     "id": "e4b",
+     "display": "真正要用的那個，才把完整說明拉進來。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 20.14,
+     "end": 23.42,
+     "abs": 428.48
+    },
+    {
+     "id": "e5",
+     "display": "這叫做漸進式揭露：用不到的能力，不先付 context 的成本。",
+     "hold": 0.3,
+     "screen": [
+      "漸進式揭露"
+     ],
+     "start": 23.92,
+     "end": 29.36,
+     "abs": 432.26
+    },
+    {
+     "id": "e6",
+     "display": "第二個是 Hook：在固定時間點執行的 shell 指令，",
+     "hold": 0.1,
+     "screen": [
+      "Hook"
+     ],
+     "start": 29.91,
+     "end": 34.16,
+     "abs": 438.25
+    },
+    {
+     "id": "e6b",
+     "display": "像是工具執行前、回覆完成後、開工時。",
+     "hold": 0.25,
+     "screen": [],
+     "start": 34.51,
+     "end": 38.99,
+     "abs": 442.85
+    },
+    {
+     "id": "e7",
+     "display": "Hook 是一般的程式碼，不是模型。",
+     "hold": 0.1,
+     "screen": [],
+     "start": 39.49,
+     "end": 42.5,
+     "abs": 447.83
+    },
+    {
+     "id": "e7b",
+     "display": "「絕對不能做」的規則，就適合寫在這裡。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 42.85,
+     "end": 45.73,
+     "abs": 451.19
+    },
+    {
+     "id": "e8",
+     "display": "比方說：擋下對受保護路徑的寫入，或在每次編輯後自動排版。",
+     "hold": 0.2,
+     "screen": [],
+     "start": 46.18,
+     "end": 52.0,
+     "abs": 454.52
+    },
+    {
+     "id": "e10",
+     "display": "第三個是 MCP：用共通的介面，接上 GitHub、資料庫、內部 API。",
+     "say": "第三個是 M C P：用共通的介面，接上 GitHub、資料庫、內部 A P I。",
+     "hold": 0.2,
+     "screen": [
+      "MCP",
+      "GitHub",
+      "資料庫",
+      "API"
+     ],
+     "start": 52.45,
+     "end": 59.0,
+     "abs": 460.79
+    },
+    {
+     "id": "e11",
+     "display": "每個 MCP server 自己宣告有哪些工具，",
+     "say": "每個 M C P server 自己宣告有哪些工具，",
+     "hold": 0.1,
+     "screen": [],
+     "start": 59.45,
+     "end": 62.93,
+     "abs": 467.79
+    },
+    {
+     "id": "e11b",
+     "display": "Harness 再用和內建工具一樣的方式，交給模型。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 63.28,
+     "end": 67.83,
+     "abs": 471.62
+    }
+   ],
+   "start_frame": 12250,
+   "frames": 2056
+  },
+  {
+   "id": "sc10",
+   "name": "三點回顧",
+   "bg": "flat",
+   "pad": [
+    0.15,
+    2.4
+   ],
+   "chapter": [
+    8,
+    "三點回顧"
+   ],
+   "start": 476.87,
+   "duration": 54.67,
+   "sentences": [
+    {
+     "id": "r1",
+     "display": "最後，把整個迴圈再看一次。",
+     "hold": 0.3,
+     "screen": [],
+     "start": 0.15,
+     "end": 2.75,
+     "abs": 477.02
+    },
+    {
+     "id": "r2",
+     "display": "第一，核心是一個迴圈：做、看結果、再決定下一步，規劃就在迴圈裡。",
+     "hold": 0.4,
+     "screen": [
+      "①",
+      "一個迴圈"
+     ],
+     "start": 3.3,
+     "end": 10.73,
+     "abs": 480.17
+    },
+    {
+     "id": "r3",
+     "display": "第二，每次動手都要開單，Harness 才能在動作發生前先檢查。",
+     "hold": 0.1,
+     "screen": [
+      "②",
+      "開單才能動手"
+     ],
+     "start": 11.38,
+     "end": 16.8,
+     "abs": 488.25
+    },
+    {
+     "id": "r4",
+     "display": "犯了錯，也只是下一輪的輸入。",
+     "hold": 0.4,
+     "screen": [],
+     "start": 17.15,
+     "end": 20.27,
+     "abs": 494.02
+    },
+    {
+     "id": "r5",
+     "display": "第三，紙卷會被整理：舊對話摘要起來，雜亂的搜尋交給分身。",
+     "hold": 0.5,
+     "screen": [
+      "③",
+      "摘要、分身"
+     ],
+     "start": 20.92,
+     "end": 27.4,
+     "abs": 497.79
+    },
+    {
+     "id": "r6",
+     "display": "這集只講了核心的部分，更多細節在說明欄的文章裡。",
+     "speaker": "mascot",
+     "hold": 0.3,
+     "screen": [
+      "完整文章",
+      "在說明欄"
+     ],
+     "start": 28.15,
+     "end": 31.97,
+     "abs": 505.02
+    }
+   ],
+   "start_frame": 14306,
+   "frames": 1640
+  }
+ ]
+}

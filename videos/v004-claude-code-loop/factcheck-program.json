@@ -1,0 +1,9 @@
+{
+ "problems": [],
+ "flagged_for_gate3": [
+  "h2（framing）含 ['一定']：你可能會想，它裡面一定有規劃器、執行器、檢查器……",
+  "g1（framing）含 ['一定']：回到那張單子。為什麼模型一定要開單，",
+  "r1（framing）含 ['最']：最後，把整個迴圈再看一次。"
+ ],
+ "prerequisite_ratio": 0.01
+}

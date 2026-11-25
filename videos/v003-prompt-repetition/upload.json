@@ -1,0 +1,41 @@
+{
+ "title": "把問題貼兩次，AI 就變準了？｜Prompt Repetition",
+ "description": "把同一段 prompt 原封不動貼兩次，AI 就答得更準？這是 Google Research 的 Prompt Repetition。\n原因在 AI 讀字的方式：每個 token 只能回頭看、不能往前看，讀前面的字時還不知道後面，寫下的理解可能是模糊的。貼兩次之後，第二遍的每個位置都看得到整個第一遍。\n多出來的字落在可以平行處理的 Prefill 階段，大多數情況幾乎不會變慢。實驗裡 70 個組合拿下 47 勝、0 敗；但開了 Chain-of-Thought 之後，好處就不明顯了。\n\n延伸閱讀\n完整文章：https://datasciocean.com/paper-intro/prompt-repetition/\n原始論文（Google Research）：Prompt Repetition Improves Non-Reasoning LLMs\nhttps://arxiv.org/abs/2512.14982\n片中論文首頁截圖出自 Leviathan、Kalman、Matias（arXiv:2512.14982），授權 CC BY 4.0。\n\n章節\n0:00 貼兩次就變準？\n0:28 AI 怎麼讀字\n1:09 The bark was rough\n2:33 順序怎麼擺都有代價\n3:27 解法：貼兩次\n4:24 之前的兩種解法\n5:03 為什麼不會變慢\n6:23 真的有效嗎\n7:51 什麼時候沒用\n8:49 三點回顧",
+ "language": "zh-TW",
+ "category_id": 28,
+ "tags": [
+  "Prompt Repetition",
+  "提示工程",
+  "Prompt Engineering",
+  "LLM",
+  "Causal Attention",
+  "Prefill",
+  "Decode",
+  "Chain of Thought",
+  "Google Research"
+ ],
+ "contains_synthetic_media": false,
+ "localizations": {
+  "en": {
+   "title": "Paste the Question Twice and the AI Gets It Right? | Prompt Repetition",
+   "description": "Paste the exact same prompt twice and the AI answers more accurately? This is Prompt Repetition from Google Research.\nThe reason lies in how AI reads text: each token can only look back, not ahead. While reading the earlier words it doesn't yet know what comes later, so the understanding it writes down may be fuzzy. After pasting twice, every position in the second copy can see the entire first copy.\nThe extra words fall into the Prefill stage, which can be processed in parallel, so in most cases it barely gets slower. In the experiments it scored 47 wins and 0 losses across 70 combinations; but once Chain-of-Thought is turned on, the benefit is no longer clear.\n\nFurther reading\nFull article (in Chinese): https://datasciocean.com/paper-intro/prompt-repetition/\nPaper (Google Research): Prompt Repetition Improves Non-Reasoning LLMs\nhttps://arxiv.org/abs/2512.14982\nPaper first-page screenshot: Leviathan, Kalman & Matias (arXiv:2512.14982), CC BY 4.0.\n\nChapters\n0:00 Paste it twice, get it right?\n0:28 How AI reads text\n1:09 The bark was rough\n2:33 Every ordering has a cost\n3:27 The fix: paste it twice\n4:24 Two earlier fixes\n5:03 Why it doesn't get slower\n6:23 Does it really work?\n7:51 When it doesn't help\n8:49 Three-point recap"
+  },
+  "zh-CN": {
+   "title": "把问题贴两次，AI 就变准了？｜Prompt Repetition",
+   "description": "把同一段 prompt 原封不动贴两次，AI 就答得更准？这是 Google Research 的 Prompt Repetition。\n原因在 AI 读字的方式：每个 token 只能回头看、不能往前看，读前面的字时还不知道后面，写下的理解可能是模糊的。贴两次之后，第二遍的每个位置都看得到整个第一遍。\n多出来的字落在可以并行处理的 Prefill 阶段，大多数情况几乎不会变慢。实验里 70 个组合拿下 47 胜、0 负；但开了 Chain-of-Thought 之后，好处就不明显了。\n\n延伸阅读\n完整文章：https://datasciocean.com/paper-intro/prompt-repetition/\n原始论文（Google Research）：Prompt Repetition Improves Non-Reasoning LLMs\nhttps://arxiv.org/abs/2512.14982\n片中论文首页截图出自 Leviathan、Kalman、Matias（arXiv:2512.14982），授权 CC BY 4.0。\n\n章节\n0:00 贴两次就变准？\n0:28 AI 怎么读字\n1:09 The bark was rough\n2:33 顺序怎么摆都有代价\n3:27 解法：贴两次\n4:24 之前的两种解法\n5:03 为什么不会变慢\n6:23 真的有效吗\n7:51 什么时候没用\n8:49 三点回顾"
+  }
+ },
+ "thumbnail": "videos/v003-prompt-repetition/thumbs/A.png",
+ "captions": [
+  {
+   "language": "zh-TW",
+   "name": "",
+   "file": "out/v003-prompt-repetition/deliver/subs.zh-TW.srt"
+  },
+  {
+   "language": "zh-CN",
+   "name": "",
+   "file": "out/v003-prompt-repetition/deliver/subs.zh-CN.srt"
+  }
+ ]
+}

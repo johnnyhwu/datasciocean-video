@@ -2,7 +2,7 @@
 
 用法：uv run python lib/timeline.py <影片 ID> [--estimate]
 
-- 句子時長＝實測音檔時長（out/<id>/audio/report.json）。還沒有音檔時用 --estimate，以語速估算
+- 句子時長＝實測音檔時長（out/<id>/audio/report.json）。還沒有音檔時用 --estimate，以語速估算；只合成了一部分時，--estimate 會用已有的實測、其餘照實測語速比例估算
   （rules/speech-rate.md：純語音約 235 單位／分鐘），只用來先做畫面。
 - 場景時長＝前置留白＋各句（時長＋句間 gap＋hold）＋後置留白。最後一場另加 end_screen 秒的乾淨片尾（片尾畫面用）。
 - 全片絕對時間用累計秒數，只在最後換算一次影格，避免每場各自取整的誤差累積（規格 §7.3-6）。
@@ -25,6 +25,9 @@ EST_UPM = 235  # 估算用的純語音語速（單位／分鐘）
 def build(vid: str, estimate: bool):
     spec = load_script(vid)
     rep = {}
+    rp0 = out_dir(vid) / "audio/report.json"
+    if estimate and rp0.exists():   # 旁白只合成了一部分（每日上限）：有音檔的用實測，其餘用估算×實測比例
+        rep = json.loads(rp0.read_text())
     if not estimate:
         rp = out_dir(vid) / "audio/report.json"
         if not rp.exists():
@@ -33,6 +36,11 @@ def build(vid: str, estimate: bool):
     gap = spec.get("gap", 0.25)
     default_pad = spec.get("scene_pad", [0.15, 0.4])
     labels = {k: v.get("label", "") for k, v in spec.get("speakers", {}).items()}
+    ratio = 1.0
+    if estimate and rep:
+        rs = sorted(rep[x["id"]]["dur"] / max(.1, units(x.get("say") or x["display"]) / EST_UPM * 60)
+                    for sc_ in spec["scenes"] for x in sc_["sentences"] if x["id"] in rep)
+        ratio = rs[len(rs) // 2] if rs else 1.0
     t, cues, scenes = 0.0, [], []
     for i, sc in enumerate(spec["scenes"]):
         pre, post = sc.get("pad", default_pad)
@@ -42,8 +50,10 @@ def build(vid: str, estimate: bool):
         t += pre
         sents = []
         for s in sc["sentences"]:
-            if estimate:
-                d = round(units(s.get("say") or s["display"]) / EST_UPM * 60, 3)
+            if estimate and s["id"] in rep:
+                d = rep[s["id"]]["dur"]
+            elif estimate:
+                d = round(units(s.get("say") or s["display"]) / EST_UPM * 60 * ratio, 3)
             else:
                 if s["id"] not in rep:
                     sys.exit(f"{s['id']} 沒有音檔；先跑 tts_gemini.py。")

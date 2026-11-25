@@ -892,7 +892,12 @@ class Timed(MovingCameraScene):
                 self.first_anim = self.anim_start
             n = max(1, round(run_time * fps))
             paused = self._pause_live(list(_flat(anims)))
+            mon = self._motion_monitor(n) if self.zone_check and n / fps >= 0.4 else None
+            if mon:
+                self.add_updater(mon)
             self.play(*anims, run_time=n / fps, **kw)
+            if mon:
+                self.remove_updater(mon)
             for x, ups in paused:
                 for u in ups:
                     x.add_updater(u)
@@ -900,6 +905,63 @@ class Timed(MovingCameraScene):
             self.last_anim_end = self.f / fps
         self.t = self.f / fps
         self.check()
+
+    # --- 動作中的碰撞（v004 加的） ---
+    # 版面檢查只在每個 at() 結束時看一次，動作進行中的碰撞抓不到（v004：小單經過時欄杆同時放下，刺穿小單，
+    # 程式全部通過，是審查員從縮圖看出來的）。播放期間每隔約 1/3 秒取樣一次：兩個頂層物件的實心部件
+    # 開始前沒重疊、動作中重疊了，而且至少一個在動，就記一筆。刻意從後面穿過去的（卡片穿過節點）設 pass_ok = True。
+    def _overlap_pairs(self):
+        frame = self.camera.frame
+        tops = []
+        for top in self.mobjects:
+            if getattr(top, "nocheck", False) or isinstance(top, ImageMobject) or top is self.hud or top is frame:
+                continue
+            if any(getattr(top, k, False) for k in ("overlap_ok", "pass_ok", "transient")):
+                continue
+            if self._visible_bbox(top, frame) is None:
+                continue
+            tops.append(top)
+        sol = [(t, self._solids(t)) for t in tops]
+        hits = {}
+        for i in range(len(sol)):
+            for j in range(i + 1, len(sol)):
+                (ma, A_), (mb, B_) = sol[i], sol[j]
+                for xa, a0, a1 in A_:
+                    found = False
+                    for xb, b0, b1 in B_:
+                        w = min(a1[0], b1[0]) - max(a0[0], b0[0])
+                        h = min(a1[1], b1[1]) - max(a0[1], b0[1])
+                        if w <= 0 or h <= 0:
+                            continue
+                        small = min((a1 - a0).prod(), (b1 - b0).prod())
+                        if self.OVERLAP_MIN < w * h / max(small, 1e-9) < self.OVERLAP_MAX:
+                            hits[(id(ma), id(mb))] = (ma, mb, xa, xb)
+                            found = True
+                            break
+                    if found:
+                        break
+        return hits
+
+    def _motion_monitor(self, n):
+        fps = config.frame_rate
+        every = max(1, round(fps / 3))
+        before = set(self._overlap_pairs())
+        pos0 = {id(m): m.get_center().copy() for m in self.mobjects}
+        state = {"k": 0}
+
+        def mon(dt):
+            state["k"] += 1
+            if state["k"] % every or state["k"] >= n:
+                return
+            for key, (ma, mb, xa, xb) in self._overlap_pairs().items():
+                if key in before:
+                    continue
+                moving = any(np.linalg.norm(m.get_center() - pos0.get(id(m), m.get_center())) > 0.05 for m in (ma, mb, xa, xb))
+                if moving:
+                    t = self.anim_start + state["k"] / fps
+                    self.problems.append(f"{self.SID} t={t:.2f}s 動作中碰撞：{self._label(ma)}／{self._label(xa)} × {self._label(mb)}／{self._label(xb)}")
+                    before.add(key)
+        return mon
 
     def _pause_live(self, anims):
         """Transform 類動畫（FadeIn／FadeOut／Indicate／Highlight／GrowFromEdge／.animate…）播放期間，
@@ -1208,6 +1270,7 @@ class Timed(MovingCameraScene):
                         break
                 if hit:
                     self.problems.append(f"{self.SID} t={self.t:.2f}s 重疊 {hit[0]:.0%}：{self._label(ma)}／{self._label(hit[1])} × {self._label(mb)}／{self._label(hit[2])}")
+        self._near_check(sol, frame)
         self._fine_check([t for t, _ in boxes])
         self._balance([(t, b) for t, b in boxes if not getattr(t, "chrome", False)])
         # 停留時間
@@ -1222,6 +1285,40 @@ class Timed(MovingCameraScene):
                 if k in self.faded and dwell < L.get("min_dwell", 1.5) - 1e-3 and not getattr(m, "transient", False) \
                         and not getattr(m, "chrome", False):
                     self.problems.append(f"{self.SID} t={t0:.2f}s {self._label(m)} 只停留 {dwell:.2f}s 就被拿掉（至少 {L.get('min_dwell', 1.5)}s）")
+
+    def _near_check(self, sol, frame):
+        """太近（v004 加的）：一段字和另一個頂層物件的實心部件沒重疊、但間距小於 min_gap（畫面寬的比例）。
+        v004 的迴圈、收費站、工具箱只隔 0.3～0.6 單位，每一項檢查都通過，使用者看了說「粗糙、太擠」。
+        字貼著自己的框（同一個頂層物件）不算；刻意貼著的設 near_ok = True。"""
+        gap_min = self.LAY.get("min_gap", 0.012) * frame.width
+        for i in range(len(sol)):
+            for j in range(len(sol)):
+                if i == j:
+                    continue
+                (ma, A_), (mb, B_) = sol[i], sol[j]
+                if any(getattr(m, k, False) for m in (ma, mb) for k in ("near_ok", "overlap_ok")):
+                    continue
+                done = False
+                for xa, a0, a1 in A_:
+                    if not isinstance(xa, Text):
+                        continue
+                    for xb, b0, b1 in B_:
+                        dx = max(b0[0] - a1[0], a0[0] - b1[0])
+                        dy = max(b0[1] - a1[1], a0[1] - b1[1])
+                        if dx <= 0 and dy <= 0:
+                            continue          # 重疊，交給重疊檢查
+                        g = max(dx, dy) if (dx <= 0 or dy <= 0) else np.hypot(dx, dy)
+                        if g < gap_min:
+                            seen = self.__dict__.setdefault("_near_seen", set())
+                            if (id(xa), id(xb)) in seen:
+                                done = True
+                                break
+                            seen.add((id(xa), id(xb)))
+                            self.problems.append(f"{self.SID} t={self.t:.2f}s 太近 {g:.2f}（至少 {gap_min:.2f}）：{self._label(xa)} × {self._label(mb)}／{self._label(xb)}")
+                            done = True
+                            break
+                    if done:
+                        break
 
     def _fine_check(self, tops):
         pad = self.LAY.get("line_text_pad", 0.06)
@@ -1305,3 +1402,61 @@ class Timed(MovingCameraScene):
         # 接縫空檔：開頭多久才第一個動作、最後一個動作結束後還停多久（seams.py 把前一場的 tail 加下一場的 head）
         (ODIR / f"idle-{self.SID}.json").write_text(json.dumps(
             {"head": round(self.first_anim or 0.0, 3), "tail": round(self.sc["frames"] / config.frame_rate - self.last_anim_end, 3)}))
+
+
+class Board(Timed):
+    """分鏡（v004 之後加）：動畫和旁白之前，先把每一拍的靜態畫面擺出來看。
+
+    為什麼：v004 的「太擠」「像清單」「同一個構圖重複」都是設計時就定下來的，到成片才被審查員和使用者看到，
+    那時改一處就要重渲、重檢查，改句子還要重新合成旁白。靜態分鏡一格幾秒就出來，結構問題在這裡改最便宜。
+
+    用法（videos/<id>/board.py）：
+        from kit import *
+        from world import *
+        class Board_(Board):
+            def construct(self):
+                W = loop_base(); self.add(*W.values())
+                self.beat("a1-開場", "空迴圈上跑一張單", cam=(LOOP_C, 14))
+                self.add(slip(...)); self.beat("a2-模型開單", "模型吐出第一張單", cam=(...))
+                ...
+        YTV_VIDEO=<id> PYTHONPATH=lib:videos/<id> uv run python -m manim -qm videos/<id>/board.py Board_
+        uv run python lib/checks/board.py <id>      # → out/<id>/board/sheet-NN.png
+    每一拍跑和動畫一樣的版面檢查（越界、重疊、太近、字壓字、線穿字、字級），結果寫在 out/<id>/layout-board.txt。
+    """
+    SID = "board"
+
+    def setup(self):
+        MovingCameraScene.setup(self)
+        self.problems, self.cues, self.beats = [], [], []
+        self.t, self.f = 0.0, 0
+        self.zone_check = True
+        self.last_anim_end, self.first_anim = 0.0, None
+        self.seen, self.balance_log, self.faded = {}, [], set()
+        self.hud = VGroup()
+
+    def beat(self, name, note="", cam=None):
+        """把現在的畫面存成一格分鏡。name 用「句 id-短描述」；note 寫這一拍畫面在演什麼（給審查員看）。"""
+        from PIL import Image
+        if cam:
+            self.cam_set(*cam)
+        k = len(self.beats) + 1
+        sid, self.SID = self.SID, f"board/{k:02d}-{name}"
+        n0 = len(self.problems)
+        self.seen = {}
+        self.check()
+        self.SID = sid
+        self.renderer.update_frame(self)
+        d = ODIR / "board"
+        if k == 1 and d.exists():
+            for old in d.glob("*.png"):
+                old.unlink()
+        d.mkdir(parents=True, exist_ok=True)
+        Image.fromarray(self.renderer.get_frame()).convert("RGB").save(d / f"{k:02d}-{name}.png")
+        self.beats.append({"n": k, "name": name, "note": note, "problems": self.problems[n0:]})
+
+    def tear_down(self):
+        MovingCameraScene.tear_down(self)
+        ODIR.mkdir(parents=True, exist_ok=True)
+        (ODIR / "board").mkdir(exist_ok=True)
+        (ODIR / "board" / "beats.json").write_text(json.dumps(self.beats, ensure_ascii=False, indent=1))
+        (ODIR / "layout-board.txt").write_text("\n".join(dict.fromkeys(self.problems)) or "OK")

@@ -1,0 +1,1139 @@
+{
+ "sentences": {
+  "h1": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c2",
+    "claude-code-agentic-loop-and-tools#c17",
+    "claude-code-agentic-loop-and-tools#c11"
+   ],
+   "verdict": "pass",
+   "note": "鉤子。「讀檔、改程式碼、驗證成果」對應 P#c2、L#c17；「修好了」是情境收尾，不是事實陳述。"
+  },
+  "h2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀眾可能的想像；後面 h3 否定。"
+  },
+  "h3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "h4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": "限定條件（由模型自己對剛觀察到的結果推理來驅動）在 n4 說了。"
+  },
+  "h5": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "吉祥物提問。"
+  },
+  "i1": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "intro-2 模板「這裡是 DataSci Ocean，這集我們來看{主題}。」，只填變數「Claude Code 的迴圈」（主題本身有 L#c1 支持）。"
+  },
+  "i2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c2",
+    "claude-code-permission-blast-radius#c2"
+   ],
+   "verdict": "pass",
+   "note": "「agent」對應「agentic 編碼 CLI」，「在命令列裡幫你寫程式」＝ CLI＋編碼。"
+  },
+  "i3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c3",
+    "claude-code-extension-and-context#c4"
+   ],
+   "verdict": "pass",
+   "note": "L#c3 是 blog 判斷（圍繞凍結模型建構的 Harness）；句子有「在我們看來」，保留判斷口吻，未說得更強。"
+  },
+  "i4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-agentic-loop-and-tools#c11"
+   ],
+   "verdict": "pass",
+   "note": "「沒有手」是比喻；「不能自己動手、要透過工具呼叫由 Harness 執行」由 L#c8、L#c11 推得，卡上沒有逐字這句，屬於合理推論，判通過。若想更保守可改「它只能發出工具呼叫」。"
+  },
+  "i5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c3"
+   ],
+   "verdict": "pass",
+   "note": "第 5 輪：「與其說…，不如說是…」對應 L#c3「看作 Harness，而不是『一個能存取檔案的聊天機器人』」，是看法的口吻、不是無前綴的斷言；沒有「所以」的因果。「會開檔案」≈「能存取檔案」，取整未改意思。i3 已有「在我們看來」，i5 與 i6 接續同一個看法。"
+  },
+  "i6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c3",
+    "claude-code-agentic-loop-and-tools#c4"
+   ],
+   "verdict": "pass",
+   "note": "第 5 輪：「圍著這顆模型搭起來的一整套執行架構：Harness」對應 L#c3（圍繞凍結模型建構的 Harness）與 L#c4（執行腳手架）；接 i5 的「與其說…不如說」，保持看法口吻，未說得比卡強。"
+  },
+  "w1": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w2": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "例子步驟：任務寫進 transcript → 對應 L#c11 transcript 是每一輪的輸入；不矛盾。"
+  },
+  "w3": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "Read 單子 → L#c8、L#c13。"
+  },
+  "w4": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "Harness 執行並把觀察結果附進 transcript → L#c11。"
+  },
+  "w5": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "Edit 精確字串替換 → L#c13。"
+  },
+  "w6": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "Bash 跑測試 → L#c13。"
+  },
+  "w7": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "失敗的 stderr 接回 transcript → L#c6。「原封不動」＝卡上的「直接」。"
+  },
+  "w8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w9": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c6",
+    "claude-code-agentic-loop-and-tools#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w10": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "無數字；錯誤→再改→通過，對應 L#c9、L#c11。"
+  },
+  "w11": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "最終答案就結束 → L#c11。"
+  },
+  "n1": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c1"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：L#c1「其核心其實只有一個原語」，句子「把剛剛那五圈疊起來看，整個核心就只有這樣」強度相當，並以示範為依據（五圈：w3、w5、w6、w10 兩圈）；沒有前綴仍讀得出是在歸納前面的示範，不比卡強。"
+  },
+  "n2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "n3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "n4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "n5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": "吉祥物台詞；「每一圈都在做」由 L#c5＋n4 的說明支持。"
+  },
+  "n6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6 原文「觀察與行動使用同一套介質」，未加強。"
+  },
+  "n7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c7"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：L#c7 blog 說這讓它與 IDE 自動補全區隔；n7＋n8 的內容（預測 token 而非行動）就是卡上的區隔，拿掉前綴沒有變強。"
+  },
+  "n8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c7"
+   ],
+   "verdict": "pass",
+   "note": "卡上是「預測 token」，「下一個字」是白話，不改意思。"
+  },
+  "n9": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c7"
+   ],
+   "verdict": "pass",
+   "note": "承接 n7 的「我們認為」。"
+  },
+  "t1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "t2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "t3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13",
+    "claude-code-agentic-loop-and-tools#c11"
+   ],
+   "verdict": "pass",
+   "note": "「只要撈出需要的那幾段」是「不需要把整個專案塞進 context」的白話延伸；「紙卷＝context」是比喻，通過但注意畫面不要暗示紙卷就是整個 context（卡上 context 還含其他層）。"
+  },
+  "t4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "t5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "t6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "t7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "問句；「一定要開單」的前提有 L#c8「必須明確發出工具呼叫」支持。"
+  },
+  "g2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "模仿語氣。"
+  },
+  "g3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-permission-blast-radius#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-permission-blast-radius#c5",
+    "claude-code-extension-and-context#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g9": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "假設情境，比對開場的想像流程圖；不帶事實。"
+  },
+  "g10": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c10"
+   ],
+   "verdict": "pass",
+   "note": "L#c10「脆弱的多階段管線」「沒有預期到錯誤會發生」；已去掉「整條卡住」。與 g9 條件句連成假設，g11 有「所以我們認為」承接判斷。"
+  },
+  "g11": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c10"
+   ],
+   "verdict": "pass",
+   "note": "部落格判斷，「我們認為」口吻正確；「所以」連接 g10，g10 改寫後仍成立。"
+  },
+  "s1": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c1"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：與 s2 合成一句，限定條件（無人看管、任意指令、改檔案）都在。"
+  },
+  "s2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c1"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：s1＋s2 合成「但一個沒人看著、也能執行任意指令和改檔案的 Agent，安全就不能只靠模型每次都猜對。」對應 P#c1「需要一層不能單純仰賴模型『每次都猜對』的安全機制」，「不能只靠」≈「不能單純仰賴」，沒有更強；「沒人看著」＝無人看管。下一句 s3 立刻接「我們認為」，語氣上承接得起來。"
+  },
+  "s3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c1"
+   ],
+   "verdict": "pass",
+   "note": "限定條件（不是完全不犯錯，而是便宜且可逆）已完整說。"
+  },
+  "s5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "s6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "s7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "s8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "s10": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c7",
+    "claude-code-permission-blast-radius#c6",
+    "claude-code-agentic-loop-and-tools#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "s11": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c14",
+    "claude-code-permission-blast-radius#c15"
+   ],
+   "verdict": "pass",
+   "note": "限定條件（容器或範圍受限的環境）在這句。"
+  },
+  "s12": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c14"
+   ],
+   "verdict": "pass",
+   "note": "限定：即使權限寬鬆，且在 s11 的受限環境裡。s11 已交代。"
+  },
+  "s13": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c15"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：P#c15 blog 認為兩者是獨立防線而非互相替代；句子內容相同，緊接 s11、s12（卡上設計參數）作總結，拿掉前綴仍是同一強度。若想更保險可改「可以說是兩道各自獨立的防線」，非必要。"
+  },
+  "c1": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c11",
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": "紙卷＝transcript，每一輪都附進結果（L#c11）。"
+  },
+  "c2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": "E#c17「長時間的 session 終究會逼近 context window 的上限」；已改成「逼近」，不比卡強。"
+  },
+  "c3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": "E#c17「不會盲目截斷，而是把較早的對話摘要成精簡版本」；「盲目」已補回。"
+  },
+  "c4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c16"
+   ],
+   "verdict": "pass",
+   "note": "E#c16「專案層級記憶」「session 開始時被讀取並自動摺入 context」；「釘在最前面」是比喻，沒帶新事實。已去掉「設定檔」。"
+  },
+  "c6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c18",
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": "例子「找出某個設定值…所有用到的地方」，卡上限定「大型程式碼庫」，c8 的「大範圍」保住了限定。"
+  },
+  "c8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c9": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c18",
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c9b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c10": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c19"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：E#c19 blog 認為 Subagent 委派使 context 呈鋸齒狀、而非永久累積；c7–c9b 已用 E#c18 交代機制，「這讓…變成鋸齒狀」是同一強度，沒有變強。"
+  },
+  "c10b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c19"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e1": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c5"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：E#c5「仍然太過僵化」；「還不夠彈性」比原卡更軟，沒有變強。限定「對寫程式的 Agent」對應「編碼 Agent」。"
+  },
+  "e2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c5"
+   ],
+   "verdict": "pass",
+   "note": "三個擴充點＝E#c5；對應 Skills、Hooks、MCP 取自 E 卡標題與 E#c1。"
+  },
+  "e3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e4b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c8"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：E#c8 blog 把這種載入方式視為「漸進式揭露」原則；「這叫做漸進式揭露」是命名，內容（不為用不到的能力預付 context 成本）與卡相同。建議（非必要）若想保留原則的味道可改「這就是漸進式揭露的原則」。"
+  },
+  "e6": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e6b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e7": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c9",
+    "claude-code-extension-and-context#c10"
+   ],
+   "verdict": "pass",
+   "note": "E#c9 Hook 是 harness 執行的 shell 指令；E#c10 前提「Hook 是一般程式碼而非模型呼叫」。這句只陳述此前提，判斷部分放在 e7b。"
+  },
+  "e8": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c11"
+   ],
+   "verdict": "pass",
+   "note": "blog 舉的例子；「自動排版」＝格式化。"
+  },
+  "e10": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e11": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e11b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "第 4 輪：「迴圈」替換「跑道」，無事實。"
+  },
+  "r2": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c1",
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": "回顧；判斷口吻已在 n1、n3 建立。"
+  },
+  "r3": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r4": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r5": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17",
+    "claude-code-extension-and-context#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r6": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "blog-2 模板相符。"
+  },
+  "i3b": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "教科書等級：語言模型輸入文字、輸出文字。沒碰論文數字、比較或爭議說法。"
+  },
+  "e7b": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c10"
+   ],
+   "verdict": "pass",
+   "note": "第 4 輪：E#c10 blog 認為 Hook 是實作「絕不能做 X」保證的正確位置；「就適合寫在這裡」比「正確位置」軟，加上 e7「Hook 是一般的程式碼，不是模型」交代理由，沒有變強。"
+  }
+ },
+ "screen": {
+  "規劃器": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀眾的想像（h2），不是事實"
+  },
+  "執行器": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀眾的想像"
+  },
+  "檢查器": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀眾的想像"
+  },
+  "除錯器": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀眾的想像；旁白沒念，只是畫面上的想像模組，不是事實陳述"
+  },
+  "Claude Code": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c2"
+   ],
+   "verdict": "pass",
+   "note": "名稱"
+  },
+  "模型": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Harness": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "修好這個沒過的測試": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "我們舉的例子"
+  },
+  "transcript": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c11"
+   ],
+   "verdict": "pass",
+   "note": "名詞，對應 L#c11"
+  },
+  "Read": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": "工具名；w3 的例子也用它"
+  },
+  "Edit": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Bash": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "FAILED": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": "虛構測試結果標籤，不是真實資料"
+  },
+  "PASSED": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "修好了": {
+   "tag": "illustration",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "想": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "迴圈三拍標籤：想＝決定下一步（L#c1）"
+  },
+  "做": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "工具呼叫"
+  },
+  "看": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "觀察結果"
+  },
+  "自動補全": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "只能讀": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Glob": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Grep": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Write": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Task": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "WebFetch": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "WebSearch": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "工具呼叫": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "權限": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-permission-blast-radius#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "log": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-permission-blast-radius#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Hook": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8",
+    "claude-code-extension-and-context#c9"
+   ],
+   "verdict": "pass",
+   "note": "g4 與 e6 共用"
+  },
+  "權限模式": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "工作目錄": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-permission-blast-radius#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "上限": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "摘要": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "CLAUDE.md": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Subagent": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c18",
+    "claude-code-agentic-loop-and-tools#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Skill": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "漸進式揭露": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "MCP": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "GitHub": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "資料庫": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "API": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "①": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "編號"
+  },
+  "②": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "編號"
+  },
+  "③": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "編號"
+  },
+  "一個迴圈": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c1",
+    "claude-code-agentic-loop-and-tools#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "開單才能動手": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-agentic-loop-and-tools#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "摘要、分身": {
+   "tag": "card_claim",
+   "refs": [
+    "claude-code-extension-and-context#c17",
+    "claude-code-extension-and-context#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "完整文章": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "指向說明欄的畫面標籤（r6 固定句 blog-2）"
+  },
+  "在說明欄": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "指向說明欄的畫面標籤"
+  }
+ },
+ "warmup_map": [
+  {
+   "step": "交代任務，寫進紙卷（transcript）",
+   "card": "claude-code-agentic-loop-and-tools#c11",
+   "ok": true
+  },
+  {
+   "step": "開單 Read → 內容接到紙卷尾巴",
+   "card": "claude-code-agentic-loop-and-tools#c11、c13",
+   "ok": true
+  },
+  {
+   "step": "開單 Edit 改一行",
+   "card": "claude-code-agentic-loop-and-tools#c13",
+   "ok": true
+  },
+  {
+   "step": "開單 Bash 跑測試 → 紅色錯誤訊息接回紙卷，沒人轉述",
+   "card": "claude-code-agentic-loop-and-tools#c6",
+   "ok": true
+  },
+  {
+   "step": "讀到錯誤再改一次（失敗只是觀察）",
+   "card": "claude-code-agentic-loop-and-tools#c9",
+   "ok": true
+  },
+  {
+   "step": "測試通過，模型直接回答、不再開單，迴圈停",
+   "card": "claude-code-agentic-loop-and-tools#c11",
+   "ok": true
+  }
+ ],
+ "figures": []
+}

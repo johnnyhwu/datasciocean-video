@@ -36,10 +36,13 @@ def published():
         st, up = d / "state.json", d / "upload-result.json"
         if not st.exists() or not up.exists():
             continue
-        s = json.loads(st.read_text())
-        if s.get("status") != "已發布" or not s.get("published_at"):
-            continue
-        out.append((d.name, datetime.fromisoformat(s["published_at"]).date(), json.loads(up.read_text())["video_id"]))
+        s, r = json.loads(st.read_text()), json.loads(up.read_text())
+        if s.get("status") == "已發布" and s.get("published_at"):
+            out.append((d.name, datetime.fromisoformat(s["published_at"]).date(), r["video_id"]))
+        elif r.get("scheduled_at") and datetime.fromisoformat(r["scheduled_at"]) <= datetime.now().astimezone():
+            # 排程時間已過、狀態還沒改：照排程時間算（提醒：跑 state.py set <id> 已發布）
+            print(f"提醒：{d.name} 已在 {r['scheduled_at']} 排程公開，請跑 state.py set {d.name} 已發布", file=sys.stderr)
+            out.append((d.name, datetime.fromisoformat(r["scheduled_at"]).date(), r["video_id"]))
     return out
 
 

@@ -1,0 +1,45 @@
+{
+ "title": "Claude Code 沒有規劃器？它怎麼自己修 bug",
+ "description": "一個會自己讀程式、改程式、跑測試的 AI，裡面一定有規劃器、執行器、檢查器吧？Claude Code 沒有另外掛規劃模組。在我們看來，它的核心只有一個迴圈：模型開一張工具呼叫單，Harness 去執行，結果接回對話紀錄，模型再決定下一步，直到它自己判斷做完了。\n每次動手都要開單，Harness 才能在動作發生前檢查權限、記 log、觸發 Hook；失敗只是另一種觀察，會變成下一輪的輸入。權限是漸進式的，加上受限的執行環境，讓犯錯便宜、可以挽回。紙卷滿了就摘要，大範圍的搜尋交給 Subagent；Skills、Hooks、MCP 則是三個擴充點。\n\n延伸閱讀\n完整文章：https://datasciocean.com/ai-concept/claude-code/\nClaude Code 官方文件：https://code.claude.com/docs/zh-TW/overview\n\n章節\n0:00 只有一個迴圈？\n0:31 模型沒有手\n1:10 舉例：修一個沒過的測試\n2:16 做、看、再做\n3:45 每次動手都要開單\n4:41 讓犯錯便宜又可逆\n5:46 紙卷滿了怎麼辦\n6:48 Skills、Hooks、MCP\n7:56 三點回顧",
+ "language": "zh-TW",
+ "category_id": 28,
+ "tags": [
+  "Claude Code",
+  "AI Agent",
+  "Agentic Loop",
+  "Anthropic",
+  "LLM",
+  "工具呼叫",
+  "Tool Use",
+  "Harness",
+  "MCP",
+  "Subagent",
+  "Hooks",
+  "Skills",
+  "context window"
+ ],
+ "contains_synthetic_media": false,
+ "localizations": {
+  "en": {
+   "title": "Claude Code Has No Planner? How It Fixes Bugs on Its Own",
+   "description": "An AI that reads code, edits code, and runs tests on its own must have a planner, an executor, and a checker inside, right? Claude Code doesn't bolt on a separate planning module. As we see it, its core is just one loop: the model writes out a tool call, the Harness executes it, the result is appended to the transcript, and the model decides the next step, until it judges on its own that the work is done.\nEvery action needs an explicit tool call, so the Harness can check permissions, write a log, and trigger Hooks before the action happens; a failure is just another observation that becomes the input for the next round. Permissions are graduated, and together with a restricted execution environment they make mistakes cheap and reversible. When the transcript fills up, it gets summarized, and wide searches are handed to a Subagent; Skills, Hooks, and MCP are three extension points.\n\nFurther reading\nFull article (in Chinese): https://datasciocean.com/ai-concept/claude-code/\nClaude Code official docs: https://code.claude.com/docs/en/overview\n\nChapters\n0:00 Just one loop?\n0:31 The model has no hands\n1:10 Example: fixing a failing test\n2:16 Act, observe, repeat\n3:45 Every action needs a tool call\n4:41 Make mistakes cheap and reversible\n5:46 When the transcript fills up\n6:48 Skills, Hooks, MCP\n7:56 Three-point recap"
+  },
+  "zh-CN": {
+   "title": "Claude Code 没有规划器？它怎么自己修 bug",
+   "description": "一个会自己读程序、改程序、跑测试的 AI，里面一定有规划器、运行器、检查器吧？Claude Code 没有另插件规划模块。在我们看来，它的内核只有一个循环：模型开一张工具调用单，Harness 去运行，结果接回对话纪录，模型再决定下一步，直到它自己判断做完了。\n每次动手都要开单，Harness 才能在动作发生前检查权限、记 log、触发 Hook；失败只是另一种观察，会变成下一轮的输入。权限是渐进式的，加上受限的运行环境，让犯错便宜、可以挽回。纸卷满了就摘要，大范围的搜索交给 Subagent；Skills、Hooks、MCP 则是三个扩充点。\n\n延伸阅读\n完整文章：https://datasciocean.com/ai-concept/claude-code/\nClaude Code 官方文档：https://code.claude.com/docs/zh-CN/overview\n\n章节\n0:00 只有一个循环？\n0:31 模型没有手\n1:10 举例：修一个没过的测试\n2:16 做、看、再做\n3:45 每次动手都要开单\n4:41 让犯错便宜又可逆\n5:46 纸卷满了怎么办\n6:48 Skills、Hooks、MCP\n7:56 三点回顾"
+  }
+ },
+ "thumbnail": "videos/v004-claude-code-loop/thumbs/B.png",
+ "captions": [
+  {
+   "language": "zh-TW",
+   "name": "",
+   "file": "out/v004-claude-code-loop/deliver/subs.zh-TW.srt"
+  },
+  {
+   "language": "zh-CN",
+   "name": "",
+   "file": "out/v004-claude-code-loop/deliver/subs.zh-CN.srt"
+  }
+ ]
+}

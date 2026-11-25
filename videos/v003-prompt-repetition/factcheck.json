@@ -1,0 +1,1513 @@
+{
+ "sentences": {
+  "h1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": "「簡單到不行」是口氣；做法本身（原封不動複製一遍）見 cb#c2"
+  },
+  "h2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": "限定（極端查找題、單一模型、比較對象為同一模型的 Baseline）在 e8b、e9、e10 說過；取整 21.33→21、97.33→97 沒改變意思"
+  },
+  "h3": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "h4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": "名稱 Prompt Repetition 與「問題出在讀字方式（單向注意力）」見 cb#c1"
+  },
+  "i1": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "模板：這裡是 DataSci Ocean。這集要講的是{主題}。畫面論文標題、Google Research、2025 年 12 月見 screen（c2）；封面為重畫，不得放原論文截圖或 logo"
+  },
+  "i2": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "預告句，指向 sc09；「沒什麼用」比卡弱（卡：中性至微幅正面），可接受，sc09 有完整限定。畫面把 Non-Reasoning 劃線只是指向論文標題上的字，不另加說法"
+  },
+  "r1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": "卡：大多採用 Decoder-only"
+  },
+  "r3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": "「切成 token」是教科書常識；從左讀到右對應 Causal（j≤i）"
+  },
+  "r4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "r6": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "比喻"
+  },
+  "w1": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": "例子取自卡的部落格舉例，沒有自補數字"
+  },
+  "w2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5",
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪：卡上 rough 回頭抓 bark 的 Value、最後 token 以 Attention 加權平均前面的 Value，故「回頭看＝attention」有依據；「層」是教科書層級的用詞，未碰論文數字或比較"
+  },
+  "w4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5",
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": "「可能」保留了"
+  },
+  "w7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w9": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w10": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5",
+    "prompt-repetition-causal-bottleneck-and-fix#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w11": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w12": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w13": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：已改成條件句，對應 c6"
+  },
+  "w14": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": "Path Dependency 命名；路徑依賴是翻譯"
+  },
+  "o1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "o2": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": "舉例已交代（比方說），無自補數字"
+  },
+  "o3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "o4": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "o5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：已加回「理論上」，「可能」保留"
+  },
+  "o6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：「論文還設計了一個極端的例子」對應 c10（作者設計的極端查找任務）；不再說「最極端」"
+  },
+  "o7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "o8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "o9": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1",
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p5": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11",
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": "把 bark 例子代入「第二遍每個位置看得到整個第一遍」；與機制一致，無自補數字"
+  },
+  "p6": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": "「筆記是已看過全文的版本」見 c11；「這是樹皮」是例子延伸"
+  },
+  "p7": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p9": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p10": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "p11": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c6",
+    "prompt-repetition-causal-bottleneck-and-fix#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "a1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c8",
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "a2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "a3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c8",
+    "prompt-repetition-free-lunch-latency#c6"
+   ],
+   "verdict": "pass",
+   "note": "c8：解決了表徵問題；增加生成 token 數、延遲與成本上升；c6：CoT 輸出長"
+  },
+  "a4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "a5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "a6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": "卡寫「現成 Decoder-only 模型」；r2 已交代 Decoder-only，可接受"
+  },
+  "a7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c10"
+   ],
+   "verdict": "pass",
+   "note": "「不增加延遲」的限定（Claude 極長文本例外、絕大多數通用場景）由 l11 交代"
+  },
+  "l1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": "卡：同時計算 1000 與 500 個 Token 的 Attention Matrix，時間差異極小（通常毫秒等級）；比較對象 500 個 token 有說"
+  },
+  "l6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l9": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c1"
+   ],
+   "verdict": "pass",
+   "note": "c1：沒改變語意、輸出長度保持不變；注意 l10 的實證只說「高度一致」"
+  },
+  "l10": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c7",
+    "prompt-repetition-free-lunch-latency#c8"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：比較對象「不貼」已寫明"
+  },
+  "l11": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "l12": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c10"
+   ],
+   "verdict": "pass",
+   "note": "原作者解讀，主詞「論文作者」符合錨點寫法"
+  },
+  "l13": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c11"
+   ],
+   "verdict": "pass",
+   "note": "卡：blog 說作者大膽聲稱 Free Lunch；「在大多數情況下」是限定，有帶"
+  },
+  "l14": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c11",
+    "prompt-repetition-free-lunch-latency#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e1": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：比較對象「不貼的版本」已寫明"
+  },
+  "e3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪畫面字「其餘：平手或不顯著」對應 rb#c3「其餘為平手或無顯著差異」；比較對象「對照：不貼」在 e2 已標"
+  },
+  "e4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3",
+    "prompt-repetition-results-and-boundary#c4"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：「一次都沒輸」對應 0 敗（e2 已交代是統計檢定下的結果），「跨越架構與大小」與「我們覺得非常少見」對應 c4；CoT 例外由 sc09 交代"
+  },
+  "e5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪：主詞改回我們，對應 c5 限定「要讀者特別注意 OpenBookQA 和 MMLU-Pro 的 Options-first 結果」；前兩句 e5、e6 已說明是選項在前的結果"
+  },
+  "e8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e8b": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10",
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e9": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪新增畫面「不貼」「貼兩次」，對應 rb#c11 比較對象（同一模型的 Baseline）；限定（極端查找題、單一模型）在 e8b/e10 說過"
+  },
+  "e10": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e10b": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c12",
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：已改成「我們的解釋是…可能」，語氣不超過 c12（部落格推論）；第 25 個見 c10"
+  },
+  "e11": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "提出疑問，帶出 c14 的對照實驗；不含卡外事實"
+  },
+  "e12": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e14": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c15"
+   ],
+   "verdict": "pass",
+   "note": "部落格推論，有「我們認為」緩衝"
+  },
+  "b1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "第 2 輪：比較對象「同樣開了 CoT、但不貼」已寫明"
+  },
+  "b4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c8"
+   ],
+   "verdict": "pass",
+   "note": "部落格推論，有「我們的解讀」緩衝"
+  },
+  "b4b": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b6": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c1",
+    "prompt-repetition-results-and-boundary#c9"
+   ],
+   "verdict": "pass",
+   "note": "部落格判斷，作者口吻，帶出限定"
+  },
+  "b7": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b8": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b9": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c14"
+   ],
+   "verdict": "pass",
+   "note": "有「也許」；卡也說貢獻是顯式化並用在非推理模型，「只是」略淡化，可接受"
+  },
+  "x1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x2": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c4",
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x3": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c1",
+    "prompt-repetition-free-lunch-latency#c8"
+   ],
+   "verdict": "pass",
+   "note": "「大多數情況」限定有帶"
+  },
+  "x5": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7",
+    "prompt-repetition-results-and-boundary#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x6": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "模板：想看更多細節，完整的文章在說明欄。"
+  },
+  "b3b": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "5 勝 1 敗 22 平，數字原樣取自 c7，比較對象由前一句 b3 交代"
+  },
+  "w3b": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c4",
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": "卡：處理每個 token 時生成 Key 和 Value；「筆記」是比喻（只翻譯，不帶新事實）。w3b 沒有說 Key/Value 的內容品質，限定在 w4 之後的句子"
+  }
+ },
+ "screen": {
+  "Ctrl+C": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Ctrl+V": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "21%": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "97%": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Prompt Repetition": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "GPT-4": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Gemini": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Llama": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Decoder-only": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "token": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "只能回頭看": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "The": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "bark": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "was": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "rough": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  ".": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "狗叫聲": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "樹皮": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "粗糙的": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "狗叫聲？": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "樹皮？": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Key": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Value": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Path Dependency": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "路徑依賴": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "選項": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "問題": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "資料": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "50 個名字": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "第 25 個是誰？": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": "h1 開場提示卡上的字，與 o6 同一題（NameIndex 的問題）"
+  },
+  "Google Research": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "2025 年 12 月": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "P": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "P ; P": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "第一遍": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "第二遍": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "偽雙向注意力": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Chain-of-Thought（CoT）": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "BERT": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "要改架構": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Prefill": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "GPU": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "1000": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "500": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Decode": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "例外": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Claude ＋ 極長文本": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "免費的午餐": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "70": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "47 勝": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": "畫面建議附「對照：不貼」，配合 e2 修正"
+  },
+  "0 敗": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "選項在前": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "問題在前": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "OpenBookQA": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "MMLU-Pro": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "NameIndex": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "極端查找題": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c10",
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Gemini 2.0 Flash-Lite": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "21.33%": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "97.33%": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "只有一個模型": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c13"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "……": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c14"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "CoT": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5 勝": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "畫面建議附「對照：同樣開 CoT、不貼」，配合 b3 修正；格子不要標 28（28 是自己加總，卡上沒有）"
+  },
+  "1 敗": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "畫面建議附「對照：同樣開 CoT、不貼」，配合 b3 修正；格子不要標 28（28 是自己加總，卡上沒有）"
+  },
+  "22 平": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "畫面建議附「對照：同樣開 CoT、不貼」，配合 b3 修正；格子不要標 28（28 是自己加總，卡上沒有）"
+  },
+  "資訊提取": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "閱讀測驗": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "①": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "②": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "③": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "第二遍看得到全文": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "多的字在 Prefill": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c1"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "完整文章": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "畫面提示，錘錘指向說明欄"
+  },
+  "在說明欄": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "對照：不貼": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": "比較對象標籤，對應 c3"
+  },
+  "對照：同樣開 CoT、不貼": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c7"
+   ],
+   "verdict": "pass",
+   "note": "比較對象標籤，對應 c7"
+  },
+  "Attention 層": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c5",
+    "prompt-repetition-causal-bottleneck-and-fix#c6"
+   ],
+   "verdict": "pass",
+   "note": "見 w3"
+  },
+  "Prompt Repetition Improves Non-Reasoning LLMs": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": "論文標題原文（c2）；封面為重畫，不是截圖"
+  },
+  "Non-Reasoning": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-causal-bottleneck-and-fix#c2"
+   ],
+   "verdict": "pass",
+   "note": "標題用字；劃線只是強調，旁白（i2）沒有宣稱 Non-Reasoning 與失效邊界的因果，邊界在 sc09 以 CoT 結果說明"
+  },
+  "其餘：平手或不顯著": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c3"
+   ],
+   "verdict": "pass",
+   "note": "卡：其餘為平手或無顯著差異；比較對象是不貼"
+  },
+  "不貼": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": "e9 兩條 50 格名單的標籤＝同一模型的 Baseline"
+  },
+  "貼兩次": {
+   "tag": "card_claim",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c11"
+   ],
+   "verdict": "pass",
+   "note": "同上"
+  },
+  "兩排小讀者站在兩階台階（e5–e6）": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-results-and-boundary#c5"
+   ],
+   "verdict": "pass",
+   "note": "只有高低、沒有數字也沒標值。基準：不貼時選項在前低、問題在前高，符合「Baseline 中 Options-first 通常較差」。貼兩次後升到與問題在前同高：符合「追平」；「再略高一點」對應「超越」，卡是「追平或超越」，旁白也是「追平、甚至超越」，高出的幅度要保持很小、不標數字、不標比例，問題在前那排保持不貼的高度（比較對象是原本較優的 Question-first）。限定「OpenBookQA 和 MMLU-Pro」由 e7 說。通過"
+  },
+  "兩條等長回答條（l10）": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c7"
+   ],
+   "verdict": "pass",
+   "note": "卡：兩者生成長度高度一致；「等長」可通過，但條上不能標字數或單位"
+  },
+  "兩條等長時間條（l10）": {
+   "tag": "illustration",
+   "refs": [
+    "prompt-repetition-free-lunch-latency#c8"
+   ],
+   "verdict": "fail",
+   "note": "卡是「端到端延遲幾乎沒有增加」，不是「完全相同」。時間條畫成完全等長會比卡強。請把「貼兩次」的時間條畫成比「不貼」只長一點點（肉眼幾乎看不出），或兩條都標「幾乎相同」，且不標數值；例外（Claude＋極長文本）由 l11 說"
+  }
+ },
+ "warmup_map": [
+  {
+   "step": "The bark was rough. 一個字一個字往右讀",
+   "card": "prompt-repetition-causal-bottleneck-and-fix#c3",
+   "ok": true
+  },
+  {
+   "step": "讀到 bark 只看得到 The bark，狗叫與樹皮混合",
+   "card": "prompt-repetition-causal-bottleneck-and-fix#c4、c5",
+   "ok": true
+  },
+  {
+   "step": "rough 知道是樹皮，回頭拿到的 bark 是舊的模糊版",
+   "card": "prompt-repetition-causal-bottleneck-and-fix#c5",
+   "ok": true
+  },
+  {
+   "step": "最後一個字把筆記加權混合，原料糊就救不回",
+   "card": "prompt-repetition-causal-bottleneck-and-fix#c6",
+   "ok": true,
+   "note": "第 2 輪：w13 已補條件"
+  },
+  {
+   "step": "第二遍的 bark 看得到第一遍的 rough → 樹皮",
+   "card": "prompt-repetition-causal-bottleneck-and-fix#c1、c11",
+   "ok": true,
+   "note": "p5、p6 是把 bark 例子代入 c1/c11 機制，與卡不矛盾"
+  },
+  {
+   "step": "50 個名字問第 25 個；讀名字時不知道要找哪個",
+   "card": "prompt-repetition-results-and-boundary#c10、c12",
+   "ok": true
+  },
+  {
+   "step": "貼兩次，第二遍帶著意圖掃描 → 21.33% → 97.33%",
+   "card": "prompt-repetition-results-and-boundary#c11、c12",
+   "ok": true,
+   "note": "第 2 輪：e10b 已改成我們的解釋＋可能"
+  }
+ ],
+ "figures": []
+}

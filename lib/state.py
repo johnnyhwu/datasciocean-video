@@ -82,7 +82,10 @@ def main():
             st["published_at"] = now()          # lib/analytics.py 用它算 d7、d28 的到期日
             up = video_dir(vid) / "upload-result.json"
             if up.exists():
-                st["url"] = json.loads(up.read_text()).get("url", "")
+                r = json.loads(up.read_text())
+                st["url"] = r.get("url", "")
+                if r.get("scheduled_at"):           # 排程公開的影片：發布時間就是排程時間
+                    st["published_at"] = r["scheduled_at"]
         save(vid, st)
     elif a.cmd == "approve":
         st = load(vid)
