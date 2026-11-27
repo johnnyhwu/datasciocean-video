@@ -1,0 +1,43 @@
+{
+ "title": "AI 評審：做對和偷吃步，為什麼同分？｜LLM-as-a-Verifier",
+ "description": "兩條 AI agent 的軌跡，一條真的做對、一條偷吃步；同樣的比較請 AI 評審做 100 次，88 次給了一樣的分數。\n問題出在只取機率最高的那個分數（argmax），其他分數的機率全被丟掉；改算期望值，平手就拆開了。\n代價是：它每次都得表態，100 次裡有 31 次反而把偷吃步的那條排在前面。\n\n延伸閱讀\n完整文章：https://datasciocean.com/paper-intro/llm-as-a-verifier/\n原始論文（arXiv）：LLM-as-a-Verifier: A General-Purpose Verification Framework\nhttps://arxiv.org/abs/2607.05391\n\n章節\n0:00 88 次平手\n1:02 評審為什麼會平手\n1:41 評審的腦袋裡\n2:49 改算期望值\n3:51 回到那一百次\n4:23 三個旋鈕\n6:30 證據有多乾淨\n7:26 代價：每次都要表態\n8:00 三點回顧\n\n論文首頁截圖出處：Kwok et al., \"LLM-as-a-Verifier: A General-Purpose Verification Framework\", arXiv:2607.05391, CC BY 4.0.",
+ "language": "zh-TW",
+ "category_id": 28,
+ "tags": [
+  "LLM-as-a-Verifier",
+  "LLM-as-a-Judge",
+  "AI 評審",
+  "AI Agent",
+  "argmax",
+  "期望值",
+  "Expected Value",
+  "Verifier",
+  "LLM",
+  "Terminal-Bench",
+  "論文解讀"
+ ],
+ "contains_synthetic_media": false,
+ "localizations": {
+  "en": {
+   "title": "AI Judges: Why Do the Right Answer and the Shortcut Get the Same Score? | LLM-as-a-Verifier",
+   "description": "Two AI agent trajectories: one really solves the task, the other takes a shortcut. We ask an AI judge to make the same comparison 100 times, and 88 times it gives them the same score.\nThe problem is that only the score with the highest probability is kept (argmax), and the probabilities of all the other scores are thrown away; compute the expected value instead, and the ties break apart.\nThe cost: it has to pick a side every time, and in 31 out of 100 it actually ranks the shortcut trajectory first.\n\nFurther reading\nFull article (in Chinese): https://datasciocean.com/paper-intro/llm-as-a-verifier/\nPaper (arXiv): LLM-as-a-Verifier: A General-Purpose Verification Framework\nhttps://arxiv.org/abs/2607.05391\n\nChapters\n0:00 88 ties\n1:02 Why the judge ties\n1:41 Inside the judge's head\n2:49 Use the expected value instead\n3:51 Back to those 100 comparisons\n4:23 Three knobs\n6:30 How clean is the evidence\n7:26 The cost: it must always pick a side\n8:00 Three-point recap\n\nPaper first-page screenshot: Kwok et al., \"LLM-as-a-Verifier: A General-Purpose Verification Framework\", arXiv:2607.05391, CC BY 4.0."
+  },
+  "zh-CN": {
+   "title": "AI 评审：做对和偷吃步，为什么同分？｜LLM-as-a-Verifier",
+   "description": "两条 AI agent 的轨迹，一条真的做对、一条偷吃步；同样的比较请 AI 评审做 100 次，88 次给了一样的分数。\n问题出在只取概率最高的那个分数（argmax），其他分数的概率全被丢掉；改算期望值，平手就拆开了。\n代价是：它每次都得表态，100 次里有 31 次反而把偷吃步的那条排在前面。\n\n延伸阅读\n完整文章：https://datasciocean.com/paper-intro/llm-as-a-verifier/\n原始论文（arXiv）：LLM-as-a-Verifier: A General-Purpose Verification Framework\nhttps://arxiv.org/abs/2607.05391\n\n章节\n0:00 88 次平手\n1:02 评审为什么会平手\n1:41 评审的脑袋里\n2:49 改算期望值\n3:51 回到那一百次\n4:23 三个旋钮\n6:30 证据有多干净\n7:26 代价：每次都要表态\n8:00 三点回顾\n\n论文首页截屏出处：Kwok et al., \"LLM-as-a-Verifier: A General-Purpose Verification Framework\", arXiv:2607.05391, CC BY 4.0."
+  }
+ },
+ "thumbnail": "videos/v005-llm-verifier/thumbs/A.png",
+ "captions": [
+  {
+   "language": "zh-TW",
+   "name": "",
+   "file": "out/v005-llm-verifier/deliver/subs.zh-TW.srt"
+  },
+  {
+   "language": "zh-CN",
+   "name": "",
+   "file": "out/v005-llm-verifier/deliver/subs.zh-CN.srt"
+  }
+ ]
+}

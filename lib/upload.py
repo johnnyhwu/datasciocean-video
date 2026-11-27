@@ -1,7 +1,7 @@
-"""把成片上傳到 YouTube，**一律上傳成私人**；使用者說定版之後，可以排程在週六 09:00（台北）自動公開。
+"""把成片上傳到 YouTube，**一律上傳成私人**；使用者說定版之後，可以排程在上一支影片的 3 天後 09:00（台北）自動公開。
 
 使用者 2026-11-16 同意：Claude 可以用 API 上傳成私人並填好所有欄位；不得上傳成公開、不得事後直接改成公開。
-使用者 2026-11-23：「以後新的影片你都可以幫我設定每週六 9:00 發佈」→ 加 --schedule：維持 private，只設 publishAt。
+使用者 2026-11-23 加 --schedule（維持 private，只設 publishAt）；2026-11-27 改成上一支的 3 天後 09:00（原本每週六）。
 這支程式沒有任何直接設成公開的路徑；privacyStatus 寫死在 PRIVACY。
 
 用法：
@@ -9,7 +9,7 @@
     uv run python lib/upload.py <影片 ID> --go     # 真的上傳（第一次會開瀏覽器請使用者授權）
     uv run python lib/upload.py <影片 ID> --update-meta --go   # 已上傳的影片：只更新標題、說明欄、標籤、翻譯（照 upload.json）
                                                           # 不送 status，隱私維持原狀；送完再讀一次隱私狀態確認沒變
-    uv run python lib/upload.py <影片 ID> --schedule           # 預演：算出下一個空著的週六 09:00（台北）
+    uv run python lib/upload.py <影片 ID> --schedule           # 預演：算出上一支的 3 天後 09:00（台北）
     uv run python lib/upload.py <影片 ID> --schedule --go      # 真的排程（只在使用者說影片定版之後做）
     uv run python lib/upload.py <影片 ID> --schedule --at 2026-12-05T09:00 --go   # 指定時間（台北時間）
     uv run python lib/upload.py <影片 ID> --status             # 讀線上的隱私與排程時間，記進 upload-result.json（使用者自己在 Studio 排程時用）
@@ -29,7 +29,7 @@ from paths import ROOT, out_dir, video_dir  # noqa: E402
 
 PRIVACY = "private"          # 不要改。公開只能靠排程（publishAt）或使用者自己按
 TZ = "Asia/Taipei"
-SLOT_WEEKDAY, SLOT_HOUR = 5, 9   # 週六 09:00（使用者 2026-11-23）
+SLOT_HOUR, GAP_DAYS = 9, 3      # 上一支的 3 天後 09:00（使用者 2026-11-27；原本是每週六）
 MIN_LEAD_H = 24                   # 排程至少在 24 小時之後，留時間給使用者最後看一眼
 SCOPES = ["https://www.googleapis.com/auth/youtube.upload", "https://www.googleapis.com/auth/youtube.force-ssl"]
 SECRET = ROOT / "secrets/youtube_client_secret.json"
@@ -58,7 +58,7 @@ def service():
 
 
 def taken_slots(skip):
-    """其他影片已經排的或已發布的日期（台北），避免同一個週六排兩支。"""
+    """其他影片已經排的或已發布的日期（台北），避免同一天排兩支。"""
     from datetime import datetime
     from zoneinfo import ZoneInfo
     out = set()
@@ -75,14 +75,16 @@ def taken_slots(skip):
 
 
 def next_slot(vid):
+    """上一支已排程或已發布影片的 GAP_DAYS 天後 09:00（台北）；至少 MIN_LEAD_H 小時後（使用者 2026-11-27：「我們現在 3 天發佈一個新影片」）。"""
     from datetime import datetime, timedelta
     from zoneinfo import ZoneInfo
     now = datetime.now(ZoneInfo(TZ))
-    t = now.replace(hour=SLOT_HOUR, minute=0, second=0, microsecond=0)
-    t += timedelta(days=(SLOT_WEEKDAY - t.weekday()) % 7)
     taken = taken_slots(vid)
+    t = now.replace(hour=SLOT_HOUR, minute=0, second=0, microsecond=0)
+    if taken:
+        t = max(t, datetime.combine(max(taken) + timedelta(days=GAP_DAYS), t.timetz()))
     while t - now < timedelta(hours=MIN_LEAD_H) or t.date() in taken:
-        t += timedelta(days=7)
+        t += timedelta(days=1)
     return t
 
 
@@ -159,7 +161,7 @@ def main():
     ap.add_argument("vid")
     ap.add_argument("--go", action="store_true", help="真的上傳（沒加就只預演）")
     ap.add_argument("--update-meta", action="store_true", help="只更新已上傳影片的標題、說明欄、標籤、翻譯；不動隱私")
-    ap.add_argument("--schedule", action="store_true", help="排程公開：下一個空著的週六 09:00（台北），影片維持 private 直到那時")
+    ap.add_argument("--schedule", action="store_true", help="排程公開：上一支已排程影片的 3 天後 09:00（台北），影片維持 private 直到那時")
     ap.add_argument("--at", help="和 --schedule 一起用：指定台北時間，例如 2026-12-05T09:00")
     ap.add_argument("--status", action="store_true", help="讀線上的隱私與排程時間並記錄")
     a = ap.parse_args()

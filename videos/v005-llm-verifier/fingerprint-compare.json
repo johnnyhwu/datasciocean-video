@@ -1,0 +1,1 @@
+{"compared": [["v001-rrf-rank-fusion", 0.1], ["v002-cer-confidence-voting", 0.05], ["v003-prompt-repetition", 0.11], ["v004-claude-code-loop", 0.05]], "threshold": 0.6}

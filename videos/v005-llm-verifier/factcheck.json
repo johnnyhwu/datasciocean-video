@@ -1,0 +1,1968 @@
+{
+ "sentences": {
+  "h1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15",
+    "verifier-expected-value-vs-argmax#c7"
+   ],
+   "verdict": "pass",
+   "note": "c15：同一個 query-optimize 任務、兩條軌跡（都由 Claude Opus 4.5 產生，「兩個 AI agent」指兩次 agent 執行）；c7：軌跡＝agent 做事的完整紀錄，「一步一步」是對「完整紀錄」的白話。本句只有設定，不含對錯判斷。"
+  },
+  "h3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15 複製到 /tmp、在複製品上加索引、兩個不同存取路徑上比結果、從來沒有真正驗證等價性。建議（不擋）：visual 的「原本的資料庫沒動」卡上沒有，且和 h9「資料庫被改過」衝突，建議刪掉這半句"
+  },
+  "h4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：「它自己回報『內部 diff 檢查通過』」"
+  },
+  "h5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c2",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c2 1 到 5 整數分；c17 離散 judge（G=5）。未碰「評審是哪個模型」，不衝突"
+  },
+  "h6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-three-knobs-g-k-c#c1",
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": "前半：c17 同一任務每種方法各評分一百次。後半「模型每次的回答會有點不同」＝單次評估有隨機的晃動（kn c1「單次評估的隨機偏差」、c9「每次隨機的晃動」；c13 也顯示重複評估會改變平手率）。不標 prerequisite：前半碰這篇的實驗設定，混合句要拆；而且後半卡上本來就有，用 card_claim 最直接。語氣和 q3「每次隨機的晃動」一致，沒有更強；旁白不得補「所以才 88 次平手」之類的因果"
+  },
+  "h7": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17 離散 judge（G=5）：正確軌跡高於／平手／低於＝12/88/0。「只有 12 次」不超過卡；同一任務一百次的限定由 h1「同一道題」、h6「做一百次」、h1b 題目帶出；畫面「甲排前面 12」「平手 88」＝c17（甲＝正確軌跡）"
+  },
+  "h8": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "h9": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16：有看出修改資料庫、並未正確驗證等價性，措辭帶保留"
+  },
+  "h10": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c16",
+    "verifier-expected-value-vs-argmax#c1"
+   ],
+   "verdict": "pass",
+   "note": "問句，但預設「判斷存在、被壓扁了」是 c16（部落格推論）／c1（原作者解讀）的主張，不是純 framing；問句沒有指名 argmax，語氣不比卡強。全片「我們認為」0 次，h9 照卡直述（部落格推論可用作者口吻、語氣不得比卡強）｜2026-11-26：畫面字已拿掉「5」，灰牌不寫數字（h10 screen 只剩「只取最高」）"
+  },
+  "i1": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "intro-1 模板；變數「LLM-as-a-Verifier」17 字，超過「2～10 字」的建議，但是專有名稱（提醒，不擋）"
+  },
+  "w1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "w2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c2"
+   ],
+   "verdict": "pass",
+   "note": "排序、篩選、當 reward"
+  },
+  "w4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6",
+    "verifier-expected-value-vs-argmax#c15",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17 同一個 query-optimize 任務各評分一百次；c15 它是 Terminal-Bench V2 的一個案例（任務）；c6 Terminal-Bench＝考 agent 做任務的 benchmark。「一整套」是 benchmark 的白話，沒有加數字或比較。後面 w4b 的 27% 要維持「全部比較結果」的說法"
+  },
+  "w4b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6",
+    "verifier-expected-value-vs-argmax#c1"
+   ],
+   "verdict": "pass",
+   "note": "限定「整數分數／離散評審（取 argmax）」已說；27% 在 Terminal-Bench（w4 剛交代）、分母是全部比較結果；visual 100 格 27 灰＝比例示意，不是實際比較數"
+  },
+  "w5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b2": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "token 一個接一個，教科書等級"
+  },
+  "b3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b4": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "機率 0.45／0.35／0.13／0.05／0.02 與 c9 相符；b4a「另外舉個例子」已交代是舉例"
+  },
+  "b5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b6": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "argmax 取 5、其餘丟掉"
+  },
+  "b7": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "c4：資訊不是沒產生，是解碼丟掉"
+  },
+  "b8": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪：0.52、0.30 與 c9 相符；同一場 b4 已說舉例；畫面已改成「其餘（沒給）」，不放自己算的 0.18"
+  },
+  "b9": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b10": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "b11": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9 限定：機率是示意值、論文從未公布任何一次評分的實際機率；畫面無字，合規"
+  },
+  "e1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c3"
+   ],
+   "verdict": "pass",
+   "note": "c3：Stanford／UC Berkeley／NVIDIA、論文名稱。首頁截圖的授權與出處需另行確認（非查核範圍）"
+  },
+  "e2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5、機率 c9；1.4、2.25 為代入計算（calc 用整條公式驗算，兩個乘積是中間值，各自的算式見 screen）；畫面有「代入公式計算」",
+   "calc": {
+    "expr": "1*0.02+2*0.05+3*0.13+4*0.35+5*0.45",
+    "result": "4.16"
+   }
+  },
+  "e4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9 直接給 4.16，也代入驗算過；e3 的「代入公式計算」標籤要在 e4 持續留在畫面上",
+   "calc": {
+    "expr": "1*0.02+2*0.05+3*0.13+4*0.35+5*0.45",
+    "result": "4.16"
+   }
+  },
+  "e5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5；p(v5)=0.52、p(v4)=0.30、期望值約 4.3 來自 c9。3.8＝5×0.52＋4×0.30 代入計算；「大約 4.3」是 c9 的「4.3 附近」。「其餘」只畫灰塊不填數字（c9 沒給其餘機率分佈）；畫面有「代入公式計算」；示意值限定由 b4a、b11 交代",
+   "calc": {
+    "expr": "5*0.52+4*0.30",
+    "result": "3.8"
+   }
+  },
+  "e6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：4.16 與 4.3 附近，不平手"
+  },
+  "e7": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "e7b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": "離散整數 → 連續實數"
+  },
+  "e8": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c1",
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": "c1 是原作者解讀，「論文指出」可以"
+  },
+  "k1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "k2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "c18：同一個 1–5 量表只換解碼方式（argmax → 期望值）"
+  },
+  "k2b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "c17：離散 judge 12/88/0 → verifier（G=5）69/0/31；比較對象離散 judge；同一任務一百次。畫面「乙排前面 31」＝c17 低於"
+  },
+  "k3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "c17/c18：期望值只換量表 1–5 → 1–20，69 → 77；畫面 23＝verifier（G=20）低於"
+  },
+  "k4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "c18：一次只動一個變因；範圍限於這個任務的一百次"
+  },
+  "k5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": "「中間那面」＝計分板第二面＝verifier（G=5，期望值 5 格）；31 次＝c17 該方法 100 次中正確軌跡分數低於錯誤軌跡（69/0/31），乙＝錯誤軌跡。分母一百次在 k2b 已說；「反而」對照 c19 離散 judge 排錯 0/100。「我們最後再回來看」是預告，無事實。"
+  },
+  "g1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c1",
+    "verifier-three-knobs-g-k-c#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c3",
+    "verifier-three-knobs-g-k-c#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "g5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18",
+    "verifier-three-knobs-g-k-c#c3"
+   ],
+   "verdict": "pass",
+   "note": "c17 把 verifier（G=5）69／（G=20）77 直接標成 G；c18 同一量表 1–5 → 1–20 只換量表；kn c3 G＝分數 token 的粒度。所以「5 格換 20 格＝轉 G」成立，69→77 對應 c17。限定：這是 query-optimize 同一任務一百次的結果，k3 已交代，這句靠「剛才計分板上」承接。建議（不擋）：若想更保險，改成「甲排前面的次數，從六十九次升到七十七次」補上這個數字在量什麼"
+  },
+  "g6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "q1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "q3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9",
+    "verifier-three-knobs-g-k-c#c10"
+   ],
+   "verdict": "pass",
+   "note": "c9 是部落格推論但卡上以事實陳述"
+  },
+  "q4": {
+   "tag": "framing",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": "比喻直接來自 c9（秤永遠多 2 公斤）"
+  },
+  "q7": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": "提醒：「verifier」一詞前面沒定義（之前都說「評審」），建議第一次出現時說明＝改算期望值的評審（理解問題，不擋事實）"
+  },
+  "q7b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "q8": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": "c12 限定：2.7 到 2.9pp"
+  },
+  "q8b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": "限定「只在剛好追平 74.7% 這個門檻才成立」"
+  },
+  "c1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：論文對 code agent 拆出三個子準則；「三面放大鏡」是比喻，不帶新事實。畫面要求／格式／錯誤對應 Specification／Output／Errors"
+  },
+  "c2b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "c4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c18"
+   ],
+   "verdict": "pass",
+   "note": "「最薄」＝比前兩個旋鈕薄"
+  },
+  "c4b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": "第 3 輪：c16 限定三項都說到（誤差棒重疊得很明顯、沒說明誤差棒代表什麼、沒做顯著性檢定）。visual 的誤差線長度是示意，畫面不得標數值｜2026-11-26 複查：「誤差範圍明顯重疊」＝c16 限定「誤差棒重疊得很明顯」，沒有弱化；visual 色帶長度仍不得標數值"
+  },
+  "v1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "v2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c1",
+    "verifier-results-how-to-read#c9",
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": "c11：同一個 Qwen 3.6 35B（VLM，c9）只差 argmax／期望值；c1：機器人最乾淨。旁白、畫面未提 RoboReward-8B 比較，c1 的利益關係限定未觸發；日後一旦加入與專門訓練模型比較，必須同時說 RoboRewardBench 的來源"
+  },
+  "v3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c10",
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": "87.4−70.8=16.6，與 c11 相符"
+  },
+  "v4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "v4b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6",
+    "verifier-results-how-to-read#c4"
+   ],
+   "verdict": "pass",
+   "note": "c6 Terminal-Bench V2 同一候選池 Pass@1 83.1%（Ours 86.5%）；c4 Pass@1＝每題只交一次。「不挑」是 Pass@1 的白話，與 c5「唯一變因是怎麼挑」一致。「同一批候選、同一個生成模型」由 v4 已說，Terminal-Bench 這一列成立（異質候選池的是 SWE-Bench，影片未提）"
+  },
+  "v5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8",
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "c8：「SOTA」宣稱的 Terminal-Bench V2 成績是 86.5%（對照 84.7%）；現句不再斷言首頁圖寫著什麼，截圖只當背景"
+  },
+  "v5b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：對照的 84.7% 是 GPT-5.5＋另一個 harness；「它對照的成績」＝84.7%（未說出數字，指代清楚）。注意：harness 在 v5b 先出現、v5c 才解釋，建議對調或在 v5b 就帶定義"
+  },
+  "v6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6",
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c19",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c19",
+    "verifier-expected-value-vs-argmax#c1"
+   ],
+   "verdict": "pass",
+   "note": "G=5 31/100、G=20 23/100"
+  },
+  "x4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c20",
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "x6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c20",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c20：平手算半分 judge 56、verifier（G=20）77，verifier 仍勝出；兩者皆為同一任務一百次。畫面 12 + 88 ÷ 2 = 56 是把 c17 的 12 勝、88 平代入 c20「平手算半分」，並標「代入公式計算」；同一任務由 x1「回到那一百次」帶出",
+   "calc": {
+    "expr": "12+88/2",
+    "result": "56"
+   }
+  },
+  "z1": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "z2": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4",
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "z3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "z4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "z5": {
+   "tag": "fixed_line",
+   "refs": [],
+   "verdict": "pass",
+   "note": "blog-1 原句"
+  },
+  "h1b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：沒優化過的 SQL、效能更好（改快）、輸出完全相同；移到 h7 之後，語意仍通順（先給結果再補題目）"
+  },
+  "e1b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c1",
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": "「新的評審叫 verifier」對應 c1（離散 judge vs verifier）；「改法很單純」對應 c5 原文；verifier 現在有定義"
+  },
+  "b4a": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "轉場＋交代下面是舉例（讓 b4 以後的機率屬於 illustration 的「舉例」交代），無事實、無數字"
+  },
+  "v5c": {
+   "tag": "prerequisite",
+   "refs": [],
+   "verdict": "pass",
+   "note": "已拆句；只剩 harness＝讓 agent 跑起來的那套程式（名詞白話解釋），不碰論文的數字或比較，與 c8 不衝突；佔比極小"
+  },
+  "v4c": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：同一候選池 Pass@1 → Ours＝83.1% → 86.5%；「升到」符合（+3.4pp 未說出）。前提「同一批候選」由 v4 交代"
+  },
+  "v5d": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：86.5% 是 GPT-5.5＋Capy harness＋N=5 抽樣＋verifier，對照的 84.7% 是 GPT-5.5＋另一個 harness，三個變因不同。「變因不只一個」比卡弱，沒有數字。順序提醒：v5b 先說 harness、v5c 再解釋，同位語寫法可讀"
+  },
+  "q6b": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：配對驗證準確率＝兩條軌跡配成一對、verifier 判對的比例；「換了一種量法」是和前面的「一百次裡甲排前面幾次」對比，沒有加事實。旁白用「評審」指 verifier，一致即可"
+  },
+  "c4c": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": "c16 限定其餘兩項：「沒說明誤差棒代表什麼」＝「論文沒說這個範圍代表什麼」；「沒做顯著性檢定」＝「沒檢定差距是不是運氣」（顯著性檢定本來就是在檢定差距是不是隨機造成），沒有弱化、也沒有變強。c4b＋c4c 三個限定都說到。注意「差距」指三面一起 78.3% 比單獨用一面的差（c16 的 1.9pp），visual 色帶只畫示意"
+  },
+  "h1a": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17「正確軌跡」＝做對的那條；c15 失敗那條沒真正驗證等價性卻自己回報「內部 diff 檢查通過」。「偷吃步」是口語，語氣略帶意圖，但 h3 立刻交代實際做法（複製資料庫、在複製品上加索引、沒真正驗證），未加新事實。"
+  }
+ },
+ "screen": {
+  "軌跡甲": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "h1 畫面標籤；甲＝正確軌跡（c17），h1a 畫綠勾。"
+  },
+  "軌跡乙": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "h1 畫面標籤；乙＝錯誤軌跡（c15、c17），h1a 畫紅叉。"
+  },
+  "1～5 分": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "LLM-as-a-Verifier": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c3"
+   ],
+   "verdict": "pass",
+   "note": "論文名稱"
+  },
+  "獎勵": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c2"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "Terminal-Bench": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "27%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": "全部比較結果中的平手比例（Terminal-Bench，c6）"
+  },
+  "<score_A>": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "<score_B>": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c10"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "0.45": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "與 c9 相符；b4 已說舉個例子"
+  },
+  "0.35": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "與 c9 相符；b4 已說舉個例子"
+  },
+  "0.13": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "與 c9 相符；b4 已說舉個例子"
+  },
+  "0.05": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "與 c9 相符；b4 已說舉個例子"
+  },
+  "0.02": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "與 c9 相符；b4 已說舉個例子"
+  },
+  "argmax": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "2026-11-26：只剩 sc03 b6 的用法（軌跡 X 被 arg max 壓成灰色「5」，b9 的乙也同樣）；b4a 已說「舉個例子」、b11 再交代是舉例。h10 已不再用這個「5」"
+  },
+  "丟掉": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "0.52": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "0.30": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "＝": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "期望值": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "分數 × 機率": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "4×0.35": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5×0.45": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "1.4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "",
+   "calc": {
+    "expr": "4*0.35",
+    "result": "1.4"
+   }
+  },
+  "2.25": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "",
+   "calc": {
+    "expr": "5*0.45",
+    "result": "2.25"
+   }
+  },
+  "代入公式計算": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "標籤，符合規定寫法"
+  },
+  "4.16": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "",
+   "calc": {
+    "expr": "1*0.02+2*0.05+3*0.13+4*0.35+5*0.45",
+    "result": "4.16"
+   }
+  },
+  "約 4.3": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "69": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "31": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "77": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": "｜x6 的 77＝verifier（G=20），平手算半分仍是 77（無平手）"
+  },
+  "23": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "G": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5 格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9",
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "G=5 即 1～5 的量表（c9、c17 的 G=5）"
+  },
+  "20 格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c3",
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "73.1%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "K": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "74.7%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c8",
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "77.5%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c5",
+    "verifier-three-knobs-g-k-c#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "偏誤": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "+2 kg": {
+   "tag": "framing",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "1 次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "16 次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "2.7～2.9 個百分點": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "16 倍": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c12"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "C": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "錯誤": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "75.2%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "76.4%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "78.3%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c16"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "4 個？": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5 個？": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c18"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "偏好準確率": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "70.8%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c10",
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "87.4%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c10",
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "16.6": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "同一個候選池，只換挑法": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "83.1%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "86.5%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8",
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "Terminal-Bench V2"
+  },
+  "+3.4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "0 次排錯": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "交給人審": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "①": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "②": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "③": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "只取最高 → 平手": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4",
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "期望值 → 拆開": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "每次都要表態": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "完整文章": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "在說明欄": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": ""
+  },
+  "題目：把沒優化過的 SQL 查詢改快": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "輸出要完全相同": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "把資料庫複製到 /tmp": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "在複製品上加索引": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "回報：內部 diff 檢查通過": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "軌跡 X": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子標籤，b4 已說舉例"
+  },
+  "軌跡 Y": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "例子標籤，b4 已說舉例"
+  },
+  "其餘": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "灰塊標籤，不填數字（0.18 卡上沒給）。注意 b8 visual 寫灰色「沒給」，但 screen 是「其餘」：請畫面只放「其餘」，不要出現「沒給」"
+  },
+  "3×0.13": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5、數值 c9"
+  },
+  "2×0.05": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5、數值 c9"
+  },
+  "1×0.02": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "公式 c5、數值 c9"
+  },
+  "＝ 4.16": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9 直接給 4.16；代入驗算同 e4",
+   "calc": {
+    "expr": "1*0.02+2*0.05+3*0.13+4*0.35+5*0.45",
+    "result": "4.16"
+   }
+  },
+  "其餘（沒給）": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "灰塊標籤，不填數字；b4 已說舉個例子"
+  },
+  "在不同存取路徑上比結果": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15「拿兩個不同物理存取路徑上的結果比較」的縮短寫法：略去「兩個」「物理」，沒有加新事實、沒有變強；「路徑上比結果」對應「路徑上的結果比較」"
+  },
+  "例子": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "b4a 的標籤"
+  },
+  "甲排前面 12": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "甲＝正確軌跡"
+  },
+  "平手 88": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "乙排前面": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "31／23 對應 c17 的「低於」"
+  },
+  "3.8": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算；5×0.52＋4×0.30",
+   "calc": {
+    "expr": "5*0.52+4*0.30",
+    "result": "3.8"
+   }
+  },
+  "argmax → 期望值": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c18",
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "5 格 → 20 格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c18",
+    "verifier-three-knobs-g-k-c#c3"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "要求": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": "Specification"
+  },
+  "格式": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c15"
+   ],
+   "verdict": "pass",
+   "note": "Output"
+  },
+  "同一個模型：argmax → 期望值": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c11"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "只交一次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c4",
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "Pass@1"
+  },
+  "verifier 挑": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "另一套 harness": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": ""
+  },
+  "12 + 88 ÷ 2 = 56": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：平手算半分",
+   "calc": {
+    "expr": "12+88/2",
+    "result": "56"
+   }
+  },
+  "只取最高": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：標準做法只取機率最高的那一個"
+  },
+  "27% 平手": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6",
+    "verifier-expected-value-vs-argmax#c1"
+   ],
+   "verdict": "pass",
+   "note": "27% 是 Terminal-Bench 上全部比較結果中平手的比例；w4 已交代 Terminal-Bench，w4b 說了整數分數的評審；100 格 27 灰只是比例示意，不是 100 次實際比較"
+  },
+  "卡住": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：平手不能排序，沒辦法從 N 條候選挑一條"
+  },
+  "×1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5：每個分數乘上它的機率；×1～×5 是分數權重"
+  },
+  "×5": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5"
+   ],
+   "verdict": "pass",
+   "note": "同上"
+  },
+  "放大 4.0～4.4": {
+   "tag": "framing",
+   "refs": [],
+   "verdict": "pass",
+   "note": "放大鏡範圍標示，內含 4.16 與約 4.3（c9），沒有新事實"
+  },
+  "甲排前面": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "k1 回頭看同一塊 12/88 板子的圖例；甲＝正確軌跡高於錯誤軌跡（c17）。須是 h7 同一塊板（離散 judge G=5）"
+  },
+  "平手": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "同上，c17 的「平手」"
+  },
+  "同一格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c6"
+   ],
+   "verdict": "pass",
+   "note": "c6：原本會被四捨五入到同一格的相近信念"
+  },
+  "配對準確率": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c4"
+   ],
+   "verdict": "pass",
+   "note": "c4：配對驗證準確率＝兩條軌跡配成一對、判對的比例"
+  },
+  "平均": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：同一個問題問 K 次再取平均"
+  },
+  "問 K 次，取平均": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8"
+  },
+  "晃動": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": "c9：平均降低變異數（隨機的晃動）；「晃動」是變異數的白話"
+  },
+  "虛線＝真正的分數": {
+   "tag": "illustration",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c9"
+   ],
+   "verdict": "pass",
+   "note": "示意：沒有數字、沒有座標軸，只表現「隨機晃動被平均抵消、同一方向的偏誤不會」；卡上的 c9 是機制（秤永遠多 2 公斤的比喻另在 q4）。若日後加上刻度或數字，旁白要加「比方說」。偏誤那條整排往右偏、位置在虛線同側，須維持不畫成論文實測"
+  },
+  "機器人：同一個模型": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c11",
+    "verifier-results-how-to-read#c1"
+   ],
+   "verdict": "pass",
+   "note": "c11 同一個 Qwen 3.6 35B，只差 argmax／期望值；c1 機器人那列是最乾淨的因果證據"
+  },
+  "寫程式：同一批候選": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c5",
+    "verifier-results-how-to-read#c6"
+   ],
+   "verdict": "pass",
+   "note": "c5：同一批候選、同一個生成器；Terminal-Bench 這一列成立"
+  },
+  "只換挑法": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c5"
+   ],
+   "verdict": "pass",
+   "note": "c5：唯一變因是「怎麼挑」"
+  },
+  "論文的最佳成績 86.5%": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：「SOTA」宣稱的 Terminal-Bench V2 成績是 86.5%"
+  },
+  "最佳成績": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8 SOTA 宣稱＝86.5%（標在論文截圖旁）"
+  },
+  "對照組": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：對照的 84.7% 是 GPT-5.5＋另一個 harness。「對照組」在實驗語境暗示只差一個變因，與 v5d 的「變因不只一個」相反；建議改「對照的成績」（不擋）"
+  },
+  "≠": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：兩邊 harness（以及抽樣、verifier）不同；≠ 指「條件不一樣」，不是指兩個數字不相等"
+  },
+  "乙排前面 31 次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "c17：連續 verifier（G=5）正確軌跡分數低於錯誤軌跡 31/100；x1 這面板必須是 verifier（G=5）那一面，x3 才會接著說 5 格／20 格"
+  },
+  "5 格：31 次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": "G=5：31/100"
+  },
+  "20 格：23 次": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": "G=20：23/100"
+  },
+  "同分": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c6"
+   ],
+   "verdict": "pass",
+   "note": "c17 的「平手」＝兩個分數一樣（c6）；畫面是 88 次平手裡的一次，灰牌沒有數字，沒有說這一對實際拿幾分。h7 才說 88／12"
+  },
+  "1～5 分評審": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c2"
+   ],
+   "verdict": "pass",
+   "note": "c17：離散 judge（G=5），c2：叫模型輸出 1 到 5 的整數；h7 這塊板子必須是離散 judge 那一面"
+  },
+  "沒真正驗證": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c15"
+   ],
+   "verdict": "pass",
+   "note": "c15：從來沒有真正驗證等價性；貼在「在不同存取路徑上比結果」那一行旁，指的是等價性沒被真正驗證。不可貼成「完全沒做任何檢查」"
+  },
+  "只取最高（5 格）": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c4"
+   ],
+   "verdict": "pass",
+   "note": "第一面＝離散 judge（G=5），argmax＝只取機率最高者（c4）；12／88／0"
+  },
+  "期望值（5 格）": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "第二面＝連續 verifier（G=5）：69／0／31；c18 同量表只換解碼"
+  },
+  "期望值（20 格）": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18"
+   ],
+   "verdict": "pass",
+   "note": "第三面＝連續 verifier（G=20）：77／0／23；c18 只換量表 1–5 → 1–20"
+  },
+  "5×0.45＝2.25": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：公式 c5（分數×機率）、機率值 c9（舉例）；畫面有「代入公式計算」標籤；e3 前面 b4a／b11 已交代是舉例",
+   "calc": {
+    "expr": "5*0.45",
+    "result": "2.25"
+   }
+  },
+  "4×0.35＝1.4": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：公式 c5（分數×機率）、機率值 c9（舉例）；畫面有「代入公式計算」標籤；e3 前面 b4a／b11 已交代是舉例",
+   "calc": {
+    "expr": "4*0.35",
+    "result": "1.4"
+   }
+  },
+  "3×0.13＝0.39": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：公式 c5（分數×機率）、機率值 c9（舉例）；畫面有「代入公式計算」標籤；e3 前面 b4a／b11 已交代是舉例",
+   "calc": {
+    "expr": "3*0.13",
+    "result": "0.39"
+   }
+  },
+  "2×0.05＝0.1": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：公式 c5（分數×機率）、機率值 c9（舉例）；畫面有「代入公式計算」標籤；e3 前面 b4a／b11 已交代是舉例",
+   "calc": {
+    "expr": "2*0.05",
+    "result": "0.1"
+   }
+  },
+  "1×0.02＝0.02": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c5",
+    "verifier-expected-value-vs-argmax#c9"
+   ],
+   "verdict": "pass",
+   "note": "代入公式計算：公式 c5（分數×機率）、機率值 c9（舉例）；畫面有「代入公式計算」標籤；e3 前面 b4a／b11 已交代是舉例",
+   "calc": {
+    "expr": "1*0.02",
+    "result": "0.02"
+   }
+  },
+  "沒試過": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-three-knobs-g-k-c#c18"
+   ],
+   "verdict": "pass",
+   "note": "c18：沒有「試過 4 個、5 個」的 ablation"
+  },
+  "對照的成績": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-results-how-to-read#c8"
+   ],
+   "verdict": "pass",
+   "note": "c8：對照的 84.7% 是 GPT-5.5＋另一個 harness（且抽樣、verifier 也不同）；比舊的「對照組」好。注意 v5b visual 還寫「對照組」，畫面請只放「對照的成績」"
+  },
+  "期望值 5 格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17"
+   ],
+   "verdict": "pass",
+   "note": "x1 的紅格板＝verifier（G=5），乙排前面 31 次"
+  },
+  "0": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c19"
+   ],
+   "verdict": "pass",
+   "note": "x2：離散 judge 乙排前面 0／100（c17 的 12/88/0、c19 排錯 0/100）；必須標在「乙排前面」那一行、離散 judge 那面板"
+  },
+  "56": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": "c20：平手算半分，judge＝56（也可由 12+88/2 代入，見「12 + 88 ÷ 2 = 56」）"
+  },
+  "期望值 20 格": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c20"
+   ],
+   "verdict": "pass",
+   "note": "c20：verifier（G=20）77；c17 G=20 的 77/0/23"
+  },
+  "計分板：甲排前面": {
+   "tag": "card_claim",
+   "refs": [
+    "verifier-expected-value-vs-argmax#c17",
+    "verifier-expected-value-vs-argmax#c18",
+    "verifier-three-knobs-g-k-c#c3"
+   ],
+   "verdict": "pass",
+   "note": "g5 畫面改成兩根柱子（2026-11-27）：69、77 是期望值 5 格、20 格把甲排在前面的次數，同 k2b、k3 計分板的圖例「甲排前面」"
+  }
+ },
+ "warmup_map": [
+  {
+   "step": "評審在 <score> 那一格產生 1～5 各一個機率",
+   "card": "verifier-expected-value-vs-argmax#c4、c10",
+   "ok": true
+  },
+  {
+   "step": "軌跡甲：0.02…0.45 → argmax 拿 5",
+   "card": "verifier-expected-value-vs-argmax#c9",
+   "ok": true,
+   "note": "第 2 輪：已改名軌跡 X／Y，不再與甲／乙撞名；數字與 c9 相符，旁白說舉個例子"
+  },
+  {
+   "step": "軌跡乙：5 分 0.52、4 分 0.30 → argmax 也是 5 → 平手",
+   "card": "verifier-expected-value-vs-argmax#c9",
+   "ok": false,
+   "note": "同上"
+  },
+  {
+   "step": "期望值 1×0.02＋…＋5×0.45＝4.16",
+   "card": "verifier-expected-value-vs-argmax#c5、c9",
+   "ok": true
+  },
+  {
+   "step": "乙的期望值約 4.3",
+   "card": "verifier-expected-value-vs-argmax#c9",
+   "ok": true,
+   "note": "第 2 輪：已改名軌跡 X／Y，不再與甲／乙撞名；數字與 c9 相符，旁白說舉個例子"
+  },
+  {
+   "step": "數字是示意，論文沒公布真實機率",
+   "card": "verifier-expected-value-vs-argmax#c9 限定",
+   "ok": true,
+   "note": "b11 旁白交代；畫面標籤已刪"
+  }
+ ],
+ "figures": [],
+ "chapters_note": "章節名（88 次平手／評審為什麼會平手／評審的腦袋裡／改算期望值／回到那一百次／三個旋鈕／證據有多乾淨／代價：每次都要表態／三點回顧）皆為框架用語，無事實問題"
+}
