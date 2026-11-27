@@ -117,7 +117,12 @@ def schedule(a):
     keep = {k: live[k] for k in ("embeddable", "license", "publicStatsViewable", "selfDeclaredMadeForKids", "containsSyntheticMedia") if k in live}
     utc = t.astimezone(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
     yt.videos().update(part="status", body={"id": res["video_id"], "status": {**keep, "privacyStatus": PRIVACY, "publishAt": utc}}).execute()
-    after = yt.videos().list(part="status", id=res["video_id"]).execute()["items"][0]["status"]
+    import time
+    for _ in range(5):   # 剛寫入時回讀可能還沒同步（v005：第一次讀到 publishAt=None，幾秒後就有了）
+        after = yt.videos().list(part="status", id=res["video_id"]).execute()["items"][0]["status"]
+        if after.get("publishAt"):
+            break
+        time.sleep(4)
     if after["privacyStatus"] != PRIVACY or not after.get("publishAt"):
         sys.exit(f"排程後狀態不對：{after.get('privacyStatus')}、publishAt={after.get('publishAt')}。請立刻到 Studio 檢查：{res['studio']}")
     res["scheduled_at"] = t.isoformat(timespec="minutes")
