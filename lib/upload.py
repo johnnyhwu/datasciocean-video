@@ -74,6 +74,28 @@ def taken_slots(skip):
     return out
 
 
+def refresh_others(skip):
+    """向 YouTube 讀其他影片線上的排程時間，寫回各自的 upload-result.json，next_slot 才不會用到過期的紀錄。"""
+    from datetime import datetime
+    from zoneinfo import ZoneInfo
+    yt = service()
+    for d in (ROOT / "videos").iterdir():
+        r = d / "upload-result.json"
+        if d.name == skip or not r.exists():
+            continue
+        res = json.loads(r.read_text())
+        if "video_id" not in res:
+            continue
+        items = yt.videos().list(part="status", id=res["video_id"]).execute().get("items", [])
+        if not items:
+            continue
+        live = items[0]["status"]
+        res["privacy"] = live["privacyStatus"]
+        if live.get("publishAt"):
+            res["scheduled_at"] = datetime.fromisoformat(live["publishAt"].replace("Z", "+00:00")).astimezone(ZoneInfo(TZ)).isoformat(timespec="minutes")
+        r.write_text(json.dumps(res, ensure_ascii=False, indent=1))
+
+
 def next_slot(vid):
     """上一支已排程或已發布影片的 GAP_DAYS 天後 09:00（台北）；至少 MIN_LEAD_H 小時後（使用者 2026-11-27：「我們現在 3 天發佈一個新影片」）。"""
     from datetime import datetime, timedelta
@@ -103,6 +125,8 @@ def schedule(a):
         res_path.write_text(json.dumps(res, ensure_ascii=False, indent=1))
         print(f"隱私：{live['privacyStatus']}；排程：{res.get('scheduled_at', '無')}")
         return
+    if not a.at:
+        refresh_others(a.vid)   # 使用者可能在 Studio 改過別支的排程（v005：本機記 v004 在 12/5，線上其實是 11/28）
     t = datetime.fromisoformat(a.at).replace(tzinfo=ZoneInfo(TZ)) if a.at else next_slot(a.vid)
     if t <= datetime.now(ZoneInfo(TZ)):
         sys.exit(f"{t} 已經過了")
