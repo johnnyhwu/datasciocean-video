@@ -27,6 +27,7 @@
    "description": "两条 AI agent 的轨迹，一条真的做对、一条偷吃步；同样的比较请 AI 评审做 100 次，88 次给了一样的分数。\n问题出在只取概率最高的那个分数（argmax），其他分数的概率全被丢掉；改算期望值，平手就拆开了。\n代价是：它每次都得表态，100 次里有 31 次反而把偷吃步的那条排在前面。\n\n延伸阅读\n完整文章：https://datasciocean.com/paper-intro/llm-as-a-verifier/\n原始论文（arXiv）：LLM-as-a-Verifier: A General-Purpose Verification Framework\nhttps://arxiv.org/abs/2607.05391\n\n章节\n0:00 88 次平手\n1:02 评审为什么会平手\n1:41 评审的脑袋里\n2:49 改算期望值\n3:51 回到那一百次\n4:23 三个旋钮\n6:30 证据有多干净\n7:26 代价：每次都要表态\n8:00 三点回顾\n\n论文首页截屏出处：Kwok et al., \"LLM-as-a-Verifier: A General-Purpose Verification Framework\", arXiv:2607.05391, CC BY 4.0."
   }
  },
+ "video": "out/v005-llm-verifier/deliver/v005-llm-verifier-nomusic.mp4",
  "thumbnail": "videos/v005-llm-verifier/thumbs/A.png",
  "captions": [
   {

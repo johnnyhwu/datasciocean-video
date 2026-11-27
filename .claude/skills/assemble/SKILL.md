@@ -9,6 +9,8 @@ description: 影片第 7、8 步「合成」與「成片自檢」：混音（旁
 
 ## 音樂：只當標點，不鋪底
 
+> **2026-11-27 起品牌音樂停用**：Pixabay 那首被 Content ID 維持認領（`assets/music-library.yaml` 開頭）。新曲子要由使用者從 **YouTube 音效庫**挑好、放進 `assets/music/` 之後才能用；在那之前，交片和上傳都用無音樂版（`package.py --nomusic`，`upload.json` 加 `"video": "out/<id>/deliver/<id>-nomusic.mp4"`）。新曲子進來後，下面的規則照舊。
+
 使用者 2026-11-16 聽了 v001 三版後定的方向，**每支影片都照這個做**：
 
 - 用和 podcast 同一首品牌音樂（`brand_intro`、`brand_sting`、`brand_outro`，授權紀錄在 `assets/music-library.yaml`，檔案在 `assets/music/`，不進 git）。

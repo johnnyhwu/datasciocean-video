@@ -133,7 +133,7 @@ def schedule(a):
 def plan(vid):
     vd = video_dir(vid)
     spec = json.loads((vd / "upload.json").read_text())
-    video = out_dir(vid) / "deliver" / f"{vid}.mp4"
+    video = ROOT / spec["video"] if spec.get("video") else out_dir(vid) / "deliver" / f"{vid}.mp4"   # v005：可指定無音樂版
     thumb = ROOT / spec["thumbnail"]
     caps = [(c["language"], c.get("name", ""), ROOT / c["file"]) for c in spec.get("captions", [])]
     problems = []

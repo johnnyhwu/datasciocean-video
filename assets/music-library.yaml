@@ -7,7 +7,10 @@
 # 要加新曲子由使用者決定；Claude 不自己找音樂、不用 AI 生成的音樂。
 # Content ID：這首被 We Are Era Music AB（代表 Jonas Blakewood）以「Corporate Vision」的曲名登記。v001 片尾（7:33–7:56）2026-11-22 被認領，
 #   影響只有營利；使用者當天以「授權」提出爭議（Pixabay 524137、下載日 2026-09-19），對方 30 天內回覆。之後的影片很可能都會被認領，
-#   收到時用同樣的理由申訴（申訴文字見 v001 的 upload.md）。
+#   2026-11-27 對方回覆：不同意爭議、維持聲明。上訴被駁回時，對方可以改發下架通知（著作權警告），風險比營利損失大。
+#   結論（使用者 2026-11-27）：這首停用。v001 在 Studio 靜音被認領的片段；v005 改傳無音樂版。新品牌音樂改從 YouTube 音效庫
+#   （在 YouTube 上不會被 Content ID 認領）挑，由使用者選曲、下載到 assets/music/，Claude 照 podcast 的方式切片頭、轉場、片尾並記授權。
+#   新曲子進來之前，新影片一律用無音樂版（mix_nomusic）。下面三軌保留紀錄，不要再用。
 tracks:
   brand_intro:
     file: brand-intro.wav

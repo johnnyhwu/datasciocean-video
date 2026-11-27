@@ -55,6 +55,7 @@ out = {"title": TITLE, "description": zh, "language": "zh-TW", "category_id": 28
        "tags": ["LLM-as-a-Verifier", "LLM-as-a-Judge", "AI 評審", "AI Agent", "argmax", "期望值", "Expected Value", "Verifier", "LLM", "Terminal-Bench", "論文解讀"],
        "contains_synthetic_media": False,
        "localizations": {"en": {"title": EN_TITLE, "description": en}, "zh-CN": {"title": to_cn(TITLE), "description": to_cn(zh)}},
+       "video": f"out/{ID}/deliver/{ID}-nomusic.mp4",   # 2026-11-27：品牌音樂被 Content ID 維持認領，使用者選無音樂版
        "thumbnail": f"videos/{ID}/thumbs/{THUMB}.png",
        "captions": [{"language": "zh-TW", "name": "", "file": f"out/{ID}/deliver/subs.zh-TW.srt"},
                     {"language": "zh-CN", "name": "", "file": f"out/{ID}/deliver/subs.zh-CN.srt"}]}

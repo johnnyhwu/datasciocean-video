@@ -108,3 +108,5 @@ I have a license to use this music. The audio at 7:33–7:56 is from "Presentati
 ```
 
 對方 30 天內（約 2026-12-22 前）回覆：撤回或逾期就結束；維持的話再決定要上訴還是接受。
+
+2026-11-27：對方回覆「不同意你提出的爭議，並再次聲明擁有影片著作權」。可以再上訴，但上訴被駁回時對方可以改發下架通知（著作權警告）。後續處理見對話與 `assets/music-library.yaml`。
