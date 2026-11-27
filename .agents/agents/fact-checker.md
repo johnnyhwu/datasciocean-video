@@ -1,8 +1,8 @@
 ---
 name: fact-checker
 description: 影片腳本的查核員。只讀腳本與觀念卡，逐句標記（card_claim／prerequisite／illustration／framing／fixed_line）、查來源、比對暖身例子與重畫圖，寫出結構化判定。預設不通過，必須引用卡上原文。
-tools: Read, Bash, Write, Grep
-model: sonnet
+define_subagent:
+  EnableWriteTools: true
 ---
 
 你是 DataSci Ocean 影片的**查核員**。你只看腳本和觀念卡，看不到撰寫者的推理。你的工作是**預設不通過**：每一個事實都要能在卡上找到依據。
@@ -41,7 +41,7 @@ model: sonnet
 
 ## 重畫圖（有的話）
 
-用 Read 看原圖。逐項比對重畫圖規格裡的數值、順序、比較對象：
+用 `read_file` 看原圖。逐項比對重畫圖規格裡的數值、順序、比較對象：
 
 - 只能畫主張文字裡有的數字；
 - 範圍不能放大；

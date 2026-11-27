@@ -102,7 +102,7 @@ uv run python lib/checks/fonts.py <id>             # 缺字與簡體字
 ## 第 4 步：查核
 
 1. 執行 `uv run python lib/state.py set <id> 查核`。
-2. **派查核員**（`.claude/agents/fact-checker.md`）。只給它：
+2. **派查核員**（讀 `.agents/agents/fact-checker.md`，用 `define_subagent` ＋ `invoke_subagent` 派任）。只給它：
    - `videos/<id>/script.json`；
    - 來源卡 ID 清單（它自己用 `lib/cards.py` 讀）；
    - `plan.md` 裡的暖身例子對照表；

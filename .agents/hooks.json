@@ -1,0 +1,16 @@
+{
+  "protect-wiki": {
+    "PreToolUse": [
+      {
+        "matcher": "edit_file|write_file|run_command",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ./hooks/protect_wiki.py",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

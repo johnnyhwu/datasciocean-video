@@ -175,7 +175,7 @@ class Sc03(Sheet):                      # Sheet＝這支影片自己的基底類
 
 - `sfx=` 只寫種類。只放在真正的轉折：劃掉或否定某個東西、領先換邊、主角被救回或被擠下去、兩條線分開或合起來、三點回顧的每一點、開始轉旋鈕（`knob`）。一般的出現、寫字、鏡頭移動不配。
 - v001 最後 48 個，約每 10 秒 1 個。`bell` 全片只用一次，留給最重要的那一刻。
-- 新加的 `gain` 先抓 0.35～0.6。Claude 聽不到，審查包要寫明沒有經過人耳確認。種類與實際的聲音檔見 `assemble`。
+- 新加的 `gain` 先抓 0.35～0.6。Agent 聽不到，審查包要寫明沒有經過人耳確認。種類與實際的聲音檔見 `assemble`。
 
 ## 片頭音樂要留的空間
 
@@ -206,7 +206,7 @@ uv run python lib/checks/sheet.py <id> sc01                # 每句結束的畫�
 
 1. **先看 `out/<id>/layout-<場>.txt`**，不是 OK 就先修。它檢查：越界、壓到字幕區、元素重疊、**太近**、**動作中碰撞**（播放中每 1/3 秒取樣一次）、線穿過文字或圓點、實際字級、版面平衡、元素停留不到 1.5 秒、動作晚起步（`starts late`）。
    - `starts late`：前一個動作的 `run_time` 蓋過下一個錨點。縮短前一個動作或把錨點往後移，不要刪動作。
-2. 程式通過後，**派視覺檢查員**（`.claude/agents/visual-checker.md`）。每場只給它：縮圖表，加上這場的規格摘要（旁白句子、這場要讓觀眾懂什麼、概念色對照、哪些是舉例）。
+2. 程式通過後，**派視覺檢查員**（讀 `.agents/agents/visual-checker.md`，用 `define_subagent` ＋ `invoke_subagent` 派任）。每場只給它：縮圖表，加上這場的規格摘要（旁白句子、這場要讓觀眾懂什麼、概念色對照、哪些是舉例）。
 3. 依它的判定修，**每場最多 2 輪**，還不過就列進審查包。它提的建議只要是明顯變好就照改，**改動大也要改**，不要留給使用者判斷（v003 留了四項，使用者第一輪就退回）。
 4. 同一場渲染失敗 3 次就停下來回報。不要換成投影片式的畫面。
 
@@ -215,7 +215,7 @@ uv run python lib/checks/sheet.py <id> sc01                # 每句結束的畫�
 ```bash
 uv run python lib/checks/seams.py <id> -q l     # 接縫：一格不差＋空檔 0.8～1.6 秒
 uv run python lib/checks/frames.py <id> -q l    # 逐格：跳出、空畫面、靜止
-uv run python lib/checks/filmstrip.py <id> -q l # 整片逐秒縮圖，Claude 逐張看
+uv run python lib/checks/filmstrip.py <id> -q l # 整片逐秒縮圖，Agent 逐張看
 uv run python lib/render.py <id> -q h -j 8      # 1080p30，串接成 out/<id>/video.mp4
 uv run python lib/checks/seams.py <id> -q h
 uv run python lib/checks/frames.py <id>         # 1080p 再跑一次

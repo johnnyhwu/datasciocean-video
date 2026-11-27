@@ -5,7 +5,7 @@ description: 影片第 9 步「發布準備」：標題候選、專用構圖的�
 
 # 第 9 步：發布準備
 
-**Claude 不直接公開。** Claude 準備素材、過關卡 4、上傳成私人；使用者說定版之後，排程在上一支影片的 3 天後 09:00（台北）自動公開（使用者 2026-11-27，原本是每週六）。不得上傳成公開、不得把私人直接改成公開。
+**Agent 不直接公開。** Agent 準備素材、過關卡 4、上傳成私人；使用者說定版之後，排程在上一支影片的 3 天後 09:00（台北）自動公開（使用者 2026-11-27，原本是每週六）。不得上傳成公開、不得把私人直接改成公開。
 
 範例：`videos/v001-rrf-rank-fusion/` 的 `upload.md`、`upload.json`、`thumb.py`、`review/gate4.md`。
 
@@ -13,7 +13,7 @@ description: 影片第 9 步「發布準備」：標題候選、專用構圖的�
 
 ## 1. 標題
 
-標題和頻道說明由 Claude 自己寫，不用 Gemini（使用者 2026-11-21 試過 Gemini 3.8 Flash 後決定：「標題和頻道說明都用你的好了，gemini 做 tts 就好」）。
+標題和頻道說明由 Agent 自己寫，不用 Gemini（使用者 2026-11-21 試過 Gemini 3.8 Flash 後決定：「標題和頻道說明都用你的好了，gemini 做 tts 就好」）。
 
 給使用者 **4～5 個候選**，列成表：標題、有趣在哪、要注意的地方，並說出你建議哪一個、為什麼。
 
@@ -136,7 +136,7 @@ uv run python lib/state.py set <id> 已發布      # 有排程時，發布時間
 uv run python lib/analytics.py --due            # 確認 d7、d28 的到期日有列出來
 ```
 
-告訴使用者 d7、d28 哪一天到期，以及到時候 Claude 會自己抓數據（`retrospective` 的「成效追蹤」）。
+告訴使用者 d7、d28 哪一天到期，以及到時候 Agent 會自己抓數據（`retrospective` 的「成效追蹤」）。
 
 報這支影片的 **Gemini 總花費**（目前只有 TTS）：`uv run python lib/gemini.py cost <id>`。使用者 2026-11-21：「每次完整產出一段影片的時候都可以告訴我 gemini 總花費 包含 tts and llm」。
 

@@ -16,7 +16,7 @@
             eq = M("0.83 + 12.4 = ?", 0.07)
             self.at(A("a1", 0.6), Write(eq), run_time=1.2)   # a1 念到 60% 時開始寫
             self.finish()
-完整範例是 videos/v001-rrf-rank-fusion/scenes.py；做法寫在 .claude/skills/animate/SKILL.md。
+完整範例是 videos/v001-rrf-rank-fusion/scenes.py；做法寫在 .agents/skills/animate/SKILL.md。
 
 規則（規格 §6.2、§6.4）：
 - 每個 at() 都要對應某一句旁白（用 A()/E() 錨定），標不出來就刪掉；同一時間只有一個焦點。
