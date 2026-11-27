@@ -84,8 +84,8 @@ def main():
             if up.exists():
                 r = json.loads(up.read_text())
                 st["url"] = r.get("url", "")
-                if r.get("scheduled_at"):           # 排程公開的影片：發布時間就是排程時間
-                    st["published_at"] = r["scheduled_at"]
+                if r.get("scheduled_at") and r["scheduled_at"] <= st["published_at"]:   # 排程時間已過：發布時間就是排程時間
+                    st["published_at"] = r["scheduled_at"]                              # 還沒到（使用者提早手動公開，v003）就記現在
         save(vid, st)
     elif a.cmd == "approve":
         st = load(vid)

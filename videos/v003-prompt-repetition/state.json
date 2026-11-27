@@ -1,6 +1,6 @@
 {
  "video": "v003-prompt-repetition",
- "status": "發布準備",
+ "status": "已發布",
  "cards": [
   "prompt-repetition-causal-bottleneck-and-fix",
   "prompt-repetition-free-lunch-latency",
@@ -70,7 +70,15 @@
    "status": "發布準備",
    "at": "2026-11-22T21:07+08:00",
    "note": ""
+  },
+  {
+   "status": "已發布",
+   "at": "2026-11-27T11:20+08:00",
+   "note": ""
   }
  ],
- "finished_at": "2026-11-22T21:06+08:00"
+ "finished_at": "2026-11-22T21:06+08:00",
+ "published_at": "2026-11-27T12:00+08:00",
+ "url": "https://youtu.be/0R6qYz9VAx8",
+ "published_note": "使用者 2026-11-27 在 Studio 提早手動公開（原排程 11/28 09:00）；確切時間未知，記當天中午"
 }
